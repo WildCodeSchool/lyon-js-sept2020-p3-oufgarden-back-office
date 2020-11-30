@@ -2,13 +2,13 @@
 
 ## Environment
 
-Copy the sample `.env` file :
+Copy the sample `.env.sample` file into a "real" environment file :
 
 ```sh
 cp .env.sample .env
 ```
 
-And adjust variables to match your own environment if needed.
+And adjust variables in the `.env` file to match your own environment if needed.
 
 ## Install dependencies
 
