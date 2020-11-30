@@ -46,7 +46,7 @@ export const extractData = (res) => res.data;
 export const isCancelledError = (fetchRequestError) =>
   fetchRequestError && fetchRequestError.constructor.name === "CancelledError";
 
-export const makeCollectionGetter = (
+export const getCollection = (
   collectionName,
   queryParams,
   config = {}
@@ -65,7 +65,7 @@ export const makeEntityAdder = (collectionName) => (attributes, config = {}) =>
     extractData
   );
 
-export const makeEntityGetter = (collectionName, id) =>
+export const getEntity = (collectionName, id) =>
   makeCancellable("get", `/${collectionName}/${id}`).then(extractData);
 
 export const makeEntityDeleter = (collectionName) => (id) =>
