@@ -1,64 +1,98 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import './style/MemberCreation.scss';
 
 // Messages
-const required = "This field is required";
-const maxLength = "Your input exceed maximum length";
+const required = 'Ce champ est obligatoire';
+const maxLength = 'Vous avez dépassé le nombre maximal de caractères.';
 
 // Error Component
 const errorMessage = (error) => {
-  return <div className="invalid-feedback">{error}</div>;
+  return (
+    <div className='invalid-feedback'>
+      <p>{error}</p>
+    </div>
+  );
 };
 
 const MemberCreation = () => {
-  const { register, errors, handleSubmit } = useForm();
+  const { register, handleSubmit, errors, getValues } = useForm();
   const onSubmit = (data) => console.log(data);
 
-  console.log(errors);
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>First Name :</label>
-        <input
-          type="text"
-          name="Firstname"
-          ref={register({ required: true, maxLength: 80 })}
-        />
-        {errors.Firstname &&
-          errors.Firstname.type === "required" &&
-          errorMessage(required)}
-        {errors.Firstname &&
-          errors.Firstname.type === "maxLength" &&
-          errorMessage(maxLength)}
-
-        <label>Last name</label>
-        <input
-          type="text"
-          name="Lastname"
-          ref={register({ required: true, maxLength: 100 })}
-        />
-        {errors.Lastname &&
-          errors.Lastname.type === "required" &&
-          errorMessage(required)}
-        {errors.Lastname &&
-          errors.Lastname.type === "maxLength" &&
-          errorMessage(maxLength)}
-
-        <label>Email</label>
-        <input
-          type="text"
-          name="Email"
-          ref={register({
-            required: true,
-            pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-          })}
-        />
-        {errors.Email &&
-          errors.Email.type === "required" &&
-          errorMessage(required)}
-
-        <input type="submit" />
-      </form>
+    <div className='container'>
+      <div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h3>Création d'un membre :</h3>
+          {/*---------------- bouton nom -------------------*/}
+          <div>
+            <label>Nom: </label>
+            <input
+              type='text'
+              name='lastname'
+              ref={register({ required: true, maxLength: 50 })}
+            />
+            {errors.lastname &&
+              errors.lastname.type === 'required' &&
+              errorMessage(required)}
+            {errors.lastname &&
+              errors.lastname.type === 'maxLength' &&
+              errorMessage(maxLength)}
+          </div>
+          {/*---------------- champ prenom -------------------*/}
+          <div>
+            <label>Prénom: </label>
+            <input
+              type='text'
+              name='Firstname'
+              ref={register({ required: true, maxLength: 50 })}
+            />
+            {errors.Firstname &&
+              errors.Firstname.type === 'required' &&
+              errorMessage(required)}
+            {errors.Firstname &&
+              errors.Firstname.type === 'maxLength' &&
+              errorMessage(maxLength)}
+          </div>
+          {/* --------------- email + verification email----- */}
+          <div>
+            <label>Email: </label>
+            <input
+              name='email'
+              ref={register({
+                required: "L'email est obligatoire !",
+                pattern: /^\S+@\S+$/i,
+              })}
+            />
+            {errors.email && <p>{errors.email.message}</p>}
+          </div>
+          <div>
+            <label>Confirmation de l'email: </label>
+            <input
+              name='emailConfirmation'
+              ref={register({
+                required: "Merci de confirmer l'email !",
+                pattern: /^\S+@\S+$/i,
+                validate: {
+                  matchesPreviousEmail: (value) => {
+                    const { email } = getValues();
+                    return (
+                      email === value || 'Les emails ne sont pas identiques'
+                    );
+                  },
+                },
+              })}
+            />
+            {errors.emailConfirmation && (
+              <p>{errors.emailConfirmation.message}</p>
+            )}
+          </div>
+          {/*---------------- bouton creer -------------------*/}
+          <div>
+            <input type='submit' value='Créer le membre' />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
