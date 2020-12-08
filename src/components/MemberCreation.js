@@ -1,15 +1,15 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import './style/MemberCreation.scss';
+import React from "react";
+import { useForm } from "react-hook-form";
+import "./style/MemberCreation.scss";
 
 // Messages
-const required = 'Ce champ est obligatoire';
-const maxLength = 'Vous avez dépassé le nombre maximal de caractères.';
+const required = "Ce champ est obligatoire";
+const maxLength = "Vous avez dépassé le nombre maximal de caractères.";
 
 // Error Component
 const errorMessage = (error) => {
   return (
-    <div className='invalid-feedback'>
+    <div className="invalid-feedback">
       <p>{error}</p>
     </div>
   );
@@ -20,7 +20,7 @@ const MemberCreation = () => {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <div className='container'>
+    <div className="container">
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h3>Création d'un membre :</h3>
@@ -28,37 +28,37 @@ const MemberCreation = () => {
           <div>
             <label>Nom: </label>
             <input
-              type='text'
-              name='lastname'
+              type="text"
+              name="lastname"
               ref={register({ required: true, maxLength: 50 })}
             />
             {errors.lastname &&
-              errors.lastname.type === 'required' &&
+              errors.lastname.type === "required" &&
               errorMessage(required)}
             {errors.lastname &&
-              errors.lastname.type === 'maxLength' &&
+              errors.lastname.type === "maxLength" &&
               errorMessage(maxLength)}
           </div>
           {/*---------------- champ prenom -------------------*/}
           <div>
             <label>Prénom: </label>
             <input
-              type='text'
-              name='Firstname'
+              type="text"
+              name="Firstname"
               ref={register({ required: true, maxLength: 50 })}
             />
             {errors.Firstname &&
-              errors.Firstname.type === 'required' &&
+              errors.Firstname.type === "required" &&
               errorMessage(required)}
             {errors.Firstname &&
-              errors.Firstname.type === 'maxLength' &&
+              errors.Firstname.type === "maxLength" &&
               errorMessage(maxLength)}
           </div>
           {/* --------------- email + verification email----- */}
           <div>
             <label>Email: </label>
             <input
-              name='email'
+              name="email"
               ref={register({
                 required: "L'email est obligatoire !",
                 pattern: /^\S+@\S+$/i,
@@ -69,7 +69,7 @@ const MemberCreation = () => {
           <div>
             <label>Confirmation de l'email: </label>
             <input
-              name='emailConfirmation'
+              name="emailConfirmation"
               ref={register({
                 required: "Merci de confirmer l'email !",
                 pattern: /^\S+@\S+$/i,
@@ -77,7 +77,7 @@ const MemberCreation = () => {
                   matchesPreviousEmail: (value) => {
                     const { email } = getValues();
                     return (
-                      email === value || 'Les emails ne sont pas identiques'
+                      email === value || "Les emails ne sont pas identiques"
                     );
                   },
                 },
@@ -89,7 +89,7 @@ const MemberCreation = () => {
           </div>
           {/*---------------- bouton creer -------------------*/}
           <div>
-            <input type='submit' value='Créer le membre' />
+            <input type="submit" value="Créer le membre" />
           </div>
         </form>
       </div>
