@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import "./style/MemberCreation.scss";
+const generator = require('generate-password');
 
 // Messages
 const required = "Ce champ est obligatoire";
@@ -15,9 +16,21 @@ const errorMessage = (error) => {
   );
 };
 
+
 const MemberCreation = () => {
   const { register, handleSubmit, errors, getValues } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data, e) => {console.log(data);
+    e.target.reset();
+  }
+
+
+//generation du mot de passe
+  let generatedPassword = generator.generate({
+    length: 10,
+    numbers: true
+  });
+
+
 
   return (
     <div className="container">
@@ -61,7 +74,7 @@ const MemberCreation = () => {
               name="email"
               ref={register({
                 required: "L'email est obligatoire !",
-                pattern: /^\S+@\S+$/i,
+                pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
               })}
             />
             {errors.email && <p>{errors.email.message}</p>}
@@ -72,7 +85,7 @@ const MemberCreation = () => {
               name="emailConfirmation"
               ref={register({
                 required: "Merci de confirmer l'email !",
-                pattern: /^\S+@\S+$/i,
+                pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                 validate: {
                   matchesPreviousEmail: (value) => {
                     const { email } = getValues();
@@ -86,6 +99,22 @@ const MemberCreation = () => {
             {errors.emailConfirmation && (
               <p>{errors.emailConfirmation.message}</p>
             )}
+          </div>
+            {/*---------------- champ password -------------------*/}
+            <div>
+            <label>Password: </label>
+            <input
+              type="text"
+              name="password"
+              defaultValue={generatedPassword}
+              ref={register({ required: true, minLength: 10 })}
+           />
+              {errors.password?.type === "required" && (
+                <p>Ce champ est obligatoire</p>
+              )}
+              {errors.password?.type === "minLength" && (
+        <p>Votre mot de passe doit posseder au minimum 10 caractères</p>
+      )}
           </div>
           {/*---------------- bouton creer -------------------*/}
           <div>
