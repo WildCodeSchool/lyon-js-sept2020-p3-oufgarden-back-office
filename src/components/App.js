@@ -13,7 +13,7 @@ const App = () => {
           <Route path="/admin/home" />
           <Route exact path="/admin/adherents" />
           <Route path="/admin/adherents/:id" />
-          <Route path="/admin/adherents/creation" component={MemberCreation}/>
+          <Route path="/admin/adherents/creation" component={MemberCreation} />
           <Route exact path="/admin/articles" />
           <Route exact path="/admin/articles/:id" />
           <Route path="/admin/articles/creation" />
