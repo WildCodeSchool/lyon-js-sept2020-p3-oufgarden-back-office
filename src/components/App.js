@@ -9,9 +9,8 @@ const App = () => {
       <div className="App">
         <Navbar />
         <Switch>
-          
-          <Route exact path="/adherents"/>
-          <Route exact path="/adherents/creation" component={MemberCreation}/>
+          <Route exact path="/adherents" />
+          <Route exact path="/adherents/creation" component={MemberCreation} />
           <Route exact path="/adherents/:id" />
           <Route exact path="/articles" />
           <Route exact path="/articles/:id" />
