@@ -21,7 +21,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.1), -7px -7px 20px rgb(175, 182, 182);
+  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.1), 0px 0px 20px rgb(175, 182, 182);
   font-size: 90px;
   align-items: center;
 }
@@ -80,7 +80,8 @@ button {
   border-radius: 10px;
   padding: 10px;
   transition: ease all 250ms;
-  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.1), -7px -7px 20px rgb(255, 255, 255);
+  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.1),
+    -7px -7px 20px rgba(255, 255, 255, 0.062);
   border: unset;
   font-size: 20px;
 }
@@ -89,7 +90,7 @@ button:hover {
   cursor: pointer;
   color: #292929;
   box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.1),
-    inset -3px -3px 5px rgb(248, 248, 248);
+    inset -3px -3px 5px rgb(172, 172, 172);
 }
 .invalid-feedback {
   display: block !important;
