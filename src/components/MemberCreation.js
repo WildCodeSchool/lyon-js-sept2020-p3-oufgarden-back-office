@@ -17,7 +17,7 @@ const errorMessage = (error) => {
 };
 
 const MemberCreation = () => {
-  const { register, handleSubmit, errors, getValues } = useForm();
+  const { register, handleSubmit, errors, getValues} = useForm();
   const onSubmit = (data, e) => {
     console.log(data);
     e.target.reset();
@@ -28,6 +28,7 @@ const MemberCreation = () => {
     length: 10,
     numbers: true,
   });
+
 
   return (
     <div className="container">
@@ -97,9 +98,11 @@ const MemberCreation = () => {
               <p>{errors.emailConfirmation.message}</p>
             )}
           </div>
+
+
           {/*---------------- champ password -------------------*/}
           <div>
-            <label>Password: </label>
+            <label>Modifier le mot de passe (si nécessaire): </label>
             <input
               type="text"
               name="password"
@@ -113,6 +116,12 @@ const MemberCreation = () => {
               <p>Votre mot de passe doit posseder au minimum 10 caractères</p>
             )}
           </div>
+
+          {/*---------------- champ administrateur -------------------*/}
+          <div>
+          <label htmlFor="admin">Membre administrateur ?</label>
+            <input name="isAdmin" type="checkbox" id="admin" value="true" ref={register} />
+            </div>
           {/*---------------- bouton creer -------------------*/}
           <div>
             <input type="submit" value="Créer le membre" />
@@ -122,5 +131,4 @@ const MemberCreation = () => {
     </div>
   );
 };
-
 export default MemberCreation;
