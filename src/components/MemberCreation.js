@@ -17,7 +17,7 @@ const errorMessage = (error) => {
 };
 
 const MemberCreation = () => {
-  const { register, handleSubmit, errors, getValues} = useForm();
+  const { register, handleSubmit, errors, getValues } = useForm();
   const onSubmit = (data, e) => {
     console.log(data);
     e.target.reset();
@@ -28,7 +28,6 @@ const MemberCreation = () => {
     length: 10,
     numbers: true,
   });
-
 
   return (
     <div className="container">
@@ -99,7 +98,6 @@ const MemberCreation = () => {
             )}
           </div>
 
-
           {/*---------------- champ password -------------------*/}
           <div>
             <label>Modifier le mot de passe (si nécessaire): </label>
@@ -119,9 +117,15 @@ const MemberCreation = () => {
 
           {/*---------------- champ administrateur -------------------*/}
           <div>
-          <label htmlFor="admin">Membre administrateur ?</label>
-            <input name="isAdmin" type="checkbox" id="admin" value="true" ref={register} />
-            </div>
+            <label htmlFor="admin">Membre administrateur ?</label>
+            <input
+              name="isAdmin"
+              type="checkbox"
+              id="admin"
+              value="true"
+              ref={register}
+            />
+          </div>
           {/*---------------- bouton creer -------------------*/}
           <div>
             <input type="submit" value="Créer le membre" />
