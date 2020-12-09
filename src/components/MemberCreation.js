@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import "./style/MemberCreation.scss";
-const generator = require('generate-password');
+const generator = require("generate-password");
 
 // Messages
 const required = "Ce champ est obligatoire";
@@ -16,21 +16,18 @@ const errorMessage = (error) => {
   );
 };
 
-
 const MemberCreation = () => {
   const { register, handleSubmit, errors, getValues } = useForm();
-  const onSubmit = (data, e) => {console.log(data);
+  const onSubmit = (data, e) => {
+    console.log(data);
     e.target.reset();
-  }
+  };
 
-
-//generation du mot de passe
+  //generation du mot de passe
   let generatedPassword = generator.generate({
     length: 10,
-    numbers: true
+    numbers: true,
   });
-
-
 
   return (
     <div className="container">
@@ -100,21 +97,21 @@ const MemberCreation = () => {
               <p>{errors.emailConfirmation.message}</p>
             )}
           </div>
-            {/*---------------- champ password -------------------*/}
-            <div>
+          {/*---------------- champ password -------------------*/}
+          <div>
             <label>Password: </label>
             <input
               type="text"
               name="password"
               defaultValue={generatedPassword}
               ref={register({ required: true, minLength: 10 })}
-           />
-              {errors.password?.type === "required" && (
-                <p>Ce champ est obligatoire</p>
-              )}
-              {errors.password?.type === "minLength" && (
-        <p>Votre mot de passe doit posseder au minimum 10 caractères</p>
-      )}
+            />
+            {errors.password?.type === "required" && (
+              <p>Ce champ est obligatoire</p>
+            )}
+            {errors.password?.type === "minLength" && (
+              <p>Votre mot de passe doit posseder au minimum 10 caractères</p>
+            )}
           </div>
           {/*---------------- bouton creer -------------------*/}
           <div>
