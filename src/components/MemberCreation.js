@@ -75,9 +75,7 @@ const MemberCreation = () => {
                 message: "Mauvais format",
               })}
             />
-            {errors.email && (
-              <p>{errors.email.message}</p>
-            )}
+            {errors.email && <p>{errors.email.message}</p>}
           </div>
           <div>
             <label>Confirmation de l'email: </label>
@@ -111,7 +109,8 @@ const MemberCreation = () => {
               ref={register({
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                  message: "Format invalide : 8 caractères minimum avec au moins 1 chiffre",
+                  message:
+                    "Format invalide : 8 caractères minimum avec au moins 1 chiffre",
                 },
               })}
             />
