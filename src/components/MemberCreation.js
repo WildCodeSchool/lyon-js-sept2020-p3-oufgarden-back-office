@@ -25,7 +25,7 @@ const MemberCreation = () => {
 
   //generation du mot de passe
   let generatedPassword = generator.generate({
-    length: 10,
+    length: 8,
     numbers: true,
   });
 
@@ -105,14 +105,20 @@ const MemberCreation = () => {
               type="text"
               name="password"
               defaultValue={generatedPassword}
-              ref={register({ required: true, minLength: 10 })}
+              ref={
+                register({
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                    message: 'error message'
+                  }
+                })
+              }
+              
             />
-            {errors.password?.type === "required" && (
-              <p>Ce champ est obligatoire</p>
-            )}
-            {errors.password?.type === "minLength" && (
-              <p>Votre mot de passe doit posseder au minimum 10 caractères</p>
-            )}
+            {errors.password && (
+                <p>{errors.password.message}</p>
+              )}
+            
           </div>
 
           {/*---------------- champ administrateur -------------------*/}
