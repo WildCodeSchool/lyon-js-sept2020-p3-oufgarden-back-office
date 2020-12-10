@@ -1,6 +1,7 @@
-import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Navbar from "./Navbar";
+import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Navbar from './Navbar';
+import Adherent from './Adherents';
 
 const App = () => {
   return (
@@ -8,7 +9,7 @@ const App = () => {
       <div className="App">
         <Navbar />
         <Switch>
-          <Route exact path="/adherents" />
+          <Route exact path="/adherents" component={Adherent} />
           <Route path="/adherents/:id" />
           <Route path="/adherents/creation" />
           <Route exact path="/articles" />
