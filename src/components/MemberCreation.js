@@ -34,7 +34,7 @@ const MemberCreation = () => {
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h3>Création d'un membre :</h3>
-          {/*---------------- bouton nom -------------------*/}
+
           <div>
             <label>Nom: </label>
             <input
@@ -49,7 +49,7 @@ const MemberCreation = () => {
               errors.lastname.type === "maxLength" &&
               errorMessage(maxLength)}
           </div>
-          {/*---------------- champ prenom -------------------*/}
+
           <div>
             <label>Prénom: </label>
             <input
@@ -64,17 +64,20 @@ const MemberCreation = () => {
               errors.Firstname.type === "maxLength" &&
               errorMessage(maxLength)}
           </div>
-          {/* --------------- email + verification email----- */}
+
           <div>
             <label>Email: </label>
             <input
               name="email"
               ref={register({
-                required: "L'email est obligatoire !",
+                required: "L'email est obligatoire",
                 pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                message: "Mauvais format",
               })}
             />
-            {errors.email && <p>{errors.email.message}</p>}
+            {errors.email && (
+              <p>{errors.email.message}</p>
+            )}
           </div>
           <div>
             <label>Confirmation de l'email: </label>
@@ -83,6 +86,7 @@ const MemberCreation = () => {
               ref={register({
                 required: "Merci de confirmer l'email !",
                 pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                message: "Mauvais format",
                 validate: {
                   matchesPreviousEmail: (value) => {
                     const { email } = getValues();
@@ -98,7 +102,6 @@ const MemberCreation = () => {
             )}
           </div>
 
-          {/*---------------- champ password -------------------*/}
           <div>
             <label>Modifier le mot de passe (si nécessaire): </label>
             <input
@@ -108,14 +111,13 @@ const MemberCreation = () => {
               ref={register({
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                  message: "error message",
+                  message: "Format invalide : 8 caractères minimum avec au moins 1 chiffre",
                 },
               })}
             />
             {errors.password && <p>{errors.password.message}</p>}
           </div>
 
-          {/*---------------- champ administrateur -------------------*/}
           <div>
             <label htmlFor="admin">Membre administrateur ?</label>
             <input
@@ -126,7 +128,6 @@ const MemberCreation = () => {
               ref={register}
             />
           </div>
-          {/*---------------- bouton creer -------------------*/}
           <div>
             <input type="submit" value="Créer le membre" />
           </div>
