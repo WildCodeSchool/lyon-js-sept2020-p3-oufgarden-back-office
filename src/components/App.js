@@ -12,7 +12,11 @@ const App = () => {
           <Route exact path="/admin" />
           <Route path="/admin/home" />
           <Route exact path="/admin/adherents" />
-          <Route exact path="/admin/adherents/creation" component={MemberCreation}  />
+          <Route
+            exact
+            path="/admin/adherents/creation"
+            component={MemberCreation}
+          />
           <Route exact path="/admin/adherents/:id" />
           <Route exact path="/admin/articles" />
           <Route exact path="/admin/articles/:id" />

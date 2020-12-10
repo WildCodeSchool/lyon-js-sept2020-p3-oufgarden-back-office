@@ -105,20 +105,14 @@ const MemberCreation = () => {
               type="text"
               name="password"
               defaultValue={generatedPassword}
-              ref={
-                register({
-                  pattern: {
-                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                    message: 'error message'
-                  }
-                })
-              }
-              
+              ref={register({
+                pattern: {
+                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                  message: "error message",
+                },
+              })}
             />
-            {errors.password && (
-                <p>{errors.password.message}</p>
-              )}
-            
+            {errors.password && <p>{errors.password.message}</p>}
           </div>
 
           {/*---------------- champ administrateur -------------------*/}
