@@ -20,12 +20,12 @@ const Adherents = () => {
 
   return (
     <div className="user-list-container">
-      <div className="buttonArticle">
+      <div className="button-user-container">
         <button type="button" className="button-user-list">
-          <Link to="/adherents">Listes</Link>
+          <Link to="/adherents">Listes Adhérents</Link>
         </button>
         <button type="button" className="button-user">
-          <Link to="/adherents/creation">Nouvel Article</Link>
+          <Link to="/adherents/creation">Nouvel Adhérent</Link>
         </button>
       </div>
       {adherentList.map((e) => {

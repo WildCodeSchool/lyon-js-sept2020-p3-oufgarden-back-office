@@ -1,5 +1,11 @@
 .user-list-container {
   margin: 100px 20px 20px 15%;
+  .button-user-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
   .button-user-list {
     width: 20vw;
     height: 5vh;
@@ -20,6 +26,10 @@
       background-color: #ebb349;
       box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    a {
+      text-decoration: none;
+      color: black;
     }
   }
   .button-user {
@@ -46,8 +56,10 @@
       box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
-    &:a {
+
+    a {
       text-decoration: none;
+      color: black;
     }
   }
 
@@ -59,7 +71,7 @@
     margin: 0 20px 20px 20px;
     background-color: #e5e7e9;
     box-shadow: 10px;
-    box-shadow: 0 8px 10px 0 rgba(0, 0, 0, 0.2),
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2),
       0 6px 10px 0 rgba(0, 0, 0, 0.19);
 
     .react-icons {
