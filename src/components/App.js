@@ -1,7 +1,7 @@
-import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Navbar from "./Navbar";
-import LoginF from "./LoginF";
+import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Navbar from './Navbar';
+import LoginF from './LoginF';
 
 const App = () => {
   return (
