@@ -39,7 +39,7 @@ const LoginF = (props) => {
   return (
     <div className="container">
       <div className="box">
-        <h3>Log in</h3>
+        <h3>Se connecter</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-wrapper">
             <div className="field">
@@ -61,7 +61,7 @@ const LoginF = (props) => {
                 value={password}
                 className="form-control"
                 type="password"
-                placeholder="Password"
+                placeholder="Mot de passe"
                 name="password"
                 ref={register({ required: true })}
               />
