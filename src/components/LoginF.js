@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useQuery } from "react-query";
-import { useForm } from "react-hook-form";
-import "./style/Login.scss";
-import axios from "axios";
+import React, { useState } from 'react';
+/* import { useQuery } from 'react-query'; */
+import { useForm } from 'react-hook-form';
+import './style/Login.scss';
+import axios from 'axios';
 
-require("dotenv").config();
+require('dotenv').config();
 
-const required = "Ce champs est requis";
+const required = 'Ce champs est requis';
 
 const errorMessage = (error) => {
   return <div className="invalid-feedback">{error}</div>;
@@ -14,8 +14,9 @@ const errorMessage = (error) => {
 
 const LoginF = (props) => {
   const { register, handleSubmit, errors } = useForm();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [isLogged, setIsLogged] = useState(false);
 
   const url = process.env.REACT_APP_API_BASE_URL;
@@ -25,8 +26,8 @@ const LoginF = (props) => {
       .post(`${url}/login`, data)
       .then((res) => {
         console.log(res.data);
-        if (res.data === "logged") {
-          props.history.push("/adherents");
+        if (res.data === 'logged') {
+          props.history.push('/adherents');
           setIsLogged(true);
         }
       })
@@ -52,7 +53,7 @@ const LoginF = (props) => {
                 ref={register({ required: true, pattern: /^\S+@\S+$/i })}
               />
               {errors.Email &&
-                errors.Email.type === "required" &&
+                errors.Email.type === 'required' &&
                 errorMessage(required)}
 
               <input
@@ -65,7 +66,7 @@ const LoginF = (props) => {
                 ref={register({ required: true })}
               />
               {errors.Password &&
-                errors.Password.type === "required" &&
+                errors.Password.type === 'required' &&
                 errorMessage(required)}
 
               <div className="form-group">
