@@ -12,6 +12,7 @@ const Adherents = () => {
       setAdherentList(elem);
     });
   }, []);
+
   return (
     <div>
       {adherentList.map((e) => {
