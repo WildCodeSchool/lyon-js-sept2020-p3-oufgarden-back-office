@@ -1,11 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./style/Navbar.scss";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './style/Navbar.scss';
 
 const Navbar = () => {
   return (
     <div className="navbar">
-      <div className="logo"></div>
+      <div className="logo" />
       <ul>
         <li>
           <Link to="/adherents">Adhérents</Link>
