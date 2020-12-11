@@ -42,7 +42,7 @@ const MemberCreation = (props) => {
   let generatedPassword = generator.generate({
     length: 8,
     numbers: true,
-    strict: true
+    strict: true,
   });
 
   return (
