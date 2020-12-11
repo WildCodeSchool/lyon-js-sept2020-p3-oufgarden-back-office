@@ -1,5 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { makeEntityAdder } from "../services/API";
+
 import "./style/MemberCreation.scss";
 const generator = require("generate-password");
 
@@ -16,10 +18,23 @@ const errorMessage = (error) => {
   );
 };
 
-const MemberCreation = () => {
+const MemberCreation = (props) => {
   const { register, handleSubmit, errors, getValues } = useForm();
   const onSubmit = (data, e) => {
-    console.log(data);
+    makeEntityAdder("users")(data)
+      .then((e) => {
+        console.log(e);
+      })
+      .then(() => props.history.push("/adherents"))
+      .catch((err) => {
+        console.log(err.response.data);
+        if (err.response.data.errorsByField[0].context !== undefined) {
+          console.log(err.response.data.errorsByField[1].context.label);
+        } else {
+          console.log(err.response.data.errorsByField[0].message);
+        }
+      });
+
     e.target.reset();
   };
 
@@ -54,7 +69,7 @@ const MemberCreation = () => {
             <label>Prénom: </label>
             <input
               type="text"
-              name="Firstname"
+              name="firstname"
               ref={register({ required: true, maxLength: 50 })}
             />
             {errors.Firstname &&
@@ -135,7 +150,7 @@ const MemberCreation = () => {
           <div>
             <label htmlFor="admin">Membre administrateur ?</label>
             <input
-              name="isAdmin"
+              name="is_admin"
               type="checkbox"
               id="admin"
               value="true"
