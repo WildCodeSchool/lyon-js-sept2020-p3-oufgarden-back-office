@@ -1,13 +1,13 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { makeEntityAdder } from "../services/API";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { makeEntityAdder } from '../services/API';
+import './style/MemberCreation.scss';
 
-import "./style/MemberCreation.scss";
-const generator = require("generate-password");
+const generator = require('generate-password');
 
 // Messages
-const required = "Ce champ est obligatoire";
-const maxLength = "Vous avez dépassé le nombre maximal de caractères.";
+const required = 'Ce champ est obligatoire';
+const maxLength = 'Vous avez dépassé le nombre maximal de caractères.';
 
 // Error Component
 const errorMessage = (error) => {
@@ -21,11 +21,11 @@ const errorMessage = (error) => {
 const MemberCreation = (props) => {
   const { register, handleSubmit, errors, getValues } = useForm();
   const onSubmit = (data, e) => {
-    makeEntityAdder("users")(data)
-      .then((e) => {
-        console.log(e);
+    makeEntityAdder('users')(data)
+      .then((elem) => {
+        console.log(elem);
       })
-      .then(() => props.history.push("/adherents"))
+      .then(() => props.history.push('/adherents'))
       .catch((err) => {
         console.log(err.response.data);
         if (err.response.data.errorsByField[0].context !== undefined) {
@@ -38,8 +38,8 @@ const MemberCreation = (props) => {
     e.target.reset();
   };
 
-  //generation du mot de passe
-  let generatedPassword = generator.generate({
+  // generation du mot de passe
+  const generatedPassword = generator.generate({
     length: 8,
     numbers: true,
     strict: true,
@@ -52,77 +52,89 @@ const MemberCreation = (props) => {
           <h3>Création d'un membre :</h3>
 
           <div>
-            <label>Nom: </label>
-            <input
-              type="text"
-              name="lastname"
-              ref={register({ required: true, maxLength: 50 })}
-            />
+            <label htmlFor="lastname">
+              Nom:{' '}
+              <input
+                type="text"
+                name="lastname"
+                ref={register({ required: true, maxLength: 50 })}
+              />
+            </label>
+
             {errors.lastname &&
-              errors.lastname.type === "required" &&
+              errors.lastname.type === 'required' &&
               errorMessage(required)}
             {errors.lastname &&
-              errors.lastname.type === "maxLength" &&
+              errors.lastname.type === 'maxLength' &&
               errorMessage(maxLength)}
           </div>
 
           <div>
-            <label>Prénom: </label>
-            <input
-              type="text"
-              name="firstname"
-              ref={register({ required: true, maxLength: 50 })}
-            />
+            <label htmlFor="firstname">
+              Prénom:{' '}
+              <input
+                type="text"
+                name="firstname"
+                ref={register({ required: true, maxLength: 50 })}
+              />
+            </label>
+
             {errors.firstname &&
-              errors.firstname.type === "required" &&
+              errors.firstname.type === 'required' &&
               errorMessage(required)}
             {errors.firstname &&
-              errors.firstname.type === "maxLength" &&
+              errors.firstname.type === 'maxLength' &&
               errorMessage(maxLength)}
           </div>
 
           <div>
-            <label htmlFor="email">email</label>
-            <input
-              id="email"
-              name="email"
-              aria-invalid={errors.email ? "true" : "false"}
-              ref={register({
-                required: "L'email est obligatoire",
-                pattern: {
-                  value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                  message: "Le format de l'email est invalide",
-                },
-              })}
-              type="email"
-              placeholder="example@mail.com"
-            />
+            <label htmlFor="email">
+              email
+              <input
+                id="email"
+                name="email"
+                aria-invalid={errors.email ? 'true' : 'false'}
+                ref={register({
+                  required: "L'email est obligatoire",
+                  pattern: {
+                    value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                    message: "Le format de l'email est invalide",
+                  },
+                })}
+                type="email"
+                placeholder="example@mail.com"
+              />
+            </label>
+
             {errors.email && <p role="alert">{errors.email.message}</p>}
           </div>
           <div>
-            <label htmlFor="emailConfirmation">Confirmation de l'email</label>
-            <input
-              id="emailConfirmation"
-              name="emailConfirmation"
-              aria-invalid={errors.emailConfirmation ? "true" : "false"}
-              ref={register({
-                required: "L'email est obligatoire",
-                pattern: {
-                  value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                  message: "Le format de l'email est invalide",
-                },
-                validate: {
-                  matchesPreviousEmail: (value) => {
-                    const { email } = getValues();
-                    return (
-                      email === value || "Les emails ne sont pas identiques"
-                    );
+            <label htmlFor="emailConfirmation">
+              Confirmation de l'email{' '}
+              <input
+                id="emailConfirmation"
+                name="emailConfirmation"
+                aria-invalid={errors.emailConfirmation ? 'true' : 'false'}
+                ref={register({
+                  required: "L'email est obligatoire",
+                  pattern: {
+                    value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                    message: "Le format de l'email est invalide",
                   },
-                },
-              })}
-              type="email"
-              placeholder="example@mail.com"
-            />
+                  validate: {
+                    matchesPreviousEmail: (value) => {
+                      const { email } = getValues();
+                      return (
+                        email === value || 'Les emails ne sont pas identiques'
+                      );
+                    },
+                  },
+                })}
+                type="email"
+                placeholder="example@mail.com"
+              />
+            </label>
+
             {errors.emailConfirmation && (
               <p role="alert">{errors.emailConfirmation.message}</p>
             )}
@@ -130,18 +142,18 @@ const MemberCreation = (props) => {
 
           <div>
             <label htmlFor="password">
-              Modifier le mot de passe (si nécessaire):{" "}
+              Modifier le mot de passe (si nécessaire):{' '}
             </label>
             <input
               type="text"
               name="password"
               defaultValue={generatedPassword}
               ref={register({
-                required: "Le mot de passe est obligatoire",
+                required: 'Le mot de passe est obligatoire',
                 pattern: {
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
                   message:
-                    "Format invalide : 8 caractères minimum avec au moins 1 chiffre",
+                    'Format invalide : 8 caractères minimum avec au moins 1 chiffre',
                 },
               })}
             />
@@ -149,14 +161,16 @@ const MemberCreation = (props) => {
           </div>
 
           <div>
-            <label htmlFor="admin">Membre administrateur ?</label>
-            <input
-              name="is_admin"
-              type="checkbox"
-              id="admin"
-              value="true"
-              ref={register}
-            />
+            <label htmlFor="admin">
+              Membre administrateur ?{' '}
+              <input
+                name="is_admin"
+                type="checkbox"
+                id="admin"
+                value="true"
+                ref={register}
+              />
+            </label>
           </div>
           <div>
             <input type="submit" value="Créer le membre" />
