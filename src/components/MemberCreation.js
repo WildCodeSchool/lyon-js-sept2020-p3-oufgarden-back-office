@@ -42,6 +42,7 @@ const MemberCreation = (props) => {
   let generatedPassword = generator.generate({
     length: 8,
     numbers: true,
+    strict: true
   });
 
   return (
@@ -72,11 +73,11 @@ const MemberCreation = (props) => {
               name="firstname"
               ref={register({ required: true, maxLength: 50 })}
             />
-            {errors.Firstname &&
-              errors.Firstname.type === "required" &&
+            {errors.firstname &&
+              errors.firstname.type === "required" &&
               errorMessage(required)}
-            {errors.Firstname &&
-              errors.Firstname.type === "maxLength" &&
+            {errors.firstname &&
+              errors.firstname.type === "maxLength" &&
               errorMessage(maxLength)}
           </div>
 
