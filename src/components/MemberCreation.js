@@ -66,52 +66,56 @@ const MemberCreation = () => {
           </div>
 
           <div>
-          <label htmlFor="email">email</label>
-        <input
-          id="email"
-          name="email"
-          aria-invalid={errors.email ? "true" : "false"}
-          ref={register({
-            required: "L'email est obligatoire",
-            pattern: {
-              value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-              message: "Le format de l'email est invalide"
-            }
-          })}
-          type="email"
-          placeholder="example@mail.com"
-        />
-        {errors.email && <p role="alert">{errors.email.message}</p>}
+            <label htmlFor="email">email</label>
+            <input
+              id="email"
+              name="email"
+              aria-invalid={errors.email ? "true" : "false"}
+              ref={register({
+                required: "L'email est obligatoire",
+                pattern: {
+                  value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                  message: "Le format de l'email est invalide",
+                },
+              })}
+              type="email"
+              placeholder="example@mail.com"
+            />
+            {errors.email && <p role="alert">{errors.email.message}</p>}
           </div>
           <div>
-          <label htmlFor="emailConfirmation">Confirmation de l'email</label>
-        <input
-          id="emailConfirmation"
-          name="emailConfirmation"
-          aria-invalid={errors.emailConfirmation ? "true" : "false"}
-          ref={register({
-            required: "L'email est obligatoire",
-            pattern: {
-              value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-              message: "Le format de l'email est invalide"
-            },
-            validate: {
-              matchesPreviousEmail: (value) => {
-                const { email } = getValues();
-                return (
-                  email === value || "Les emails ne sont pas identiques"
-                );
-              },
-            },
-          })}
-          type="email"
-          placeholder="example@mail.com"
-        />
-        {errors.emailConfirmation && <p role="alert">{errors.emailConfirmation.message}</p>}
+            <label htmlFor="emailConfirmation">Confirmation de l'email</label>
+            <input
+              id="emailConfirmation"
+              name="emailConfirmation"
+              aria-invalid={errors.emailConfirmation ? "true" : "false"}
+              ref={register({
+                required: "L'email est obligatoire",
+                pattern: {
+                  value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                  message: "Le format de l'email est invalide",
+                },
+                validate: {
+                  matchesPreviousEmail: (value) => {
+                    const { email } = getValues();
+                    return (
+                      email === value || "Les emails ne sont pas identiques"
+                    );
+                  },
+                },
+              })}
+              type="email"
+              placeholder="example@mail.com"
+            />
+            {errors.emailConfirmation && (
+              <p role="alert">{errors.emailConfirmation.message}</p>
+            )}
           </div>
 
           <div>
-            <label htmlFor="password">Modifier le mot de passe (si nécessaire): </label>
+            <label htmlFor="password">
+              Modifier le mot de passe (si nécessaire):{" "}
+            </label>
             <input
               type="text"
               name="password"
