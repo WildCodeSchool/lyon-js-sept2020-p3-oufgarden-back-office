@@ -1,3 +1,9 @@
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .TextEditor {
   display: flex;
   flex-direction: column;
@@ -5,7 +11,7 @@
   align-items: center;
   width: 70vw;
   margin-left: 20%;
-  padding-top: 5%;
+  padding-top: 3%;
   position: relative;
   font-family: 'Montserrat';
   font-size: 1rem;
@@ -42,10 +48,12 @@
   background-color: #E6E6E6;
   height: 70vh;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  
 }
 
 .sendButton {
-  margin: 20%;
+  margin-top: 5%;
+  margin-left: 40%;
   background-color: #EBB349;
   font-family: 'Montserrat';
   font-size: 1rem;

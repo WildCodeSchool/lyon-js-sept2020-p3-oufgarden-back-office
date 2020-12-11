@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-// import { useMutation } from "react-query";
 import { Editor } from "@tinymce/tinymce-react";
 import { makeEntityAdder } from "../services/API";
 
