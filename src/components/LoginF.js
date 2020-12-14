@@ -37,8 +37,8 @@ const LoginF = (props) => {
   };
 
   return (
-    <div className="container">
-      <div className="box">
+    <div className="containerLogin">
+      <div className="boxLogin">
         <h3>Se connecter</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-wrapper">
