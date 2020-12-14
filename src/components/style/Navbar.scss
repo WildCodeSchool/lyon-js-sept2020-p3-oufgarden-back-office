@@ -1,6 +1,9 @@
 .navbar {
   float: left;
-  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
   width: 13vw;
   justify-content: left;
   align-items: center;
@@ -28,7 +31,7 @@
 
       a {
         text-decoration: none;
-        font-size: 2.5rem;
+        font-size: 1.5rem;
         color: black;
         padding: 30px;
         width: 100%;
