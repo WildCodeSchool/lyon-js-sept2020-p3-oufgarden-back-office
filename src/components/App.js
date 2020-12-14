@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './Navbar';
+import LoginF from './LoginF';
 import Adherent from './Adherents';
 import MemberCreation from './MemberCreation';
 
@@ -10,7 +11,7 @@ const App = () => {
       <div className="App">
         <Navbar />
         <Switch>
-          <Route exact path="/" />
+          <Route exact path="/" component={LoginF} />
           <Route path="/home" />
           <Route exact path="/adherents" component={Adherent} />
           <Route exact path="/adherents/creation" component={MemberCreation} />
