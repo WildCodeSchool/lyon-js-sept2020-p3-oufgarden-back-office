@@ -4,14 +4,12 @@ import Navbar from './Navbar';
 import LoginF from './LoginF';
 import Adherent from './Adherents';
 
-
 const App = () => {
   return (
     <Router>
       <div className="App">
         <Navbar />
         <Switch>
-
           <Route exact path="/" component={LoginF} />
           <Route path="/home" />
           <Route exact path="/adherents" component={Adherent} />
