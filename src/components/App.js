@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './Navbar';
 import LoginF from './LoginF';
 import Adherent from './Adherents';
+import MemberCreation from './MemberCreation';
 
 const App = () => {
   return (
@@ -13,8 +14,8 @@ const App = () => {
           <Route exact path="/" component={LoginF} />
           <Route path="/home" />
           <Route exact path="/adherents" component={Adherent} />
-          <Route path="/adherents/:id" />
-          <Route path="/adherents/creation" />
+          <Route exact path="/adherents/creation" component={MemberCreation} />
+          <Route exact path="/adherents/:id" />
           <Route exact path="/articles" />
           <Route exact path="/articles/:id" />
           <Route path="/articles/creation" />
