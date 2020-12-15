@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-/* import { makeEntityAdder } from '../services/API'; */
+import { makeEntityAdder } from '../services/API';
 import './style/GardenCreation.scss';
 
 // Messages
@@ -16,27 +16,26 @@ const errorMessage = (error) => {
   );
 };
 
-const GardenCreation = () => {
+const GardenCreation = (props) => {
   const { register, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data) => console.log(data);
-  /* const onSubmit = (data, e) => {
-    makeEntityAdder('users')(data)
+  const onSubmit = (data, e) => {
+    makeEntityAdder('garden')(data)
       .then((elem) => {
         console.log(elem);
       })
-      .then(() => props.history.push('/adherents'))
+      .then(() => props.history.push('/garden'))
       .catch((err) => {
         console.log(err.response.data);
-        if (err.response.data.errorsByField[0].context !== undefined) {
+        /* if (err.response.data.errorsByField[0].context !== undefined) {
           console.log(err.response.data.errorsByField[1].context.label);
         } else {
           console.log(err.response.data.errorsByField[0].message);
-        }
+        } */
       });
 
     e.target.reset();
-  }; */
+  };
 
   return (
     <div className="containerGarden">
