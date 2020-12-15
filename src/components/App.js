@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import LoginF from './LoginF';
 import Adherent from './Adherents';
 import MemberCreation from './MemberCreation';
+import GardenCreation from './GardenCreation';
 
 const App = () => {
   return (
@@ -19,7 +20,7 @@ const App = () => {
           <Route exact path="/articles" />
           <Route exact path="/articles/:id" />
           <Route path="/articles/creation" />
-          <Route exact path="/garden" />
+          <Route exact path="/garden" component={GardenCreation} />
           <Route path="/garden/:id" />
           <Route path="/garden/creation" />
           <Route path="/calendar" />
