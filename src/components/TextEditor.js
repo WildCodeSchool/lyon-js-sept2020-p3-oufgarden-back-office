@@ -8,7 +8,7 @@ const TextEditor = () => {
   const [articleContent, setArticleContent] = useState('');
   const [title, setTitle] = useState('');
   const [urlImage, setUrlImage] = useState('');
-  const [allTags, setAllTags] = useState('');
+  const [allTags, setAllTags] = useState([]);
   const [tagsArray, setTagsArray] = useState([]);
   const history = useHistory();
 
