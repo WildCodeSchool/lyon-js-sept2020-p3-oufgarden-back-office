@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 /* import { useQuery } from 'react-query'; */
 import { useForm } from 'react-hook-form';
 import './style/Login.scss';
-import axios from 'axios';
-
-require('dotenv').config();
+import API from '../services/API';
 
 const required = 'Ce champs est requis';
 
@@ -19,11 +17,8 @@ const LoginF = (props) => {
   // eslint-disable-next-line no-unused-vars
   const [isLogged, setIsLogged] = useState(false);
 
-  const url = process.env.REACT_APP_API_BASE_URL;
-
   const onSubmit = (data) => {
-    axios
-      .post(`${url}/login`, data)
+    API.post('/login', data)
       .then((res) => {
         console.log(res.data);
         if (res.data === 'logged') {

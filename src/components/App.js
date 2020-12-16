@@ -4,10 +4,11 @@ import Navbar from './Navbar';
 import LoginF from './LoginF';
 import Adherent from './Adherents';
 import MemberCreation from './MemberCreation';
+import history from '../history';
 
 const App = () => {
   return (
-    <Router>
+    <Router history={history}>
       <div className="App">
         <Navbar />
         <Switch>
