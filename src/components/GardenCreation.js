@@ -60,6 +60,27 @@ const GardenCreation = (props) => {
 
           <div>
             <label htmlFor="Location">
+              Description :{' '}
+              <input
+                type="text"
+                name="description"
+                ref={register({ required: true })}
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="Location">
+              Exposition :{' '}
+              <input
+                type="text"
+                name="exposition"
+                ref={register({ required: true })}
+              />
+            </label>
+          </div>
+
+          <div>
+            <label htmlFor="Location">
               Adresse :{' '}
               <input
                 type="text"
@@ -73,17 +94,17 @@ const GardenCreation = (props) => {
               errorMessage(required)}
           </div>
           <div>
-            <label htmlFor="NumberOfCase">
-              Nombre de parselle :{' '}
+            <label htmlFor="zone">
+              Nombre de zone :{' '}
               <input
                 type="number"
-                name="case"
+                name="zone"
                 ref={register({ required: true })}
               />
             </label>
 
-            {errors.case &&
-              errors.case.type === 'required' &&
+            {errors.zone &&
+              errors.zone.type === 'required' &&
               errorMessage(required)}
           </div>
           <div>
