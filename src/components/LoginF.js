@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 /* import { useQuery } from 'react-query'; */
 import { useForm } from 'react-hook-form';
@@ -25,14 +26,13 @@ const LoginF = (props) => {
     axios
       .post(`${url}/login`, data)
       .then((res) => {
-        console.log(res.data);
         if (res.data === 'logged') {
           props.history.push('/adherents');
           setIsLogged(true);
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 
