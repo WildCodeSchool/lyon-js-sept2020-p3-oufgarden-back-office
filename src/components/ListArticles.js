@@ -1,13 +1,10 @@
-/* eslint-disable */
-/* eslint-disable */
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 require('dotenv').config();
 
 const ListArticles = () => {
-  const [articles, setArticles] = useState([]);
-  const url = process.env.REACT_APP_API_BASE_URL;
+  // const [articles, setArticles] = useState([]);
+  // const url = process.env.REACT_APP_API_BASE_URL;
 
   // useEffect(() => {
   //   axios.get(`${url}/articles`).then((res) => {

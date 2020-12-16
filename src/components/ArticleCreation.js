@@ -1,5 +1,3 @@
-/* eslint-disable react/button-has-type */
-/* eslint-disable */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TextEditor from './TextEditor';
@@ -9,10 +7,10 @@ import './style/Articles.scss';
 const ArticleCreation = () => {
   return (
     <div>
-      <button className="buttonList">
+      <button type="button" className="buttonList">
         <Link to="/articles">Listes</Link>
       </button>
-      <button className="buttonArticle">
+      <button type="button" className="buttonArticle">
         <Link to="/articles/creation">Nouvel Article</Link>
       </button>
       <div className="TextEditor">

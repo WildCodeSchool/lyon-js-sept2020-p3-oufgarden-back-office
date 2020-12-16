@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/button-has-type */
-/* eslint-disable */
-
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 // import { useMutation } from "react-query";
@@ -21,7 +17,7 @@ const TextEditor = () => {
     setAllTags(tags);
   }, []);
 
-  const handleEditorChange = (content, editor) => {
+  const handleEditorChange = (content) => {
     setArticleContent(content);
   };
 
@@ -101,13 +97,14 @@ const TextEditor = () => {
             'insertdatetime media table paste code help wordcount',
           ],
           toolbar:
+            // eslint-disable-next-line no-multi-str
             'undo redo | formatselect | bold italic backcolor | \
               alignleft aligncenter alignright alignjustify | \
               bullist numlist outdent indent | removeformat | help',
         }}
         onEditorChange={handleEditorChange}
       />
-      <button className="sendButton" onClick={handleClick}>
+      <button type="button" className="sendButton" onClick={handleClick}>
         Créer
       </button>
     </div>

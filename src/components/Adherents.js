@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMail } from 'react-icons/fi';
@@ -11,11 +9,10 @@ import './style/AdherentList.scss';
 
 const Adherents = () => {
   const [adherentList, setAdherentList] = useState([]);
+
   useEffect(() => {
-    const request = getCollection('users').then((elem) => {
-      console.log(elem);
-      setAdherentList(elem);
-    });
+    const request = getCollection('users');
+    setAdherentList(request);
   }, []);
 
   return (
