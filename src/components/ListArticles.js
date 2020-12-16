@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MdDelete, MdEdit } from 'react-icons/md';
@@ -13,15 +14,19 @@ const ListArticles = (props) => {
 
   useEffect(() => {
     getCollection('articles').then((elem) => {
-      console.log(elem);
       setArticles(elem);
     });
   }, []);
 
+  useEffect(() => {
+    getCollection('articles').then((elem) => {
+      setArticles(() => elem);
+    });
+  }, [props.location]);
+
   const handleDelete = async (id) => {
     await makeEntityDeleter('articles')(id);
     getCollection('articles').then((elem) => {
-      console.log(elem);
       setArticles(elem);
     });
   };
