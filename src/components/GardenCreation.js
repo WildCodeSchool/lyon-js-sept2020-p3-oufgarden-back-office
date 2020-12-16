@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { makeEntityAdder } from '../services/API';
 import './style/GardenCreation.scss';
@@ -18,6 +18,30 @@ const errorMessage = (error) => {
 
 const GardenCreation = (props) => {
   const { register, handleSubmit, errors } = useForm();
+  const [inputList, setInputList] = useState([
+    { Identifiant: '', Type: '', Variété: '', Quantité: '' },
+  ]);
+  const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...inputList];
+    list[index][name] = value;
+    setInputList(list);
+  };
+
+  // handle click event of the Remove button
+  const handleRemoveClick = (index) => {
+    const list = [...inputList];
+    list.splice(index, 1);
+    setInputList(list);
+  };
+
+  // handle click event of the Add button
+  const handleAddClick = () => {
+    setInputList([
+      ...inputList,
+      { Identifiant: '', Type: '', Variété: '', Quantité: '' },
+    ]);
+  };
 
   const onSubmit = (data, e) => {
     makeEntityAdder('garden')(data)
@@ -57,6 +81,19 @@ const GardenCreation = (props) => {
               errors.name.type === 'required' &&
               errorMessage(required)}
           </div>
+          {/* partie upload */}
+          <div>
+            <label htmlFor="imageGarden">
+              Photo du jardin :{' '}
+              <form
+                method="POST"
+                encType="multipart/form-data"
+                action="http://localhost:5000"
+              >
+                <input type="file" name="imageGarden" />
+              </form>
+            </label>
+          </div>
 
           <div>
             <label htmlFor="Location">
@@ -94,6 +131,19 @@ const GardenCreation = (props) => {
               errorMessage(required)}
           </div>
           <div>
+            <label htmlFor="imageAdress">
+              Plan :{' '}
+              <form
+                method="POST"
+                encType="multipart/form-data"
+                action="http://localhost:5000"
+              >
+                <input type="file" name="imageAdress" />
+              </form>
+            </label>
+          </div>
+
+          <div>
             <label htmlFor="zone">
               Nombre de zone :{' '}
               <input
@@ -107,6 +157,56 @@ const GardenCreation = (props) => {
               errors.zone.type === 'required' &&
               errorMessage(required)}
           </div>
+          <label htmlFor="zoneCreer">
+            Zone à creer :{' '}
+            {inputList.map((x, i) => {
+              return (
+                <div>
+                  <input
+                    name="name"
+                    placeholder="Nom de la Zone"
+                    value={x.name}
+                    onChange={(e) => handleInputChange(e, i)}
+                  />
+                  <input
+                    name="type"
+                    placeholder="Type"
+                    value={x.type}
+                    onChange={(e) => handleInputChange(e, i)}
+                  />
+                  <input
+                    name="variety"
+                    placeholder="Variété"
+                    value={x.variety}
+                    onChange={(e) => handleInputChange(e, i)}
+                  />
+                  <input
+                    type="number"
+                    name="quantity"
+                    placeholder="Quantité"
+                    value={x.quantity}
+                    onChange={(e) => handleInputChange(e, i)}
+                  />
+                  <div className="btn-box">
+                    {inputList.length !== 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveClick(i)}
+                      >
+                        Supprimer
+                      </button>
+                    )}
+                    {inputList.length - 1 === i && (
+                      <button type="button" onClick={handleAddClick}>
+                        Ajouter
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </label>
+
           <div>
             <input type="submit" value="Créer le jardin" />
           </div>
