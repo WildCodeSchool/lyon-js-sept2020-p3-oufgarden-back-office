@@ -10,7 +10,7 @@ import './style/ListArticles.scss';
 
 const ListArticles = (props) => {
   const [articles, setArticles] = useState([]);
-  const [articlesFilterd, setArticlesFilterd] = useState([]);
+  const [articlesFiltered, setArticlesFiltered] = useState([]);
   const [tagList, setTagList] = useState([]);
 
   useEffect(() => {
@@ -38,11 +38,13 @@ const ListArticles = (props) => {
       }).map(article => { 
           return article.article_id
         });
-        setArticlesFilterd(result);
+        setArticlesFiltered(articleToFilter);
     });
   };
 
-
+  useEffect(() => {
+    handleTagFilter()
+  }, [tagList]);
 
   const handleTagList = (target) => {
     if (tagList.includes(+target.id)) {
@@ -84,9 +86,9 @@ const ListArticles = (props) => {
         </button>
       </div>
       <div className="articleListContainer">
-        {articlesFilterd.length > 0 ? (
+        {articlesFiltered.length > 0 ? (
           articles.filter((article) => {
-            if (articlesFilterd.includes(article.id)) {
+            if (articlesFiltered.includes(article.id)) {
               return true
             } else {
               return false
@@ -111,7 +113,7 @@ const ListArticles = (props) => {
                   </div>
                 </div>
           )})
-          ) : ( {articles.map((e) => {
+          ) : ( articles.map((e) => {
             return (
               <div key={e.id} className="ArticlesRow">
                 <div className="articlesInfos">
@@ -130,7 +132,7 @@ const ListArticles = (props) => {
                   </IconContext.Provider>
                 </div> 
               </div> )
-            })
+            }))
         }
       </div>
     </div>
