@@ -16,7 +16,7 @@ const ListArticles = (props) => {
   useEffect(() => {
     getCollection("articles").then((elem) => {
       console.log(elem);
-    setArticles(elem);
+      setArticles(elem);
     });
   }, []);
 
