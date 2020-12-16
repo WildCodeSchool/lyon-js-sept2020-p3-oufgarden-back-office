@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-// import { useMutation } from "react-query";
 import { Editor } from '@tinymce/tinymce-react';
 import { makeEntityAdder, getCollection } from '../services/API';
 
@@ -13,18 +12,12 @@ const TextEditor = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const tags = getCollection('tags');
-    setAllTags(tags);
+    getCollection('tags').then((data) => setAllTags(data));
   }, []);
 
   const handleEditorChange = (content) => {
     setArticleContent(content);
   };
-
-  const currentDate = new Date()
-    .toISOString()
-    .replace('T', ' ')
-    .replace('Z', '');
 
   const handleTitle = (e) => {
     setTitle(e.target.value);
@@ -38,7 +31,6 @@ const TextEditor = () => {
       content: articleContent,
       title,
       url: urlImage,
-      created_at: currentDate,
       tagsArray,
     };
     makeEntityAdder('articles')(data);

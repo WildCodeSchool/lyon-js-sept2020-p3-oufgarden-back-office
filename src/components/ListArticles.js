@@ -89,7 +89,8 @@ const ListArticles = (props) => {
       </div>
       <div className="filterContainer">
         {/* <p>Filter on : </p> */}
-        <button type="button"
+        <button
+          type="button"
           id="1"
           className="filterBtn-on"
           onClick={(e) => handleTagList(e.target)}
