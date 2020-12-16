@@ -1,8 +1,11 @@
-import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Navbar from "./Navbar";
-import Articles from "./Articles";
-import ArticleCreation from "./ArticleCreation";
+import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Navbar from './Navbar';
+import LoginF from './LoginF';
+import Adherent from './Adherents';
+import MemberCreation from './MemberCreation';
+import Articles from './Articles';
+import ArticleCreation from './ArticleCreation';
 
 const App = () => {
   return (
@@ -10,9 +13,11 @@ const App = () => {
       <div className="App">
         <Navbar />
         <Switch>
-          <Route exact path="/adherents" />
-          <Route path="/adherents/:id" />
-          <Route path="/adherents/creation" />
+          <Route exact path="/" component={LoginF} />
+          <Route path="/home" />
+          <Route exact path="/adherents" component={Adherent} />
+          <Route exact path="/adherents/creation" component={MemberCreation} />
+          <Route exact path="/adherents/:id" />
           <Route exact path="/articles" component={Articles} />
           <Route exact path="/articles/creation" component={ArticleCreation} />
           <Route exact path="/articles/:id" />

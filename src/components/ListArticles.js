@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { MdDelete, MdEdit } from "react-icons/md";
-import { IconContext } from "react-icons";
-// import axios from "axios";
-// require("dotenv").config();
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { MdDelete, MdEdit } from 'react-icons/md';
+import { IconContext } from 'react-icons';
 
-import { getCollection, makeEntityDeleter } from "../services/API";
-import "./style/ListArticles.scss";
+import { getCollection, makeEntityDeleter } from '../services/API';
+import './style/ListArticles.scss';
 
 const ListArticles = (props) => {
   const [articles, setArticles] = useState([]);
@@ -14,15 +12,15 @@ const ListArticles = (props) => {
   const [tagList, setTagList] = useState([]);
 
   useEffect(() => {
-    getCollection("articles").then((elem) => {
+    getCollection('articles').then((elem) => {
       console.log(elem);
       setArticles(elem);
     });
   }, []);
 
   const handleDelete = async (id) => {
-    await makeEntityDeleter("articles")(id);
-    getCollection("articles").then((elem) => {
+    await makeEntityDeleter('articles')(id);
+    getCollection('articles').then((elem) => {
       console.log(elem);
       setArticles(elem);
     });
@@ -46,14 +44,13 @@ const ListArticles = (props) => {
   // };
 
   useEffect(() => {
-    getCollection("tagToArticle").then((result) => {
+    getCollection('tagToArticle').then((result) => {
       const articleToFilter = result
         .filter((article) => {
           if (tagList.includes(article.tag_id)) {
             return true;
-          } else {
-            return false;
           }
+          return false;
         })
         .map((article) => {
           return article.article_id;
@@ -64,16 +61,16 @@ const ListArticles = (props) => {
 
   const handleTagList = (target) => {
     if (tagList.includes(+target.id)) {
-      let newTagList = tagList.filter((item) => item !== +target.id);
+      const newTagList = tagList.filter((item) => item !== +target.id);
       setTagList(newTagList);
     } else {
       setTagList((prevState) => [...prevState, +target.id]);
     }
-    if (target.className !== "filterBtn-on") {
-      target.className = "filterBtn-on";
-    } else {
-      target.className = "filterBtn-off";
-    }
+    // if (target.className !== 'filterBtn-on') {
+    //   target.className = 'filterBtn-on';
+    // } else {
+    //   target.className = 'filterBtn-off';
+    // }
   };
 
   const handleEdit = (id) => {
@@ -83,16 +80,16 @@ const ListArticles = (props) => {
   return (
     <div>
       <div className="buttons">
-        <button className="buttonList">
+        <button type="button" className="buttonList">
           <Link to="/articles">Listes</Link>
         </button>
-        <button className="buttonArticle">
+        <button type="button" className="buttonArticle">
           <Link to="/articles/creation">Nouvel Article</Link>
         </button>
       </div>
       <div className="filterContainer">
         {/* <p>Filter on : </p> */}
-        <button
+        <button type="button"
           id="1"
           className="filterBtn-on"
           onClick={(e) => handleTagList(e.target)}
@@ -106,9 +103,8 @@ const ListArticles = (props) => {
               .filter((article) => {
                 if (articlesFiltered.includes(article.id)) {
                   return true;
-                } else {
-                  return false;
                 }
+                return false;
               })
               .map((e) => {
                 return (
@@ -120,7 +116,7 @@ const ListArticles = (props) => {
                     </div>
                     <div className="articleListIcons">
                       <IconContext.Provider
-                        value={{ className: "react-icons" }}
+                        value={{ className: 'react-icons' }}
                       >
                         <MdEdit
                           size={25}
@@ -148,7 +144,7 @@ const ListArticles = (props) => {
                     </p>
                   </div>
                   <div className="articleListIcons">
-                    <IconContext.Provider value={{ className: "react-icons" }}>
+                    <IconContext.Provider value={{ className: 'react-icons' }}>
                       <MdEdit
                         size={25}
                         onClick={() => {

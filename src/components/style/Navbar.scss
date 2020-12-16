@@ -1,6 +1,9 @@
 .navbar {
   float: left;
-  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
   width: 13vw;
   justify-content: left;
   align-items: center;

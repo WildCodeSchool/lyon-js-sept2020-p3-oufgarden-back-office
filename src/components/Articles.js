@@ -1,7 +1,8 @@
-import React from "react";
-import ListArticles from "./ListArticles";
-import "./style/Articles.scss";
-require("dotenv").config();
+import React from 'react';
+import ListArticles from './ListArticles';
+import './style/Articles.scss';
+
+require('dotenv').config();
 
 function Articles() {
   return (
