@@ -9,6 +9,15 @@ const TextEditor = () => {
   const [urlImage, setUrlImage] = useState("");
   let history = useHistory();
 
+  // useEffect(() => {
+  //   const request = getEntity(`articles/${id}`).then((elem) => {
+  //     console.log(elem);
+  //     setArticleContent(elem);
+  //     setTitle(elem);
+  //     setUrlImage(elem);
+  //   });
+  // }, []);
+
   const handleEditorChange = (content, editor) => {
     setArticleContent(content);
   };

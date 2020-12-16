@@ -7,15 +7,9 @@ require("dotenv").config();
 function Articles() {
   return (
     <div className="Article">
-      <div className="buttonArticle">
-        <button className="buttonList">
-          <Link to="/articles">Listes</Link>
-        </button>
-        <button className="buttonArticle">
-          <Link to="/articles/creation">Nouvel Article</Link>
-        </button>
+      <div className="List">
+        <ListArticles />
       </div>
-      {/* <div className="List"><ListArticles /></div> */}
     </div>
   );
 }
