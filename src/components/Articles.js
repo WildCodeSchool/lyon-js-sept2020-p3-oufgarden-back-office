@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import ListArticles from "./ListArticles";
 import "./style/Articles.scss";
 require("dotenv").config();

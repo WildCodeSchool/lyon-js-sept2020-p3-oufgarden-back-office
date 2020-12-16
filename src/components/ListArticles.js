@@ -13,10 +13,10 @@ const ListArticles = (props) => {
   const [articlesFiltered, setArticlesFiltered] = useState([]);
   const [tagList, setTagList] = useState([]);
 
-  useEffect( async () => {
-    await getCollection("articles").then((elem) => {
+  useEffect(() => {
+    getCollection("articles").then((elem) => {
       console.log(elem);
-      setArticles(elem);
+    setArticles(elem);
     });
   }, []);
 
@@ -28,8 +28,25 @@ const ListArticles = (props) => {
     });
   };
 
-  const handleTagFilter = async () => {
-    await getCollection("tagToArticle").then((result) => {
+  // const handleTagFilter = async () => {
+  //   await getCollection("tagToArticle").then((result) => {
+  //     const articleToFilter = result
+  //       .filter((article) => {
+  //         if (tagList.includes(article.tag_id)) {
+  //           return true;
+  //         } else {
+  //           return false;
+  //         }
+  //       })
+  //       .map((article) => {
+  //         return article.article_id;
+  //       });
+  //     setArticlesFiltered(articleToFilter);
+  //   });
+  // };
+
+  useEffect(() => {
+    getCollection("tagToArticle").then((result) => {
       const articleToFilter = result
         .filter((article) => {
           if (tagList.includes(article.tag_id)) {
@@ -43,10 +60,6 @@ const ListArticles = (props) => {
         });
       setArticlesFiltered(articleToFilter);
     });
-  };
-
-  useEffect(() => {
-    handleTagFilter();
   }, [tagList]);
 
   const handleTagList = (target) => {
