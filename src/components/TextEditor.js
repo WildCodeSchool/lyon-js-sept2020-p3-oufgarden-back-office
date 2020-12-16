@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/button-has-type */
+/* eslint-disable */
 
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -12,6 +13,7 @@ const TextEditor = () => {
   const [title, setTitle] = useState('');
   const [urlImage, setUrlImage] = useState('');
   const [allTags, setAllTags] = useState('');
+  const [tagsArray, setTagsArray] = useState([]);
   const history = useHistory();
 
   useEffect(async () => {
@@ -41,12 +43,24 @@ const TextEditor = () => {
       title,
       url: urlImage,
       created_at: currentDate,
+      tagsArray,
     };
     makeEntityAdder('articles')(data);
     setArticleContent('');
     setTitle('');
     setUrlImage('');
     history.push('/articles');
+  };
+
+  const handleCheckboxChange = (target) => {
+    if (target.checked) {
+      setTagsArray((prevState) => [...prevState, +target.id]);
+    } else if (!target.checked) {
+      setTagsArray((prevState) =>
+        prevState.filter((tagId) => tagId !== +target.id)
+      );
+    }
+    console.log(tagsArray);
   };
 
   return (
@@ -63,7 +77,12 @@ const TextEditor = () => {
             return (
               <div key={tag.id}>
                 <label htmlFor="{tag.name}">
-                  <input type="checkbox" id={tag.name} name={tag.name} />
+                  <input
+                    type="checkbox"
+                    id={tag.id}
+                    name={tag.name}
+                    onChange={(e) => handleCheckboxChange(e.target)}
+                  />
                   {tag.name}
                 </label>
               </div>

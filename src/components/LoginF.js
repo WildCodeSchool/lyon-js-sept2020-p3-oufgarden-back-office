@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable */
 import React, { useState } from 'react';
 /* import { useQuery } from 'react-query'; */
 import { useForm } from 'react-hook-form';

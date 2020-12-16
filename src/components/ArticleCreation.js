@@ -1,4 +1,5 @@
 /* eslint-disable react/button-has-type */
+/* eslint-disable */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TextEditor from './TextEditor';
