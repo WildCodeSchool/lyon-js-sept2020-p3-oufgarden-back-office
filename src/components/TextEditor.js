@@ -13,8 +13,7 @@ const TextEditor = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const tags = getCollection('tags');
-    setAllTags(tags);
+    getCollection('tags').then((data) => setAllTags(data));
   }, []);
 
   const handleEditorChange = (content) => {

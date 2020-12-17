@@ -10,12 +10,17 @@ const ListArticles = (props) => {
   const [articles, setArticles] = useState([]);
   const [articlesFiltered, setArticlesFiltered] = useState([]);
   const [tagList, setTagList] = useState([]);
+  const [allTags, setAllTags] = useState([]);
 
   useEffect(() => {
     getCollection('articles').then((elem) => {
       console.log(elem);
       setArticles(elem);
     });
+  }, []);
+
+  useEffect(() => {
+    getCollection('tags').then((data) => setAllTags(data));
   }, []);
 
   const handleDelete = async (id) => {
@@ -88,14 +93,20 @@ const ListArticles = (props) => {
         </button>
       </div>
       <div className="filterContainer">
-        {/* <p>Filter on : </p> */}
-        <button type="button"
-          id="1"
-          className="filterBtn-on"
-          onClick={(e) => handleTagList(e.target)}
-        >
-          Biodiversité
-        </button>
+        {allTags &&
+          allTags.map((tag) => {
+            return (
+              <div key={tag.id}>
+                <button
+                  type="button"
+                  id={tag.id}
+                  onClick={(e) => handleTagList(e.target)}
+                >
+                  {tag.name}
+                </button>
+              </div>
+            );
+          })}
       </div>
       <div className="articleListContainer">
         {articlesFiltered.length > 0
