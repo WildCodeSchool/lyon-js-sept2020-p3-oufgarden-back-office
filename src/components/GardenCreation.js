@@ -19,7 +19,7 @@ const errorMessage = (error) => {
 const GardenCreation = (props) => {
   const { register, handleSubmit, errors } = useForm();
   const [inputList, setInputList] = useState([
-    { Identifiant: '', Type: '', Variété: '', Quantité: '' },
+    { name: '', Type: '', variety: '', quantity: '', date_plantation: '' },
   ]);
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -39,11 +39,12 @@ const GardenCreation = (props) => {
   const handleAddClick = () => {
     setInputList([
       ...inputList,
-      { Identifiant: '', Type: '', Variété: '', Quantité: '' },
+      { name: '', Type: '', variety: '', quantity: '', date_plantation: '' },
     ]);
   };
 
   const onSubmit = (data, e) => {
+    console.log(data);
     makeEntityAdder('garden')(data)
       .then((elem) => {
         console.log(elem);
@@ -64,7 +65,7 @@ const GardenCreation = (props) => {
   return (
     <div className="containerGarden">
       <div>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="formContainer" onSubmit={handleSubmit(onSubmit)}>
           <h3>Création d'un Jardin :</h3>
 
           <div>
@@ -83,14 +84,14 @@ const GardenCreation = (props) => {
           </div>
           {/* partie upload */}
           <div>
-            <label htmlFor="imageGarden">
+            <label htmlFor="pic_profile">
               Photo du jardin :{' '}
               <form
                 method="POST"
                 encType="multipart/form-data"
                 action="http://localhost:5000"
               >
-                <input type="file" name="imageGarden" />
+                <input className="inputPics" type="file" name="pic_profile" />
               </form>
             </label>
           </div>
@@ -131,14 +132,14 @@ const GardenCreation = (props) => {
               errorMessage(required)}
           </div>
           <div>
-            <label htmlFor="imageAdress">
+            <label htmlFor="pic_plan">
               Plan :{' '}
               <form
                 method="POST"
                 encType="multipart/form-data"
                 action="http://localhost:5000"
               >
-                <input type="file" name="imageAdress" />
+                <input className="inputPics" type="file" name="pic_plan" />
               </form>
             </label>
           </div>
@@ -148,64 +149,74 @@ const GardenCreation = (props) => {
               Nombre de zone :{' '}
               <input
                 type="number"
-                name="zone"
+                name="zone_number"
                 ref={register({ required: true })}
               />
             </label>
 
-            {errors.zone &&
-              errors.zone.type === 'required' &&
+            {errors.zone_number &&
+              errors.zone_number.type === 'required' &&
               errorMessage(required)}
           </div>
-          <label htmlFor="zoneCreer">
-            Zone à creer :{' '}
-            {inputList.map((x, i) => {
-              return (
-                <div>
-                  <input
-                    name="name"
-                    placeholder="Nom de la Zone"
-                    value={x.name}
-                    onChange={(e) => handleInputChange(e, i)}
-                  />
-                  <input
-                    name="type"
-                    placeholder="Type"
-                    value={x.type}
-                    onChange={(e) => handleInputChange(e, i)}
-                  />
-                  <input
-                    name="variety"
-                    placeholder="Variété"
-                    value={x.variety}
-                    onChange={(e) => handleInputChange(e, i)}
-                  />
-                  <input
-                    type="number"
-                    name="quantity"
-                    placeholder="Quantité"
-                    value={x.quantity}
-                    onChange={(e) => handleInputChange(e, i)}
-                  />
-                  <div className="btn-box">
-                    {inputList.length !== 1 && (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveClick(i)}
-                      >
-                        Supprimer
-                      </button>
-                    )}
-                    {inputList.length - 1 === i && (
-                      <button type="button" onClick={handleAddClick}>
-                        Ajouter
-                      </button>
-                    )}
+          <div className="inputZoneCreation">
+            <label htmlFor="zoneCreer">
+              Zone à creer :{' '}
+              {inputList.map((x, i) => {
+                return (
+                  <div>
+                    <input
+                      name="name"
+                      placeholder="Nom de la Zone"
+                      value={x.name}
+                      onChange={(e) => handleInputChange(e, i)}
+                    />
+                    <input
+                      name="type"
+                      placeholder="Quelle type de zone ? serre, compost, potager.."
+                      value={x.type}
+                      onChange={(e) => handleInputChange(e, i)}
+                    />
+                    <input
+                      name="variety"
+                      placeholder="Variété de plante"
+                      value={x.variety}
+                      onChange={(e) => handleInputChange(e, i)}
+                    />
+                    <input
+                      type="number"
+                      name="quantity"
+                      placeholder="Quantité de plante"
+                      value={x.quantity}
+                      onChange={(e) => handleInputChange(e, i)}
+                    />
+                    <span>Date de mise en terre :</span>
+                    <input
+                      type="date"
+                      name="date_plantation"
+                      placeholder="Date de mise en terre"
+                      value={x.date_plantation}
+                      onChange={(e) => handleInputChange(e, i)}
+                    />
+                    <div className="btn-box">
+                      {inputList.length - 1 === i && (
+                        <button type="button" onClick={handleAddClick}>
+                          Ajouter
+                        </button>
+                      )}
+                      {inputList.length !== 1 && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveClick(i)}
+                        >
+                          Supprimer
+                        </button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </label>
+                );
+              })}
+            </label>
+          </div>
 
           <div>
             <input type="submit" value="Créer le jardin" />
