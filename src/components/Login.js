@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 /* import { useQuery } from 'react-query'; */
 import { useForm } from 'react-hook-form';
 import './style/Login.scss';
 import API from '../services/API';
+import { UserContext } from './_context/UserContext';
 
 const required = 'Ce champs est requis';
 
@@ -10,7 +11,8 @@ const errorMessage = (error) => {
   return <div className="invalid-feedback">{error}</div>;
 };
 
-const LoginF = (props) => {
+const Login = (props) => {
+  const { setIsAdmin } = useContext(UserContext);
   const { register, handleSubmit, errors } = useForm();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,15 +24,16 @@ const LoginF = (props) => {
       .then((res) => {
         console.log(res.data);
         if (res.data === 'logged') {
-          props.history.push('/adherents');
+          setIsAdmin(true);
           setIsLogged(true);
+
+          props.history.push('/adherents');
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   return (
     <div className="containerLogin">
       <div className="boxLogin">
@@ -63,6 +66,19 @@ const LoginF = (props) => {
               {errors.Password &&
                 errors.Password.type === 'required' &&
                 errorMessage(required)}
+              <div className="stay-connected-container">
+                <div className="stay-connected">
+                  <label htmlFor="stayConnected">
+                    <input
+                      ref={register}
+                      name="stayConnected"
+                      id="stayConnected"
+                      type="checkbox"
+                    />
+                    Stay connected ?
+                  </label>
+                </div>
+              </div>
 
               <div className="form-group">
                 <button type="submit" className="button">
@@ -77,4 +93,4 @@ const LoginF = (props) => {
   );
 };
 
-export default LoginF;
+export default Login;

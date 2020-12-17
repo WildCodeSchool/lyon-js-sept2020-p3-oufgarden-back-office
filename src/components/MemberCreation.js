@@ -21,19 +21,15 @@ const errorMessage = (error) => {
 const MemberCreation = (props) => {
   const { register, handleSubmit, errors, getValues } = useForm();
   const onSubmit = (data, e) => {
-    makeEntityAdder('users')(data)
-      .then((elem) => {
-        console.log(elem);
-      })
-      .then(() => props.history.push('/adherents'))
-      .catch((err) => {
+    makeEntityAdder('users')(data).then(() => props.history.push('/adherents'));
+    /* .catch((err) => {
         console.log(err.response.data);
         if (err.response.data.errorsByField[0].context !== undefined) {
           console.log(err.response.data.errorsByField[1].context.label);
         } else {
           console.log(err.response.data.errorsByField[0].message);
-        }
-      });
+        } 
+      }); */
 
     e.target.reset();
   };

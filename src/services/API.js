@@ -76,13 +76,13 @@ instance.interceptors.response.use(
   (res) => res,
   (err) => {
     // eslint-disable-next-line
-    console.log('Error while requesting the API : ', err.response);
+
     if (
       err.response &&
       err.response.status === 401 &&
-      window.location.pathname !== '/login'
+      window.location.pathname !== '/'
     ) {
-      browserHistory.push(`/login?redirectPath=${window.location.pathname}`);
+      browserHistory.push(`/?redirectPath=${window.location.pathname}`);
     }
     return Promise.reject(err);
   }
