@@ -1,7 +1,7 @@
-import axios, { CancelToken } from "axios";
-import queryString from "query-string";
-
-import * as Promise from "bluebird";
+import axios, { CancelToken } from 'axios';
+import queryString from 'query-string';
+import * as Promise from 'bluebird';
+import browserHistory from '../history';
 
 Promise.config({
   cancellation: true,
@@ -11,6 +11,7 @@ Promise.config({
 // REACT_APP_API_BASE_URL variable in .env file at the root of the project
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
+  withCredentials: true,
 });
 
 const makeCancellable = (method, url, data, config) => {
@@ -36,7 +37,7 @@ const makeCancellable = (method, url, data, config) => {
       // When it is called, this code runs.
       // It's the perfect place to cancel the axios
       // request in order to save bandwidth, CPU and memory :)
-      source.cancel("Request was cancelled");
+      source.cancel('Request was cancelled');
     });
   });
 };
@@ -44,32 +45,47 @@ const makeCancellable = (method, url, data, config) => {
 export const extractData = (res) => res.data;
 
 export const isCancelledError = (fetchRequestError) =>
-  fetchRequestError && fetchRequestError.constructor.name === "CancelledError";
+  fetchRequestError && fetchRequestError.constructor.name === 'CancelledError';
 
 export const getCollection = (collectionName, queryParams, config = {}) =>
   makeCancellable(
-    "get",
+    'get',
     `/${collectionName}${
-      queryParams ? `?${queryString.stringify(queryParams)}` : ""
+      queryParams ? `?${queryString.stringify(queryParams)}` : ''
     }`,
     null,
     config
   ).then(extractData);
 
 export const makeEntityAdder = (collectionName) => (attributes, config = {}) =>
-  makeCancellable("post", `/${collectionName}`, attributes, config).then(
+  makeCancellable('post', `/${collectionName}`, attributes, config).then(
     extractData
   );
 
 export const getEntity = (collectionName, id) =>
-  makeCancellable("get", `/${collectionName}/${id}`).then(extractData);
+  makeCancellable('get', `/${collectionName}/${id}`).then(extractData);
 
 export const makeEntityDeleter = (collectionName) => (id) =>
-  makeCancellable("delete", `/${collectionName}/${id}`).then(extractData);
+  makeCancellable('delete', `/${collectionName}/${id}`).then(extractData);
 
 export const makeEntityUpdater = (collectionName) => (id, attributes) =>
-  makeCancellable("patch", `/${collectionName}/${id}`, attributes).then(
+  makeCancellable('patch', `/${collectionName}/${id}`, attributes).then(
     extractData
   );
+instance.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    // eslint-disable-next-line
+
+    if (
+      err.response &&
+      err.response.status === 401 &&
+      window.location.pathname !== '/'
+    ) {
+      browserHistory.push(`/?redirectPath=${window.location.pathname}`);
+    }
+    return Promise.reject(err);
+  }
+);
 
 export default instance;
