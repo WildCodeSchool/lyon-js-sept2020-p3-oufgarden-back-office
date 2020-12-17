@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 // import { useMutation } from "react-query";
 import { Editor } from '@tinymce/tinymce-react';
 import { makeEntityAdder, getCollection } from '../services/API';
+import './style/TextEditor.scss';
 
 const TextEditor = () => {
   const [articleContent, setArticleContent] = useState('');
@@ -20,11 +21,6 @@ const TextEditor = () => {
     setArticleContent(content);
   };
 
-  const currentDate = new Date()
-    .toISOString()
-    .replace('T', ' ')
-    .replace('Z', '');
-
   const handleTitle = (e) => {
     setTitle(e.target.value);
   };
@@ -37,7 +33,6 @@ const TextEditor = () => {
       content: articleContent,
       title,
       url: urlImage,
-      created_at: currentDate,
       tagsArray,
     };
     makeEntityAdder('articles')(data);

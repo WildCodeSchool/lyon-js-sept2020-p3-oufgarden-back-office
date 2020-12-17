@@ -99,6 +99,7 @@ const ListArticles = (props) => {
               <div key={tag.id}>
                 <button
                   type="button"
+                  className="filterButton"
                   id={tag.id}
                   onClick={(e) => handleTagList(e.target)}
                 >

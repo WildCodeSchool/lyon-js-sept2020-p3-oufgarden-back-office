@@ -1,18 +1,11 @@
-.buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 .TextEditor {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   width: 70vw;
-  margin-left: 20%;
   padding-top: 3%;
-  position: relative;
+  // position: relative;
   font-family: 'Montserrat';
   font-size: 1rem;
   color: black;
@@ -36,6 +29,14 @@
   font-size: 1rem;
 }
 
+.checkboxes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 1%;
+}
+
 .h1 {
   margin-bottom: 5%;
   text-align: center;
@@ -45,34 +46,30 @@
 }
 
 .Editor {
-  background-color: #E6E6E6;
+  background-color: #e6e6e6;
   height: 70vh;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .sendButton {
-  margin-top: 5%;
+  margin-top: 3%;
   margin-left: 40%;
-  background-color: #EBB349;
+  margin-bottom: 3%;
+  background-color: #ebb349;
   font-family: 'Montserrat';
   font-size: 1rem;
   text-align: center;
   border: none;
   border-radius: 8px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   color: white;
   padding: 15px 32px;
   cursor: pointer;
   &:focus,
   &:hover {
     outline: 0;
-    background-color: #EBB349;
-    box-shadow: 0 4px 12px 0 rgba(0,0,0,0.2), 0 3px 15px 0 rgba(0,0,0,0.19)
+    background-color: #ebb349;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+      0 3px 15px 0 rgba(0, 0, 0, 0.19);
   }
 }
-
-
-
-
-
