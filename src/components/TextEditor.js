@@ -27,14 +27,14 @@ const TextEditor = () => {
     setUrlImage(e.target.value);
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     const data = {
       content: articleContent,
       title,
       url: urlImage,
       tagsArray,
     };
-    makeEntityAdder('articles')(data);
+    await makeEntityAdder('articles')(data);
     setArticleContent('');
     setTitle('');
     setUrlImage('');
