@@ -15,6 +15,7 @@ const Login = (props) => {
   const [password, setPassword] = useState('');
   // eslint-disable-next-line no-unused-vars
   const [isLogged, setIsLogged] = useState(false);
+  const [stayConnected, setStayConnected] = useState(false);
   const required = 'Ce champs est requis';
 
   const errorMessage = (error) => {
@@ -22,6 +23,7 @@ const Login = (props) => {
   };
 
   const onSubmit = (data) => {
+    console.log(data);
     API.post('/login', data)
       .then((res) => {
         if (res.data === 'logged') {
@@ -83,6 +85,8 @@ const Login = (props) => {
                       name="stayConnected"
                       id="stayConnected"
                       type="checkbox"
+                      value={stayConnected}
+                      onClick={() => setStayConnected(true)}
                     />
                     Stay connected ?
                   </label>
