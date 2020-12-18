@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 
-import { getCollection, makeEntityDeleter } from '../services/API';
+import { getCollection, makeEntityDeleter, getEntity } from '../services/API';
 import './style/ListArticles.scss';
 
 const ListArticles = (props) => {
@@ -30,23 +30,6 @@ const ListArticles = (props) => {
       setArticles(elem);
     });
   };
-
-  // const handleTagFilter = async () => {
-  //   await getCollection("tagToArticle").then((result) => {
-  //     const articleToFilter = result
-  //       .filter((article) => {
-  //         if (tagList.includes(article.tag_id)) {
-  //           return true;
-  //         } else {
-  //           return false;
-  //         }
-  //       })
-  //       .map((article) => {
-  //         return article.article_id;
-  //       });
-  //     setArticlesFiltered(articleToFilter);
-  //   });
-  // };
 
   useEffect(() => {
     getCollection('tagToArticle').then((result) => {
@@ -78,9 +61,19 @@ const ListArticles = (props) => {
     // }
   };
 
-  const handleEdit = (id) => {
-    props.history.push(`/articles/creation/${id}`);
+  const handleEdit = async (id, data) => {
+    await getEntity(`/articles/${id}`, data);
+    // makeEntityUpdater('articles')(data);
+    props.history.push(`/articles/${id}`, data);
   };
+
+  // const handleDelete = async (id) => {
+  //   await makeEntityDeleter('articles')(id);
+  //   getCollection('articles').then((elem) => {
+  //     console.log(elem);
+  //     setArticles(elem);
+  //   });
+  // };
 
   return (
     <div>
