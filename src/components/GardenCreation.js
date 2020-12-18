@@ -138,7 +138,7 @@ const GardenCreation = (props) => {
           </div>
 
           <div>
-            <label htmlFor="zone">
+            <label htmlFor="zone_number">
               Nombre de zone :{' '}
               <input
                 type="number"
