@@ -65,7 +65,13 @@ const GardenCreation = (props) => {
   return (
     <div className="containerGarden">
       <div>
-        <form className="formContainer" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          method="POST"
+          encType="multipart/form-data"
+          action="http://localhost:5000"
+          className="formContainer"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <h3>Création d'un Jardin :</h3>
 
           <div>
@@ -86,13 +92,7 @@ const GardenCreation = (props) => {
           <div>
             <label htmlFor="pic_profile">
               Photo du jardin :{' '}
-              <form
-                method="POST"
-                encType="multipart/form-data"
-                action="http://localhost:5000"
-              >
-                <input className="inputPics" type="file" name="pic_profile" />
-              </form>
+              <input className="inputPics" type="file" name="pic_profile" />
             </label>
           </div>
 
@@ -100,7 +100,7 @@ const GardenCreation = (props) => {
             <label htmlFor="Location">
               Description :{' '}
               <input
-                type="text"
+                type="textarea"
                 name="description"
                 ref={register({ required: true })}
               />
@@ -133,14 +133,7 @@ const GardenCreation = (props) => {
           </div>
           <div>
             <label htmlFor="pic_plan">
-              Plan :{' '}
-              <form
-                method="POST"
-                encType="multipart/form-data"
-                action="http://localhost:5000"
-              >
-                <input className="inputPics" type="file" name="pic_plan" />
-              </form>
+              Plan : <input className="inputPics" type="file" name="pic_plan" />
             </label>
           </div>
 
@@ -160,7 +153,7 @@ const GardenCreation = (props) => {
           </div>
           <div className="inputZoneCreation">
             <label htmlFor="zoneCreer">
-              Zone à creer :{' '}
+              Zone à creer :
               {inputList.map((x, i) => {
                 return (
                   <div>
