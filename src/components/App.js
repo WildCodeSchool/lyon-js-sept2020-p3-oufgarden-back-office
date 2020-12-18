@@ -1,6 +1,7 @@
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import { Router } from 'react-router';
+import history from '../history';
 import Navbar from './Navbar';
 import Login from './Login';
 import Adherent from './Adherents';
@@ -10,7 +11,7 @@ import ArticleCreation from './ArticleCreation';
 
 const App = () => {
   return (
-    <Router>
+    <Router history={history}>
       <div className="App">
         <Navbar />
         <Switch>

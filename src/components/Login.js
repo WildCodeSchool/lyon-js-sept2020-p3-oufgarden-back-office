@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 /* import { useQuery } from 'react-query'; */
 import { useForm } from 'react-hook-form';
 import './style/Login.scss';
 import API from '../services/API';
-import { UserContext } from './_context/UserContext';
+// import { UserContext } from './_context/UserContext';
 
 const required = 'Ce champs est requis';
 
@@ -12,7 +12,7 @@ const errorMessage = (error) => {
 };
 
 const Login = (props) => {
-  const { setIsAdmin } = useContext(UserContext);
+  // const { setIsAdmin } = useContext(UserContext);
   const { register, handleSubmit, errors } = useForm();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,7 +23,7 @@ const Login = (props) => {
     API.post('/login', data)
       .then((res) => {
         if (res.data === 'logged') {
-          setIsAdmin(true);
+          // setIsAdmin(true);
           setIsLogged(true);
 
           props.history.push('/adherents');
