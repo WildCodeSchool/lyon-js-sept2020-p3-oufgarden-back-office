@@ -13,7 +13,6 @@ const Adherents = () => {
   const [adherentList, setAdherentList] = useState([]);
   useEffect(() => {
     const request = getCollection('users').then((elem) => {
-      console.log(elem);
       setAdherentList(elem);
     });
   }, []);

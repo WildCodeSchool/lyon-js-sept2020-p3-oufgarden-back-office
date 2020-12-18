@@ -1,27 +1,44 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useToasts } from 'react-toast-notifications';
+
 import { makeEntityAdder } from '../services/API';
 import './style/MemberCreation.scss';
 
 const generator = require('generate-password');
 
-// Messages
-const required = 'Ce champ est obligatoire';
-const maxLength = 'Vous avez dépassé le nombre maximal de caractères.';
-
-// Error Component
-const errorMessage = (error) => {
-  return (
-    <div className="invalid-feedback">
-      <p>{error}</p>
-    </div>
-  );
-};
-
 const MemberCreation = (props) => {
+  // Messages
+  const required = 'Ce champ est obligatoire';
+  const maxLength = 'Vous avez dépassé le nombre maximal de caractères.';
+
+  // Error Component
+  const errorMessage = (error) => {
+    return (
+      <div className="invalid-feedback">
+        <p>{error}</p>
+      </div>
+    );
+  };
+  const { addToast } = useToasts();
+
   const { register, handleSubmit, errors, getValues } = useForm();
-  const onSubmit = (data, e) => {
-    makeEntityAdder('users')(data).then(() => props.history.push('/adherents'));
+  const onSubmit = async (data, e) => {
+    try {
+      await makeEntityAdder('users')(data).then(() => {
+        props.history.push('/adherents');
+      });
+      addToast('Membre crée avec succès', {
+        appearance: 'success',
+        autoDismiss: true,
+      });
+    } catch (err) {
+      addToast('Email déjà utilisé', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    }
+
     /* .catch((err) => {
         console.log(err.response.data);
         if (err.response.data.errorsByField[0].context !== undefined) {

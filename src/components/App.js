@@ -1,6 +1,7 @@
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import { Router } from 'react-router';
+import { ToastProvider } from 'react-toast-notifications';
 
 import Navbar from './Navbar';
 import Login from './Login';
@@ -25,31 +26,33 @@ const App = () => {
   }, [show]); */
   return (
     <div>
-      <UserProvider>
-        <Router history={history}>
-          <Navbar />
-          {/* {show !== '/' && <Navbar />} */}
-          <div className="App">
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route exact path="/adherents" component={Adherent} />
-              <Route
-                exact
-                path="/adherents/creation"
-                component={MemberCreation}
-              />
-              <Route exact path="/adherents/:id" />
-              <Route exact path="/articles" />
-              <Route exact path="/articles/:id" />
-              <Route path="/articles/creation" />
-              <Route exact path="/garden" />
-              <Route path="/garden/:id" />
-              <Route path="/garden/creation" />
-              <Route path="/calendar" />
-            </Switch>
-          </div>
-        </Router>
-      </UserProvider>
+      <ToastProvider placement="top-right">
+        <UserProvider>
+          <Router history={history}>
+            <Navbar />
+            {/* {show !== '/' && <Navbar />} */}
+            <div className="App">
+              <Switch>
+                <Route exact path="/" component={Login} />
+                <Route exact path="/adherents" component={Adherent} />
+                <Route
+                  exact
+                  path="/adherents/creation"
+                  component={MemberCreation}
+                />
+                <Route exact path="/adherents/:id" />
+                <Route exact path="/articles" />
+                <Route exact path="/articles/:id" />
+                <Route path="/articles/creation" />
+                <Route exact path="/garden" />
+                <Route path="/garden/:id" />
+                <Route path="/garden/creation" />
+                <Route path="/calendar" />
+              </Switch>
+            </div>
+          </Router>
+        </UserProvider>
+      </ToastProvider>
     </div>
   );
 };

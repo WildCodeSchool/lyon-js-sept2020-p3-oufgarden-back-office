@@ -5,7 +5,6 @@ import history from '../history';
 import './style/Navbar.scss';
 
 const Navbar = () => {
-  console.log(history.location.pathname);
   if (history.location.pathname === '/') {
     return false;
   }
