@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Editor } from '@tinymce/tinymce-react';
 import { makeEntityAdder, getCollection } from '../services/API';
+import './style/TextEditor.scss';
 
 const TextEditor = () => {
   const [articleContent, setArticleContent] = useState('');

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable no-unused-vars */
+
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMail } from 'react-icons/fi';
 import { MdDelete, MdEdit } from 'react-icons/md';
@@ -11,8 +13,9 @@ const Adherents = () => {
   const [adherentList, setAdherentList] = useState([]);
 
   useEffect(() => {
-    const request = getCollection('users');
-    setAdherentList(request);
+    const request = getCollection('users').then((elem) => {
+      setAdherentList(elem);
+    });
   }, []);
 
   return (
