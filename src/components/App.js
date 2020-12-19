@@ -4,6 +4,7 @@ import { Router } from 'react-router';
 import Navbar from './Navbar';
 import Login from './Login';
 import Adherent from './Adherents';
+import TagsPage from './TagsPage';
 import MemberCreation from './MemberCreation';
 import history from '../history';
 import { UserProvider } from './_context/UserContext';
@@ -19,6 +20,10 @@ const App = () => {
             <Route exact path="/adherents">
               <Navbar />
               <Adherent />
+            </Route>
+            <Route exact path="/category">
+              <Navbar />
+              <TagsPage />
             </Route>
             <Route exact path="/adherents/creation">
               <Navbar />
