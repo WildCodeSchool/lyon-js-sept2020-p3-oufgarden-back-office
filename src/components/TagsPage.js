@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useToasts } from 'react-toast-notifications';
+import { IconContext } from 'react-icons';
+import { MdDelete, MdEdit } from 'react-icons/md';
 import { getCollection, makeEntityAdder } from '../services/API';
 import './style/TagsPage.scss';
 
 const TagsPage = () => {
   const [tagList, setTagList] = useState([]);
   const [newTag, setNewTag] = useState('');
+  const { addToast } = useToasts();
 
   useEffect(() => {
     getCollection('tags')
       .then((data) => {
-        console.log(data);
         return data.sort();
       })
       .then((sortedData) => {
@@ -27,10 +30,12 @@ const TagsPage = () => {
       setTagList(sortedUpdatedList);
       setNewTag(() => '');
     } catch (err) {
-      console.error(`Erreur: ${err}`);
-      if (err.errorMessage) {
-        if (err.errorMessage === 'tag_already_exists') {
-          console.log('pouet');
+      if (err.response.data.errorMessage) {
+        if (err.response.data.errorMessage === 'tag_already_exists') {
+          addToast('impossible de créer 2 fois la même catégorie', {
+            appearance: 'error',
+            autoDismiss: true,
+          });
         }
       }
     }
@@ -58,6 +63,13 @@ const TagsPage = () => {
         return (
           <div className="tag-row" key={tag.id}>
             <p>{tag.name}</p>
+            <div className="user-list-icons">
+              {/* IconContext provider pour personnaliser les props de react-icons */}
+              <IconContext.Provider value={{ className: 'react-icons' }}>
+                <MdEdit size={25} />
+                <MdDelete size={25} />
+              </IconContext.Provider>
+            </div>
           </div>
         );
       })}
