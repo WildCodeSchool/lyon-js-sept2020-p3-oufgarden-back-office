@@ -19,7 +19,7 @@ const TagsPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = { name: newTag };
+    const data = { name: newTag.toLowerCase() };
     try {
       await makeEntityAdder('tags')(data);
       const updatedList = await getCollection('tags');
@@ -27,7 +27,12 @@ const TagsPage = () => {
       setTagList(sortedUpdatedList);
       setNewTag(() => '');
     } catch (err) {
-      console.error(err);
+      console.error(`Erreur: ${err}`);
+      if (err.errorMessage) {
+        if (err.errorMessage === 'tag_already_exists') {
+          console.log('pouet');
+        }
+      }
     }
   };
 
