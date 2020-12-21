@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useToasts } from 'react-toast-notifications';
 import { IconContext } from 'react-icons';
-import { MdDelete, MdEdit } from 'react-icons/md';
-import { getCollection, makeEntityAdder } from '../services/API';
+import { MdDelete } from 'react-icons/md';
+import {
+  getCollection,
+  makeEntityAdder,
+  makeEntityDeleter,
+} from '../services/API';
 import './style/TagsPage.scss';
 
 const TagsPage = () => {
@@ -13,12 +17,31 @@ const TagsPage = () => {
   useEffect(() => {
     getCollection('tags')
       .then((data) => {
-        return data.sort();
+        return data.sort((a, b) => {
+          return a.name.localeCompare(b.name);
+        });
       })
       .then((sortedData) => {
         setTagList(sortedData);
       });
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await makeEntityDeleter('tags')(id);
+      const updatedList = await getCollection('tags');
+      const sortedUpdatedList = updatedList.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
+      setTagList(sortedUpdatedList);
+      setNewTag(() => '');
+    } catch (err) {
+      addToast('problème serveur lors de la suppression', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,7 +49,9 @@ const TagsPage = () => {
     try {
       await makeEntityAdder('tags')(data);
       const updatedList = await getCollection('tags');
-      const sortedUpdatedList = updatedList.sort();
+      const sortedUpdatedList = updatedList.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
       setTagList(sortedUpdatedList);
       setNewTag(() => '');
     } catch (err) {
@@ -36,6 +61,7 @@ const TagsPage = () => {
             appearance: 'error',
             autoDismiss: true,
           });
+          setNewTag(() => '');
         }
       }
     }
@@ -44,7 +70,7 @@ const TagsPage = () => {
   return (
     <div className="tag-list-container">
       <div className="tag-creation-container">
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form className="tag-form" onSubmit={(e) => handleSubmit(e)}>
           <label htmlFor="newTag">
             {' '}
             Nom de la nouvelle catégorie
@@ -56,7 +82,11 @@ const TagsPage = () => {
               onChange={(e) => setNewTag(e.target.value)}
             />
           </label>
-          <input type="submit" value="Créer la catégorie" />
+          <input
+            className="button-tag"
+            type="submit"
+            value="Créer la catégorie"
+          />
         </form>
       </div>
       {tagList.map((tag) => {
@@ -66,8 +96,7 @@ const TagsPage = () => {
             <div className="user-list-icons">
               {/* IconContext provider pour personnaliser les props de react-icons */}
               <IconContext.Provider value={{ className: 'react-icons' }}>
-                <MdEdit size={25} />
-                <MdDelete size={25} />
+                <MdDelete size={25} onClick={() => handleDelete(tag.id)} />
               </IconContext.Provider>
             </div>
           </div>

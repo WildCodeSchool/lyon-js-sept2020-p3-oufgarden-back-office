@@ -1,5 +1,28 @@
 .tag-list-container {
   margin: 100px 20px 20px 15%;
+
+  .tag-form {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    label {
+      display: flex;
+      flex-direction: column;
+      margin: 0 10px 10px 10px;
+
+      color: #323436;
+
+      input {
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        padding-left: 10px;
+        line-height: 2em;
+        margin-top: 10px;
+      }
+    }
+  }
+
   .button-tag-container {
     display: flex;
     justify-content: center;
@@ -8,12 +31,11 @@
 
   .button-tag-list {
     width: 20vw;
-    height: 5vh;
+    height: 2em;
     border: none;
-    margin: 1%;
+    margin: 10px;
     border-radius: 8px;
-    font-family: 'Montserrat';
-    font-size: 1rem;
+    // font-family: 'Montserrat';
     cursor: pointer;
     &:active {
       background-color: #ebb349;
@@ -36,12 +58,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 20vw;
-    height: 5vh;
+    width: min-content;
+    white-space: nowrap;
+    padding: 0 10px;
+    height: 2em;
     border: none;
-    margin: 1%;
+    margin: 10px;
     border-radius: 8px;
-    font-family: 'Montserrat';
+    // font-family: 'Montserrat';
     font-size: 1rem;
     cursor: pointer;
     &:active {

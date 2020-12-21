@@ -6,7 +6,7 @@ import { FiMail } from 'react-icons/fi';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 
-import { getCollection } from '../services/API';
+import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/AdherentList.scss';
 
 const Adherents = () => {
