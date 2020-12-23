@@ -1,7 +1,7 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+/* import axios from 'axios';
+ */ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { getEntity } from '../services/API';
+import { getEntity, makeEntityUpdater } from '../services/API';
 
 const MemberEdition = (props) => {
   const [email, setEmail] = useState('');
@@ -30,18 +30,11 @@ const MemberEdition = (props) => {
       setLastname(elem.lastname);
     });
   }, [id]);
-  const onUpdate = (data) => {
+  const onUpdate = async (data) => {
     console.log(data);
-    /* await makeEntityUpdater('users')(id).then(() => {
+    await makeEntityUpdater('users')(id, data).then(() => {
       props.history.push('/adherents');
-    }); */
-    try {
-      axios.put(`http://localhost:5000/users/${id}`, data);
-    } catch (err) {
-      if (err) {
-        console.log(err);
-      }
-    }
+    });
   };
   return (
     <div className="container">
