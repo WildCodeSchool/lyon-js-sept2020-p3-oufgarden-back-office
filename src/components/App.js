@@ -9,11 +9,12 @@ import Adherent from './Adherents';
 import MemberCreation from './MemberCreation';
 import history from '../history';
 import { UserProvider } from './_context/UserContext';
+import MemberEdition from './MemberEdition';
 
 const App = () => {
   // Je laisse ce code, j'ai tenté de cacher la navbar
   // au login avec un useEffect mais sans succès
-  // Je dois recharger la page sur adherents pour qu'elle s'affiche
+  // Je dois recharger la page sur /adherents pour qu'elle s'affiche
   // j'ai donc utilisé withRouter dans le composant Navbar....
 
   /* const path = history.location.pathname;
@@ -40,7 +41,7 @@ const App = () => {
                   path="/adherents/creation"
                   component={MemberCreation}
                 />
-                <Route exact path="/adherents/:id" />
+                <Route exact path="/adherents/:id" component={MemberEdition} />
                 <Route exact path="/articles" />
                 <Route exact path="/articles/:id" />
                 <Route path="/articles/creation" />
