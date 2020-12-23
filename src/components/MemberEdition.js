@@ -1,5 +1,7 @@
-/* import axios from 'axios';
- */ import React, { useEffect, useState } from 'react';
+/* eslint-disable camelcase */
+/* eslint-disable no-shadow */
+// import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { getEntity, makeEntityUpdater } from '../services/API';
 
@@ -7,6 +9,7 @@ const MemberEdition = (props) => {
   const [email, setEmail] = useState('');
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
+
   const required = 'Ce champ est obligatoire';
   const maxLength = 'Vous avez dépassé le nombre maximal de caractères.';
   const { register, handleSubmit, errors } = useForm();
@@ -30,11 +33,24 @@ const MemberEdition = (props) => {
       setLastname(elem.lastname);
     });
   }, [id]);
+
   const onUpdate = async (data) => {
     console.log(data);
-    await makeEntityUpdater('users')(id, data).then(() => {
-      props.history.push('/adherents');
-    });
+    const { firstname, lastname, email, is_admin, password } = data;
+    let newData = { firstname, lastname, email, is_admin, password };
+    if (password.length === 0) {
+      newData = { firstname, lastname, email, is_admin };
+    }
+
+    try {
+      await makeEntityUpdater('users')(id, newData).then(() => {
+        props.history.push('/adherents');
+      });
+    } catch (err) {
+      if (err) {
+        console.log(err);
+      }
+    }
   };
   return (
     <div className="container">
@@ -101,6 +117,25 @@ const MemberEdition = (props) => {
             </label>
 
             {errors.email && <p role="alert">{errors.email.message}</p>}
+          </div>
+
+          <div>
+            <label htmlFor="password">
+              Password:{' '}
+              <input
+                // defaultValue=""
+                type="text"
+                name="password"
+                ref={register({ required: false, maxLength: 50 })}
+              />
+            </label>
+            {/* 
+            {errors.firstname &&
+              errors.firstname.type === 'required' &&
+              errorMessage(required)} */}
+            {/* {errors.firstname &&
+              errors.firstname.type === 'maxLength' &&
+              errorMessage(maxLength)} */}
           </div>
 
           <div>
