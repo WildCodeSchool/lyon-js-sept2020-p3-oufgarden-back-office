@@ -5,11 +5,14 @@ import { Link } from 'react-router-dom';
 import { FiMail } from 'react-icons/fi';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { IconContext } from 'react-icons';
+import { useToasts } from 'react-toast-notifications';
 
-import { getCollection } from '../services/API';
+import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/AdherentList.scss';
 
 const Adherents = () => {
+  const { addToast } = useToasts();
+
   const [adherentList, setAdherentList] = useState([]);
 
   useEffect(() => {
@@ -17,6 +20,24 @@ const Adherents = () => {
       setAdherentList(elem);
     });
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      await makeEntityDeleter('users')(id);
+      getCollection('users').then((elem) => {
+        setAdherentList(elem);
+        addToast('Membre supprimé avec succès', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+      });
+    } catch (err) {
+      addToast('Un problème est survenu lors de la suppression du membre', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    }
+  };
 
   return (
     <div className="user-list-container">
@@ -39,9 +60,15 @@ const Adherents = () => {
             <div className="user-list-icons">
               {/* IconContext provider pour personnaliser les props de react-icons */}
               <IconContext.Provider value={{ className: 'react-icons' }}>
-                <FiMail size={25} style={{}} />
+                <FiMail size={25} />
                 <MdEdit size={25} />
-                <MdDelete size={25} />
+                <MdDelete
+                  style={{ cursor: 'pointer' }}
+                  size={25}
+                  onClick={() => {
+                    handleDelete(e.id);
+                  }}
+                />
               </IconContext.Provider>
             </div>
           </div>
