@@ -2,43 +2,53 @@ import React, { useState } from 'react';
 /* import { useQuery } from 'react-query'; */
 import { useForm } from 'react-hook-form';
 import './style/Login.scss';
-import axios from 'axios';
+import { useToasts } from 'react-toast-notifications';
 
-require('dotenv').config();
+import API from '../services/API';
+// import { UserContext } from './_context/UserContext';
 
-const required = 'Ce champs est requis';
-
-const errorMessage = (error) => {
-  return <div className="invalid-feedback">{error}</div>;
-};
-
-const LoginF = (props) => {
+const Login = (props) => {
+  const { addToast } = useToasts();
+  /* const { setIsAdmin } = useContext(UserContext);
+   */
   const { register, handleSubmit, errors } = useForm();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // eslint-disable-next-line no-unused-vars
   const [isLogged, setIsLogged] = useState(false);
+  const [stayConnected, setStayConnected] = useState(false);
+  const required = 'Ce champs est requis';
 
-  const url = process.env.REACT_APP_API_BASE_URL;
+  const errorMessage = (error) => {
+    return <div className="invalid-feedback">{error}</div>;
+  };
 
   const onSubmit = (data) => {
-    axios
-      .post(`${url}/login`, data)
+    console.log(data);
+    API.post('/login', data)
       .then((res) => {
-        console.log(res.data);
         if (res.data === 'logged') {
-          props.history.push('/adherents');
+          // setIsAdmin(true);
           setIsLogged(true);
+          addToast('logged in successfully', {
+            appearance: 'success',
+            autoDismiss: true,
+          });
+          props.history.push('/adherents');
         }
       })
       .catch((err) => {
         console.log(err);
+        addToast("Vous n'avez pas la permission d'entrer ici!", {
+          appearance: 'error',
+          autoDismiss: true,
+        });
       });
   };
 
   return (
-    <div className="container">
-      <div className="box">
+    <div className="containerLogin">
+      <div className="boxLogin">
         <h3>Se connecter</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-wrapper">
@@ -68,6 +78,21 @@ const LoginF = (props) => {
               {errors.Password &&
                 errors.Password.type === 'required' &&
                 errorMessage(required)}
+              <div className="stay-connected-container">
+                <div className="stay-connected">
+                  <label htmlFor="stayConnected">
+                    <input
+                      ref={register}
+                      name="stayConnected"
+                      id="stayConnected"
+                      type="checkbox"
+                      value={stayConnected}
+                      onClick={() => setStayConnected(true)}
+                    />
+                    Stay connected ?
+                  </label>
+                </div>
+              </div>
 
               <div className="form-group">
                 <button type="submit" className="button">
@@ -82,4 +107,4 @@ const LoginF = (props) => {
   );
 };
 
-export default LoginF;
+export default Login;

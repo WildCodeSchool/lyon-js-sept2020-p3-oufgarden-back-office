@@ -1,7 +1,7 @@
 import axios, { CancelToken } from 'axios';
 import queryString from 'query-string';
-
 import * as Promise from 'bluebird';
+import browserHistory from '../history';
 
 Promise.config({
   cancellation: true,
@@ -11,6 +11,7 @@ Promise.config({
 // REACT_APP_API_BASE_URL variable in .env file at the root of the project
 const instance = axios.create({
   baseURL: process.env.REACT_APP_API_BASE_URL,
+  withCredentials: true,
 });
 
 const makeCancellable = (method, url, data, config) => {
@@ -68,8 +69,23 @@ export const makeEntityDeleter = (collectionName) => (id) =>
   makeCancellable('delete', `/${collectionName}/${id}`).then(extractData);
 
 export const makeEntityUpdater = (collectionName) => (id, attributes) =>
-  makeCancellable('patch', `/${collectionName}/${id}`, attributes).then(
+  makeCancellable('put', `/${collectionName}/${id}`, attributes).then(
     extractData
   );
+instance.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    // eslint-disable-next-line
+
+    if (
+      err.response &&
+      err.response.status === 401 &&
+      window.location.pathname !== '/'
+    ) {
+      browserHistory.push(`/?redirectPath=${window.location.pathname}`);
+    }
+    return Promise.reject(err);
+  }
+);
 
 export default instance;

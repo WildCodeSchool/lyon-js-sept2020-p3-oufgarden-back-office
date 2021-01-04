@@ -1,20 +1,12 @@
-/* * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  color: #292929;
-} */
-
-.container {
-  overflow-y: auto;
+.containerLogin {
   display: flex;
   justify-content: center;
   align-items: center;
   background: #ffffff;
 }
 
-.box {
-  margin-top: 15%;
+.boxLogin {
+  margin-top: 150px;
   border-radius: 20px;
   padding: 30px;
   min-width: 500px;
@@ -26,7 +18,7 @@
   align-items: center;
 }
 
-.box h3 {
+.boxLogin h3 {
   margin: 30px;
   font-size: 30px;
 }
@@ -95,4 +87,16 @@ button:hover {
 .invalid-feedback {
   display: block !important;
   color: red;
+}
+.stay-connected-container {
+  display: flex;
+  justify-content: center;
+
+  .stay-connected {
+    font-size: 15px;
+
+    #stayConnected {
+      margin: 20px;
+    }
+  }
 }

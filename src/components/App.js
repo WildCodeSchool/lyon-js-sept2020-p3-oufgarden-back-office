@@ -1,32 +1,55 @@
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import { Router } from 'react-router';
+import { ToastProvider } from 'react-toast-notifications';
 import Navbar from './Navbar';
-import LoginF from './LoginF';
+import Login from './Login';
 import Adherent from './Adherents';
+import TagsPage from './TagsPage';
 import MemberCreation from './MemberCreation';
+import history from '../history';
+import { UserProvider } from './_context/UserContext';
+import MemberEdition from './MemberEdition';
+import Articles from './Articles';
+import ArticleCreation from './ArticleCreation';
 import GardenCreation from './GardenCreation';
 
 const App = () => {
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <Switch>
-          <Route exact path="/" component={LoginF} />
-          <Route path="/home" />
-          <Route exact path="/adherents" component={Adherent} />
-          <Route exact path="/adherents/creation" component={MemberCreation} />
-          <Route exact path="/adherents/:id" />
-          <Route exact path="/articles" />
-          <Route exact path="/articles/:id" />
-          <Route path="/articles/creation" />
-          <Route exact path="/garden" />
-          <Route path="/garden/creation" component={GardenCreation} />
-          <Route path="/garden/:id" />
-          <Route path="/calendar" />
-        </Switch>
-      </div>
-    </Router>
+    <div>
+      <ToastProvider placement="top-right">
+        <UserProvider>
+          <Router history={history}>
+            <Navbar />
+            <div className="App">
+              <Switch>
+                <Route exact path="/" component={Login} />
+                <Route exact path="/adherents" component={Adherent} />
+                <Route
+                  exact
+                  path="/adherents/creation"
+                  component={MemberCreation}
+                />
+                <Route exact path="/adherents/:id" component={MemberEdition} />
+                <Route exact path="/articles" component={Articles} />
+
+                <Route
+                  exact
+                  path="/articles/creation"
+                  component={ArticleCreation}
+                />
+                <Route exact path="/articles/:id" />
+                <Route exact path="/category" component={TagsPage} />
+                <Route exact path="/garden" />
+                <Route path="/garden/:id" />
+                <Route path="/garden/creation" component={GardenCreation} />
+                <Route path="/calendar" />
+              </Switch>
+            </div>
+          </Router>
+        </UserProvider>
+      </ToastProvider>
+    </div>
   );
 };
 

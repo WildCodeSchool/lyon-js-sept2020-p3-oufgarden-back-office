@@ -1,0 +1,60 @@
+.CreationArticle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20%;
+}
+
+.buttonNav {
+  margin-top: 2%;
+  margin-left: 10%;
+}
+
+.buttonList {
+  width: 20vw;
+  height: 5vh;
+  border: none;
+  margin: 1%;
+  border-radius: 8px;
+  font-family: 'Montserrat';
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  &:active {
+    background-color: #ebb349;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  &:focus,
+  &:hover {
+    outline: 0;
+    background-color: #ebb349;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+}
+
+.buttonArticle {
+  width: 20vw;
+  height: 5vh;
+  border: none;
+  margin: 1%;
+  border-radius: 8px;
+  font-family: 'Montserrat';
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  &:active {
+    background-color: #ebb349;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  &:focus,
+  &:hover {
+    outline: 0;
+    background-color: #ebb349;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+}
