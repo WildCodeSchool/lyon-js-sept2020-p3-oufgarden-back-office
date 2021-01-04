@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { makeEntityAdder } from '../services/API';
+import { getCollection, makeEntityAdder } from '../services/API';
 import './style/GardenCreation.scss';
 
 // Messages
@@ -18,9 +18,38 @@ const errorMessage = (error) => {
 
 const GardenCreation = (props) => {
   const { register, handleSubmit, errors } = useForm();
+  const [allPlantFamilies, setAllPlantFamilies] = useState([]);
   const [inputList, setInputList] = useState([
-    { name: '', Type: '', variety: '', quantity: '', date_plantation: '' },
+    {
+      zone_name: '',
+      type: '',
+      exposition: '',
+      plantFamilyArray: [],
+      description: '',
+    },
   ]);
+
+  useEffect(() => {
+    getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
+  }, []);
+
+  const handleCheckboxChange = (target, index) => {
+    // the index is the index of the zone creation part of the form
+    if (target.checked) {
+      const id = +target.id;
+      const list = [...inputList];
+      list[index].plantFamilyArray = [...list[index].plantFamilyArray, id];
+      setInputList(list);
+    } else if (!target.checked) {
+      const id = +target.id;
+      const list = [...inputList];
+      list[index].plantFamilyArray = list[index].plantFamilyArray.filter(
+        (plantId) => plantId !== id
+      );
+      setInputList(list);
+    }
+  };
+
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...inputList];
@@ -39,27 +68,66 @@ const GardenCreation = (props) => {
   const handleAddClick = () => {
     setInputList([
       ...inputList,
-      { name: '', Type: '', variety: '', quantity: '', date_plantation: '' },
+      {
+        zone_name: '',
+        type: '',
+        exposition: '',
+        plantFamilyArray: [],
+        description: '',
+      },
     ]);
   };
 
+  // format de l'objet data: {
+  //   "name": "",
+  //   "description": "",
+  //   "exposition": "",
+  //   "address_street": "",
+  //   "address_city": "",
+  //   "address_zipcode": "",
+  //   "zone_quantity": "0"
+  // }
+
   const onSubmit = (data, e) => {
-    console.log(data);
-    makeEntityAdder('garden')(data)
+    // console.log(data);
+    const newData = {
+      address: {
+        address_city: data.address_city,
+        address_street: data.address_street,
+        address_zipcode: data.address_zipcode,
+      },
+      name: data.name,
+      description: data.description,
+      exposition: data.exposition,
+      zone_quantity: data.zone_quantity,
+      zone_details: [...inputList],
+    };
+    console.log(newData);
+    makeEntityAdder('garden')(newData)
       .then((elem) => {
         console.log(elem);
       })
-      .then(() => props.history.push('/garden'))
-      .catch((err) => {
-        console.log(err.response.data);
-        /* if (err.response.data.errorsByField[0].context !== undefined) {
-          console.log(err.response.data.errorsByField[1].context.label);
-        } else {
-          console.log(err.response.data.errorsByField[0].message);
-        } */
-      });
-
-    e.target.reset();
+      .then(() => {
+        e.target.reset();
+        setInputList([
+          {
+            zone_name: '',
+            type: '',
+            exposition: '',
+            plantFamilyArray: [],
+            description: '',
+          },
+        ]);
+      })
+      .then(() => props.history.push('/garden'));
+    //   .catch((err) => {
+    //     console.log(err.response.data);
+    //     /* if (err.response.data.errorsByField[0].context !== undefined) {
+    //       console.log(err.response.data.errorsByField[1].context.label);
+    //     } else {
+    //       console.log(err.response.data.errorsByField[0].message);
+    //     } */
+    //   });
   };
 
   return (
@@ -119,18 +187,49 @@ const GardenCreation = (props) => {
 
           <div>
             <label htmlFor="Location">
-              Adresse :{' '}
+              Adresse (rue) :{' '}
               <input
                 type="text"
-                name="address"
+                name="address_street"
                 ref={register({ required: true })}
               />
             </label>
 
-            {errors.address &&
-              errors.address.type === 'required' &&
+            {errors.address_street &&
+              errors.address_street.type === 'required' &&
               errorMessage(required)}
           </div>
+          <div>
+            <label htmlFor="Location">
+              Adresse (ville) :{' '}
+              <input
+                type="text"
+                name="address_city"
+                ref={register({ required: true })}
+              />
+            </label>
+
+            {errors.address_city &&
+              errors.address_city.type === 'required' &&
+              errorMessage(required)}
+          </div>
+
+          <div>
+            <label htmlFor="Location">
+              Code postal :{' '}
+              <input
+                type="text"
+                name="address_zipcode"
+                // rajouter une validation sur le code postal
+                ref={register({ required: true })}
+              />
+            </label>
+
+            {errors.address_zipcode &&
+              errors.address_zipcode.type === 'required' &&
+              errorMessage(required)}
+          </div>
+
           <div>
             <label htmlFor="pic_plan">
               Plan : <input className="inputPics" type="file" name="pic_plan" />
@@ -138,17 +237,17 @@ const GardenCreation = (props) => {
           </div>
 
           <div>
-            <label htmlFor="zone_number">
-              Nombre de zone :{' '}
+            <label htmlFor="zone_quantity">
+              Nombre de zones :{' '}
               <input
                 type="number"
-                name="zone_number"
+                name="zone_quantity"
                 ref={register({ required: true })}
               />
             </label>
 
-            {errors.zone_number &&
-              errors.zone_number.type === 'required' &&
+            {errors.zone_quantity &&
+              errors.zone_quantity.type === 'required' &&
               errorMessage(required)}
           </div>
           <div className="inputZoneCreation">
@@ -156,40 +255,58 @@ const GardenCreation = (props) => {
               Zone à creer :
               {inputList.map((x, i) => {
                 return (
-                  <div key={x.name}>
+                  <div key={x.zone_name}>
                     <input
-                      name="name"
-                      placeholder="Nom de la Zone"
-                      value={x.name}
+                      name="zone_name"
+                      type="text"
+                      placeholder="Nom de la zone"
+                      value={x.zone_name}
                       onChange={(e) => handleInputChange(e, i)}
                     />
                     <input
                       name="type"
-                      placeholder="Quelle type de zone ? serre, compost, potager.."
+                      type="text"
+                      placeholder="Quelle type de zone ? Serre, compost, potager.."
                       value={x.type}
                       onChange={(e) => handleInputChange(e, i)}
                     />
                     <input
-                      name="variety"
-                      placeholder="Variété de plante"
-                      value={x.variety}
+                      name="description"
+                      type="text"
+                      placeholder="Description de la zone"
+                      value={x.description}
                       onChange={(e) => handleInputChange(e, i)}
                     />
                     <input
-                      type="number"
-                      name="quantity"
-                      placeholder="Quantité de plante"
-                      value={x.quantity}
+                      name="exposition"
+                      type="text"
+                      placeholder="Exposition"
+                      value={x.exposition}
                       onChange={(e) => handleInputChange(e, i)}
                     />
-                    <span>Date de mise en terre :</span>
-                    <input
-                      type="date"
-                      name="date_plantation"
-                      placeholder="Date de mise en terre"
-                      value={x.date_plantation}
-                      onChange={(e) => handleInputChange(e, i)}
-                    />
+
+                    {allPlantFamilies &&
+                      allPlantFamilies.map((plantFamily) => {
+                        return (
+                          <div key={plantFamily.id}>
+                            <label
+                              htmlFor="{plantFamily.main_category + ' - ' +
+                                  plantFamily.sub_category}"
+                            >
+                              <input
+                                type="checkbox"
+                                id={plantFamily.id}
+                                name={`${plantFamily.main_category} - ${plantFamily.sub_category}`}
+                                onChange={(e) =>
+                                  handleCheckboxChange(e.target, i)
+                                }
+                              />
+                              {`${plantFamily.main_category} - ${plantFamily.sub_category}`}
+                            </label>
+                          </div>
+                        );
+                      })}
+
                     <div className="btn-box">
                       {inputList.length - 1 === i && (
                         <button type="button" onClick={handleAddClick}>
