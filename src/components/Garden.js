@@ -1,32 +1,30 @@
-/* eslint-disable no-unused-vars */
-
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMail } from 'react-icons/fi';
+
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { IconContext } from 'react-icons';
+
 import { useToasts } from 'react-toast-notifications';
-
 import { getCollection, makeEntityDeleter } from '../services/API';
-import './style/AdherentList.scss';
+import './style/Garden.scss';
 
-const Adherents = () => {
+const Garden = () => {
   const { addToast } = useToasts();
-
-  const [adherentList, setAdherentList] = useState([]);
+  const [gardenList, setGardenList] = useState([]);
 
   useEffect(() => {
-    getCollection('users').then((elem) => {
-      setAdherentList(elem);
+    getCollection('garden').then((elem) => {
+      setGardenList(elem);
     });
   }, []);
 
   const handleDelete = async (id) => {
     try {
-      await makeEntityDeleter('users')(id);
-      getCollection('users').then((elem) => {
-        setAdherentList(elem);
-        addToast('Membre supprimé avec succès', {
+      await makeEntityDeleter('garden')(id);
+      getCollection('garden').then((elem) => {
+        setGardenList(elem);
+        addToast('Jardin supprimé avec succès', {
           appearance: 'success',
           autoDismiss: true,
         });
@@ -38,26 +36,23 @@ const Adherents = () => {
       });
     }
   };
-
   return (
-    <div className="user-list-container">
-      <div className="button-user-container">
-        <button type="button" className="button-user-list">
-          <Link to="/adherents">Listes Adhérents</Link>
+    <div className="garden-list-container">
+      <div className="button-garden-container">
+        <button type="button" className="button-garden-list">
+          <Link to="/garden">Listes Adhérents</Link>
         </button>
-        <button type="button" className="button-user">
-          <Link to="/adherents/creation">Nouvel Adhérent</Link>
+        <button type="button" className="button-garden">
+          <Link to="/garden/creation">Nouvel Adhérent</Link>
         </button>
       </div>
-      {adherentList.map((e) => {
+      {gardenList.map((e) => {
         return (
-          <div key={e.id} className="adherent-row">
-            <div className="user-infos">
-              <p>
-                {e.firstname} {e.lastname} {e.email}
-              </p>
+          <div key={e.id} className="garden-row">
+            <div className="garden-infos">
+              <p>{e.name}</p>
             </div>
-            <div className="user-list-icons">
+            <div className="garden-list-icons">
               {/* IconContext provider pour personnaliser les props de react-icons */}
               <IconContext.Provider value={{ className: 'react-icons' }}>
                 <FiMail size={25} />
@@ -78,4 +73,4 @@ const Adherents = () => {
   );
 };
 
-export default Adherents;
+export default Garden;
