@@ -40,10 +40,10 @@ const Garden = () => {
     <div className="garden-list-container">
       <div className="button-garden-container">
         <button type="button" className="button-garden-list">
-          <Link to="/garden">Listes Adhérents</Link>
+          <Link to="/garden">Listes Jardins</Link>
         </button>
         <button type="button" className="button-garden">
-          <Link to="/garden/creation">Nouvel Adhérent</Link>
+          <Link to="/garden/creation">Nouveau Jardin</Link>
         </button>
       </div>
       {gardenList.map((e) => {
