@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiMail } from 'react-icons/fi';
 
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { IconContext } from 'react-icons';
@@ -55,7 +54,6 @@ const Garden = () => {
             <div className="garden-list-icons">
               {/* IconContext provider pour personnaliser les props de react-icons */}
               <IconContext.Provider value={{ className: 'react-icons' }}>
-                <FiMail size={25} />
                 <MdEdit size={25} />
                 <MdDelete
                   style={{ cursor: 'pointer' }}
