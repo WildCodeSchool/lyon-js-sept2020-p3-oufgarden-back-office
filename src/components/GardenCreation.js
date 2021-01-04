@@ -156,7 +156,7 @@ const GardenCreation = (props) => {
               Zone à creer :
               {inputList.map((x, i) => {
                 return (
-                  <div>
+                  <div key={x.name}>
                     <input
                       name="name"
                       placeholder="Nom de la Zone"
