@@ -12,26 +12,12 @@ import { UserProvider } from './_context/UserContext';
 import MemberEdition from './MemberEdition';
 
 const App = () => {
-  // Je laisse ce code, j'ai tenté de cacher la navbar
-  // au login avec un useEffect mais sans succès
-  // Je dois recharger la page sur /adherents pour qu'elle s'affiche
-  // j'ai donc utilisé withRouter dans le composant Navbar....
-
-  /* const path = history.location.pathname;
-  const [show, setShow] = useState('/');
-
-  useEffect(() => {
-    console.log(show);
-    console.log(history.location.pathname);
-    setShow(path);
-  }, [show]); */
   return (
     <div>
       <ToastProvider placement="top-right">
         <UserProvider>
           <Router history={history}>
             <Navbar />
-            {/* {show !== '/' && <Navbar />} */}
             <div className="App">
               <Switch>
                 <Route exact path="/" component={Login} />
