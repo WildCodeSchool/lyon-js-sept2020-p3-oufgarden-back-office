@@ -14,7 +14,7 @@
     "babel-polyfill": "^6.26.0",
     "bluebird": "^3.7.2",
     "dotenv": "^8.2.0",
-      "draft-js": "^0.11.7",
+    "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "generate-password": "^1.5.1",
     "history": "^4.10.1",
