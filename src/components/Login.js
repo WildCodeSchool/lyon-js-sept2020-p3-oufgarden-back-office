@@ -8,10 +8,9 @@ import API from '../services/API';
 // import { UserContext } from './_context/UserContext';
 
 const Login = (props) => {
-
   const { addToast } = useToasts();
-  const { setIsAdmin } = useContext(UserContext);
-
+  /* const { setIsAdmin } = useContext(UserContext);
+   */
   const { register, handleSubmit, errors } = useForm();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,13 +38,11 @@ const Login = (props) => {
         }
       })
       .catch((err) => {
-
         console.log(err);
         addToast("Vous n'avez pas la permission d'entrer ici!", {
           appearance: 'error',
           autoDismiss: true,
         });
-
       });
   };
 
