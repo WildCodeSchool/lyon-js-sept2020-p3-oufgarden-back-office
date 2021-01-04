@@ -2,7 +2,6 @@ import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import { Router } from 'react-router';
 import { ToastProvider } from 'react-toast-notifications';
-
 import Navbar from './Navbar';
 import Login from './Login';
 import Adherent from './Adherents';
@@ -10,6 +9,8 @@ import MemberCreation from './MemberCreation';
 import history from '../history';
 import { UserProvider } from './_context/UserContext';
 import MemberEdition from './MemberEdition';
+import Articles from './Articles';
+import ArticleCreation from './ArticleCreation';
 
 const App = () => {
   return (
@@ -28,9 +29,9 @@ const App = () => {
                   component={MemberCreation}
                 />
                 <Route exact path="/adherents/:id" component={MemberEdition} />
-                <Route exact path="/articles" />
+                <Route exact path="/articles" component={Articles} />
                 <Route exact path="/articles/:id" />
-                <Route path="/articles/creation" />
+                <Route exact path="/articles/creation" component={ArticleCreation} />
                 <Route exact path="/garden" />
                 <Route path="/garden/:id" />
                 <Route path="/garden/creation" />
@@ -41,6 +42,7 @@ const App = () => {
         </UserProvider>
       </ToastProvider>
     </div>
+
   );
 };
 

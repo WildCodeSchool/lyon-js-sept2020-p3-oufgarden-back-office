@@ -14,6 +14,7 @@ const Adherents = () => {
   const { addToast } = useToasts();
 
   const [adherentList, setAdherentList] = useState([]);
+
   useEffect(() => {
     const request = getCollection('users').then((elem) => {
       setAdherentList(elem);
