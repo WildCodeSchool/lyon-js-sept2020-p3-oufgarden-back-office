@@ -14,10 +14,10 @@ const ArticleCreation = () => {
         <button type="button" className="buttonArticle">
           <Link to="/articles/creation">Nouvel Article</Link>
         </button>
-        <div className="TextEditor">
-          <div className="Editor">
-            <TextEditor />
-          </div>
+      </div>
+      <div className="TextEditor">
+        <div className="Editor">
+          <TextEditor />
         </div>
       </div>
     </div>

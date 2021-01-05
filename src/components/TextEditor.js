@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Editor } from '@tinymce/tinymce-react';
+/* import Select from 'react-select'; */
+
 import { makeEntityAdder, getCollection } from '../services/API';
+
 import './style/TextEditor.scss';
 
 const ArticleCreationForm = () => {
@@ -10,12 +13,16 @@ const ArticleCreationForm = () => {
   const [urlImage, setUrlImage] = useState('');
   const [allTags, setAllTags] = useState([]);
   const [tagsArray, setTagsArray] = useState([]);
+  const [gardenList, setGardenList] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
     getCollection('tags').then((data) => setAllTags(data));
   }, []);
-
+  useEffect(() => {
+    getCollection('garden').then((data) => setGardenList(data));
+  }, []);
+  console.log(gardenList);
   const handleEditorChange = (content) => {
     setArticleContent(content);
   };
