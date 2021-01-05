@@ -123,22 +123,7 @@ const GardenCreation = (props) => {
     //     } */
     //   });
   };
-  /* const handleCheckboxChange = (target, index) => {
-    // the index is the index of the zone creation part of the form
-    if (target.checked) {
-      const id = +target.id;
-      const list = [...inputList];
-      list[index].plantFamilyArray = [...list[index].plantFamilyArray, id];
-      setInputList(list);
-    } else if (!target.checked) {
-      const id = +target.id;
-      const list = [...inputList];
-      list[index].plantFamilyArray = list[index].plantFamilyArray.filter(
-        (plantId) => plantId !== id
-      );
-      setInputList(list);
-    }
-  }; */
+
   const handleChangeSelect = (elem, i) => {
     console.log(elem, i);
     if (elem.length > 0) {

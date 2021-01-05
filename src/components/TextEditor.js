@@ -4,7 +4,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { makeEntityAdder, getCollection } from '../services/API';
 import './style/TextEditor.scss';
 
-const TextEditor = () => {
+const ArticleCreationForm = () => {
   const [articleContent, setArticleContent] = useState('');
   const [title, setTitle] = useState('');
   const [urlImage, setUrlImage] = useState('');
@@ -51,7 +51,7 @@ const TextEditor = () => {
     }
     console.log(tagsArray);
   };
-
+  const textEditorApi = process.env.REACT_APP_TEXT_EDITOR_API;
   return (
     <div>
       <input className="Title" placeholder="Titre" onChange={handleTitle} />
@@ -79,7 +79,7 @@ const TextEditor = () => {
           })}
       </div>
       <Editor
-        apiKey="c2pe0rrg2r5r6yu3c3gcxe5qr192kgoghmxbjnaj4fk1yv9d"
+        apiKey={textEditorApi}
         initialValue=""
         init={{
           height: 500,
@@ -104,4 +104,4 @@ const TextEditor = () => {
   );
 };
 
-export default TextEditor;
+export default ArticleCreationForm;
