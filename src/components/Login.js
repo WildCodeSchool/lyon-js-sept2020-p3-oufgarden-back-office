@@ -30,7 +30,7 @@ const Login = (props) => {
         if (res.data === 'logged') {
           // setIsAdmin(true);
           setIsLogged(true);
-          addToast('logged in successfully', {
+          addToast('Connecté avec succès !', {
             appearance: 'success',
             autoDismiss: true,
           });
