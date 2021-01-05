@@ -12,6 +12,8 @@ import { UserProvider } from './_context/UserContext';
 import MemberEdition from './MemberEdition';
 import Articles from './Articles';
 import ArticleCreation from './ArticleCreation';
+import Garden from './Garden';
+import GardenCreation from './GardenCreation';
 
 const App = () => {
   return (
@@ -39,9 +41,9 @@ const App = () => {
                 />
                 <Route exact path="/articles/:id" />
                 <Route exact path="/category" component={TagsPage} />
-                <Route exact path="/garden" />
+                <Route exact path="/garden" component={Garden} />
+                <Route path="/garden/creation" component={GardenCreation} />
                 <Route path="/garden/:id" />
-                <Route path="/garden/creation" />
                 <Route path="/calendar" />
               </Switch>
             </div>
