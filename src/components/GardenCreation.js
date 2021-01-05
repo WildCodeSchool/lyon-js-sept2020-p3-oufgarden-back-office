@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
+import Select from 'react-select';
+
 import { getCollection, makeEntityAdder } from '../services/API';
 import './style/GardenCreation.scss';
 
@@ -17,7 +19,7 @@ const errorMessage = (error) => {
 };
 
 const GardenCreation = (props) => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
   const [inputList, setInputList] = useState([
     {
@@ -30,12 +32,12 @@ const GardenCreation = (props) => {
   ]);
 
   // test pour react select
-  /*  const options = allPlantFamilies.map((elem) => {
+  const options = allPlantFamilies.map((elem) => {
     return {
       value: elem.id,
       label: `${elem.main_category} -  ${elem.sub_category}`,
     };
-  }); */
+  });
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
@@ -291,14 +293,14 @@ const GardenCreation = (props) => {
                       onChange={(e) => handleInputChange(e, i)}
                     />
 
-                    {/* <Controller
-                      as={<ReactSelect />}
+                    <Controller
+                      as={<Select />}
                       options={options}
                       name="ReactSelect"
                       isClearable
                       control={control}
                       isMulti
-                    /> */}
+                    />
 
                     {allPlantFamilies &&
                       allPlantFamilies.map((plantFamily) => {
