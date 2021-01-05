@@ -28,7 +28,6 @@ const MemberEdition = (props) => {
     },
   } = props;
   useEffect(() => {
-    console.log(id);
     getEntity('users', id).then((elem) => {
       setEmail(elem.email);
       setFirstname(elem.firstname);
