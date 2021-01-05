@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useToasts } from 'react-toast-notifications';
+import { Link } from 'react-router-dom';
 
 import { makeEntityAdder } from '../services/API';
 import './style/MemberCreation.scss';
@@ -60,6 +61,14 @@ const MemberCreation = (props) => {
 
   return (
     <div className="container">
+      <div className="button-user-container">
+        <button type="button" className="button-user-list">
+          <Link to="/adherents">Listes Adhérents</Link>
+        </button>
+        <button type="button" className="button-user">
+          <Link to="/adherents/creation">Nouvel Adhérent</Link>
+        </button>
+      </div>
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h3>Création d'un membre :</h3>

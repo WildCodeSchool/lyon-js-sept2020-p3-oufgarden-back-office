@@ -10,7 +10,7 @@ import { useToasts } from 'react-toast-notifications';
 import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/AdherentList.scss';
 
-const Adherents = () => {
+const Adherents = (props) => {
   const { addToast } = useToasts();
 
   const [adherentList, setAdherentList] = useState([]);
@@ -38,6 +38,9 @@ const Adherents = () => {
       });
     }
   };
+  const handleEdit = (id) => {
+    props.history.push(`/adherents/${id}`);
+  };
 
   return (
     <div className="user-list-container">
@@ -61,7 +64,13 @@ const Adherents = () => {
               {/* IconContext provider pour personnaliser les props de react-icons */}
               <IconContext.Provider value={{ className: 'react-icons' }}>
                 <FiMail size={25} />
-                <MdEdit size={25} />
+                <MdEdit
+                  size={25}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    handleEdit(e.id);
+                  }}
+                />
                 <MdDelete
                   style={{ cursor: 'pointer' }}
                   size={25}
