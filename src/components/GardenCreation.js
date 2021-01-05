@@ -85,7 +85,12 @@ const GardenCreation = (props) => {
       description: data.description,
       exposition: data.exposition,
       zone_quantity: data.zone_quantity,
-      zone_details: inputList,
+      zone_details:
+        inputList.length === 1 &&
+        inputList[0].zone_name === '' &&
+        inputList[0].type === ''
+          ? []
+          : inputList,
     };
     console.log(newData);
     makeEntityAdder('garden')(newData)
@@ -256,7 +261,7 @@ const GardenCreation = (props) => {
                 ref={register({
                   required: true,
                   pattern: {
-                    value: /^[1-9]$|^[1-9][0-9]$|^(100)$/,
+                    value: /^[0-9]$|^[1-9][0-9]$|^(100)$/,
                     message: "Merci d'entrer un nombre",
                   },
                 })}
@@ -275,7 +280,8 @@ const GardenCreation = (props) => {
               Zone à creer :
               {inputList.map((x, i) => {
                 return (
-                  <div>
+                  // not the best solution for the key but could not find another one - do not replace with Math.random()
+                  <div key={new Date()}>
                     <input
                       name="zone_name"
                       type="text"
