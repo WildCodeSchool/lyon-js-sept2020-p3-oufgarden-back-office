@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
+import ReactSelect from 'react-select';
 import { getCollection, makeEntityAdder } from '../services/API';
 import './style/GardenCreation.scss';
 
@@ -17,7 +18,7 @@ const errorMessage = (error) => {
 };
 
 const GardenCreation = (props) => {
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
   const [inputList, setInputList] = useState([
     {
@@ -29,10 +30,16 @@ const GardenCreation = (props) => {
     },
   ]);
 
+  // test pour react select
+  const options = allPlantFamilies.map((elem) => {
+    return {
+      value: elem.id,
+      label: `${elem.main_category} -  ${elem.sub_category}`,
+    };
+  });
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
-
   const handleCheckboxChange = (target, index) => {
     // the index is the index of the zone creation part of the form
     if (target.checked) {
@@ -48,6 +55,10 @@ const GardenCreation = (props) => {
       );
       setInputList(list);
     }
+  };
+
+  const handleSelectOnChange = (e) => {
+    console.log(e);
   };
 
   const handleInputChange = (e, index) => {
@@ -89,7 +100,7 @@ const GardenCreation = (props) => {
   // }
 
   const onSubmit = (data, e) => {
-    // console.log(data);
+    console.log(data);
     const newData = {
       address: {
         address_city: data.address_city,
@@ -255,7 +266,7 @@ const GardenCreation = (props) => {
               Zone à creer :
               {inputList.map((x, i) => {
                 return (
-                  <div key={x.zone_name}>
+                  <div>
                     <input
                       name="zone_name"
                       type="text"
@@ -283,6 +294,16 @@ const GardenCreation = (props) => {
                       placeholder="Exposition"
                       value={x.exposition}
                       onChange={(e) => handleInputChange(e, i)}
+                    />
+
+                    <Controller
+                      as={<ReactSelect />}
+                      options={options}
+                      name="ReactSelect"
+                      isClearable
+                      control={control}
+                      isMulti
+                      onChange={handleSelectOnChange}
                     />
 
                     {allPlantFamilies &&
