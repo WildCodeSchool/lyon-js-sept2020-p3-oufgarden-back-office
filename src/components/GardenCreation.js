@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
@@ -42,7 +43,6 @@ const GardenCreation = (props) => {
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
-  console.log(options);
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -83,7 +83,6 @@ const GardenCreation = (props) => {
   // }
 
   const onSubmit = (data, e) => {
-    console.log(data);
     const newData = {
       address: {
         address_city: data.address_city,
@@ -101,6 +100,7 @@ const GardenCreation = (props) => {
       .then((elem) => {
         console.log(elem);
       })
+      .catch((err) => console.log(err.response.data))
       .then(() => {
         e.target.reset();
         setInputList([
