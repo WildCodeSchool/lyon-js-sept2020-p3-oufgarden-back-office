@@ -10,6 +10,15 @@
   background-color: #e6e6e6;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
 
+  .logo {
+    background-image: url('../../images/black_logo.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100px;
+    margin: 10%;
+  }
+
   ul {
     display: flex;
     flex-direction: column;
