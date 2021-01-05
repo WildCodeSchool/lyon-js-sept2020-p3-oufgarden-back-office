@@ -185,7 +185,7 @@ const MemberCreation = (props) => {
               />
             </label>
           </div>
-          <div>
+          <div className="submitFormBtn">
             <input type="submit" value="Créer le membre" />
           </div>
         </form>
