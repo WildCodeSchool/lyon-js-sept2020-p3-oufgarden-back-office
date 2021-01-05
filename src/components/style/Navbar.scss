@@ -10,15 +10,6 @@
   background-color: #e6e6e6;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
 
-  .logo {
-    background-image: url('../../images/black_logo.png');
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100px;
-    margin: 10%;
-  }
-
   ul {
     display: flex;
     flex-direction: column;
@@ -51,10 +42,11 @@
 .containerLogoutButton{
 display: flex;
 justify-content: center;
+width: 100%;
+
   .btn-logout {
-    background-image: linear-gradient(-60deg,#57ac5a 0%,#7db667 100%);
     z-index: 1;
-    
+    font-size: 1rem;
   }
   .btn-logout:after {
     position: absolute;
@@ -64,14 +56,13 @@ justify-content: center;
     bottom: 0;
     left: 0;
     z-index: -1;
-    background-color: #4d6bcc;
-    background-image: linear-gradient(315deg, #4dccc6 0%, #4d6bcc 74%);
+    background-image: linear-gradient(315deg, #57ac5a 0%, #7db667 74%);
     box-shadow:
     -7px -7px 20px 0px #fff9,
     -4px -4px 5px 0px #fff9,
     7px 7px 20px 0px #0002,
     4px 4px 5px 0px #0001;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
   } 
   .btn-logout:hover {
     color: #fff;
@@ -80,8 +71,6 @@ justify-content: center;
     top: 0;
     height: 100%;
   }
-  .btn-logout:active {
-    top: 2px;
-  }
+  
   
 }
