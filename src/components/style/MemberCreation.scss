@@ -48,19 +48,20 @@
     }
     .submitFormBtn {
       align-self: center;
-    }
-    input[type='submit'] {
-      background: rgb(103, 158, 103);
-      color: white;
-      text-transform: uppercase;
-      margin-top: 40px;
-      padding: 20px;
-      font-weight: 100;
-      letter-spacing: 10px;
-      width: 100%;
 
-      &:hover {
-        background: red;
+      input[type='submit'] {
+        background: rgb(103, 158, 103);
+        color: white;
+        text-transform: uppercase;
+        margin-top: 40px;
+        padding: 20px;
+        font-weight: 100;
+        letter-spacing: 10px;
+        width: 100%;
+
+        &:hover {
+          background: red;
+        }
       }
     }
   }

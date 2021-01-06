@@ -362,7 +362,7 @@ const GardenCreation = (props) => {
             </label>
           </div>
 
-          <div>
+          <div className="submitFormBtn">
             <input type="submit" value="Créer le jardin" />
           </div>
         </form>
