@@ -56,11 +56,12 @@ const ArticleCreationForm = () => {
       tagsArray,
       gardenArray,
     };
-
+    console.log(data);
     await makeEntityAdder('articles')(data);
     setArticleContent('');
     setTitle('');
     setUrlImage('');
+    setGardenArray([]);
     history.push('/articles');
   };
 

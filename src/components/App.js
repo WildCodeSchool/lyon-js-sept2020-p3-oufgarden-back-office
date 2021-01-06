@@ -9,10 +9,10 @@ import TagsPage from './TagsPage';
 import MemberCreation from './MemberCreation';
 import history from '../history';
 import { UserProvider } from './_context/UserContext';
-import ListArticles from './ListArticles';
 import ArticleCreation from './ArticleCreation';
 import Garden from './Garden';
 import GardenCreation from './GardenCreation';
+import ArticleList from './ArticleList';
 
 const App = () => {
   return (
@@ -31,7 +31,7 @@ const App = () => {
                   component={MemberCreation}
                 />
                 <Route exact path="/adherents/:id" component={MemberCreation} />
-                <Route exact path="/articles" component={ListArticles} />
+                <Route exact path="/articles" component={ArticleList} />
 
                 <Route
                   exact

@@ -7,7 +7,7 @@ import { IconContext } from 'react-icons';
 import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/ListArticles.scss';
 
-const ListArticles = (props) => {
+const ArticleList = (props) => {
   const [articles, setArticles] = useState([]);
   const [articlesFiltered, setArticlesFiltered] = useState([]);
   const [tagList, setTagList] = useState([]);
@@ -153,4 +153,4 @@ const ListArticles = (props) => {
     </div>
   );
 };
-export default ListArticles;
+export default ArticleList;
