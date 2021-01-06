@@ -36,7 +36,6 @@ const MemberEdition = (props) => {
   }, [id]);
 
   const onUpdate = async (data) => {
-    console.log(data);
     const { firstname, lastname, email, is_admin, password } = data;
     let newData = { firstname, lastname, email, is_admin, password };
     if (password.length === 0) {

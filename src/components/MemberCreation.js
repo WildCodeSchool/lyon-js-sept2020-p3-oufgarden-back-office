@@ -39,16 +39,6 @@ const MemberCreation = (props) => {
         autoDismiss: true,
       });
     }
-
-    /* .catch((err) => {
-        console.log(err.response.data);
-        if (err.response.data.errorsByField[0].context !== undefined) {
-          console.log(err.response.data.errorsByField[1].context.label);
-        } else {
-          console.log(err.response.data.errorsByField[0].message);
-        } 
-      }); */
-
     e.target.reset();
   };
 
