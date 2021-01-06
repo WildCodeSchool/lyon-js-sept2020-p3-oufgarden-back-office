@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import ReactSelect from 'react-select';
+import Select from 'react-select';
+
 import { getCollection, makeEntityAdder } from '../services/API';
 import './style/GardenCreation.scss';
 
@@ -20,6 +22,7 @@ const errorMessage = (error) => {
 const GardenCreation = (props) => {
   const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
+
   const [inputList, setInputList] = useState([
     {
       zone_name: '',
@@ -40,26 +43,6 @@ const GardenCreation = (props) => {
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
-  const handleCheckboxChange = (target, index) => {
-    // the index is the index of the zone creation part of the form
-    if (target.checked) {
-      const id = +target.id;
-      const list = [...inputList];
-      list[index].plantFamilyArray = [...list[index].plantFamilyArray, id];
-      setInputList(list);
-    } else if (!target.checked) {
-      const id = +target.id;
-      const list = [...inputList];
-      list[index].plantFamilyArray = list[index].plantFamilyArray.filter(
-        (plantId) => plantId !== id
-      );
-      setInputList(list);
-    }
-  };
-
-  const handleSelectOnChange = (e) => {
-    console.log(e);
-  };
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -100,7 +83,6 @@ const GardenCreation = (props) => {
   // }
 
   const onSubmit = (data, e) => {
-    console.log(data);
     const newData = {
       address: {
         address_city: data.address_city,
@@ -118,6 +100,7 @@ const GardenCreation = (props) => {
       .then((elem) => {
         console.log(elem);
       })
+      .catch((err) => console.log(err.response.data))
       .then(() => {
         e.target.reset();
         setInputList([
@@ -141,6 +124,17 @@ const GardenCreation = (props) => {
     //   });
   };
 
+  const handleChangeSelect = (elem, i) => {
+    console.log(elem, i);
+    if (elem.length > 0) {
+      const plantFamilySelection = { i, value: elem.map((e) => e.value) };
+      const arrFamilyId = plantFamilySelection.value;
+      const list = [...inputList];
+      list[i].plantFamilyArray = [...arrFamilyId];
+      setInputList(list);
+      console.log(plantFamilySelection);
+    }
+  };
   return (
     <div className="containerGarden">
       <div>
@@ -296,17 +290,32 @@ const GardenCreation = (props) => {
                       onChange={(e) => handleInputChange(e, i)}
                     />
 
-                    <Controller
-                      as={<ReactSelect />}
+                    {/* <Controller
+                      as={<Select onchange={handleSelectChange} />}
                       options={options}
                       name="ReactSelect"
                       isClearable
                       control={control}
                       isMulti
-                      onChange={handleSelectOnChange}
+                    /> */}
+                    <Controller
+                      name="plantfamily"
+                      control={control}
+                      defaultValue=""
+                      render={({ onChange, value }) => (
+                        <Select
+                          options={options}
+                          onChange={(e) => {
+                            onChange(e.value);
+                            handleChangeSelect(e, i);
+                          }}
+                          value={value}
+                          isMulti
+                        />
+                      )}
                     />
 
-                    {allPlantFamilies &&
+                    {/*  {allPlantFamilies &&
                       allPlantFamilies.map((plantFamily) => {
                         return (
                           <div key={plantFamily.id}>
@@ -326,7 +335,7 @@ const GardenCreation = (props) => {
                             </label>
                           </div>
                         );
-                      })}
+                      })} */}
 
                     <div className="btn-box">
                       {inputList.length - 1 === i && (

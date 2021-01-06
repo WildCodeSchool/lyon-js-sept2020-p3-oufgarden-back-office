@@ -62,8 +62,8 @@ const Login = (props) => {
                 name="email"
                 ref={register({ required: true, pattern: /^\S+@\S+$/i })}
               />
-              {errors.Email &&
-                errors.Email.type === 'required' &&
+              {errors.email &&
+                errors.email.type === 'required' &&
                 errorMessage(required)}
 
               <input
@@ -75,8 +75,8 @@ const Login = (props) => {
                 name="password"
                 ref={register({ required: true })}
               />
-              {errors.Password &&
-                errors.Password.type === 'required' &&
+              {errors.password &&
+                errors.password.type === 'required' &&
                 errorMessage(required)}
               <div className="stay-connected-container">
                 <div className="stay-connected">
