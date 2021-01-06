@@ -1,8 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { useToasts } from 'react-toast-notifications';
+import history from '../history';
+import API from '../services/API';
 import './style/Navbar.scss';
 
 const Navbar = () => {
+  if (history.location.pathname === '/') {
+    return false;
+  }
+  const { addToast } = useToasts();
+  const logout = async () => {
+    try {
+      await API.get('/login');
+      addToast('Déconnecté avec succès !', {
+        appearance: 'success',
+        autoDismiss: true,
+      });
+      history.push('/');
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <div className="navbar">
       <div className="logo" />
@@ -23,8 +43,13 @@ const Navbar = () => {
           <Link to="/calendar">Agenda</Link>
         </li>
       </ul>
+      <div className="containerLogoutButton">
+        <button className="btn-logout" type="button" onClick={logout}>
+          Déconnexion
+        </button>
+      </div>
     </div>
   );
 };
 
-export default Navbar;
+export default withRouter(Navbar);

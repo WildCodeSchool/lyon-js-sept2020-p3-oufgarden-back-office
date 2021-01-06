@@ -1,37 +1,47 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 /* import { useQuery } from 'react-query'; */
 import { useForm } from 'react-hook-form';
 import './style/Login.scss';
+import { useToasts } from 'react-toast-notifications';
+
 import API from '../services/API';
-import { UserContext } from './_context/UserContext';
-
-const required = 'Ce champs est requis';
-
-const errorMessage = (error) => {
-  return <div className="invalid-feedback">{error}</div>;
-};
+// import { UserContext } from './_context/UserContext';
 
 const Login = (props) => {
-  const { setIsAdmin } = useContext(UserContext);
+  const { addToast } = useToasts();
+  /* const { setIsAdmin } = useContext(UserContext);
+   */
   const { register, handleSubmit, errors } = useForm();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // eslint-disable-next-line no-unused-vars
   const [isLogged, setIsLogged] = useState(false);
+  const [stayConnected, setStayConnected] = useState(false);
+  const required = 'Ce champs est requis';
+
+  const errorMessage = (error) => {
+    return <div className="invalid-feedback">{error}</div>;
+  };
 
   const onSubmit = (data) => {
     API.post('/login', data)
       .then((res) => {
-        console.log(res.data);
         if (res.data === 'logged') {
-          setIsAdmin(true);
+          // setIsAdmin(true);
           setIsLogged(true);
-
+          addToast('Connecté avec succès !', {
+            appearance: 'success',
+            autoDismiss: true,
+          });
           props.history.push('/adherents');
         }
       })
       .catch((err) => {
         console.log(err);
+        addToast("Vous n'avez pas la permission d'entrer ici!", {
+          appearance: 'error',
+          autoDismiss: true,
+        });
       });
   };
 
@@ -51,8 +61,8 @@ const Login = (props) => {
                 name="email"
                 ref={register({ required: true, pattern: /^\S+@\S+$/i })}
               />
-              {errors.Email &&
-                errors.Email.type === 'required' &&
+              {errors.email &&
+                errors.email.type === 'required' &&
                 errorMessage(required)}
 
               <input
@@ -64,8 +74,8 @@ const Login = (props) => {
                 name="password"
                 ref={register({ required: true })}
               />
-              {errors.Password &&
-                errors.Password.type === 'required' &&
+              {errors.password &&
+                errors.password.type === 'required' &&
                 errorMessage(required)}
               <div className="stay-connected-container">
                 <div className="stay-connected">
@@ -75,6 +85,8 @@ const Login = (props) => {
                       name="stayConnected"
                       id="stayConnected"
                       type="checkbox"
+                      value={stayConnected}
+                      onClick={() => setStayConnected(true)}
                     />
                     Stay connected ?
                   </label>

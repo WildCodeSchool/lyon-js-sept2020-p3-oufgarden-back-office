@@ -69,7 +69,7 @@ export const makeEntityDeleter = (collectionName) => (id) =>
   makeCancellable('delete', `/${collectionName}/${id}`).then(extractData);
 
 export const makeEntityUpdater = (collectionName) => (id, attributes) =>
-  makeCancellable('patch', `/${collectionName}/${id}`, attributes).then(
+  makeCancellable('put', `/${collectionName}/${id}`, attributes).then(
     extractData
   );
 instance.interceptors.response.use(

@@ -1,0 +1,84 @@
+.TextEditor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 70vw;
+  padding-top: 3%;
+  // position: relative;
+  font-family: 'Montserrat';
+  font-size: 1rem;
+  color: black;
+}
+
+.Title {
+  text-align: center;
+  width: 100%;
+  position: relative;
+  margin-bottom: 1%;
+  font-family: 'Montserrat';
+  font-size: 1rem;
+}
+
+.Image {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 1%;
+  position: relative;
+  font-family: 'Montserrat';
+  font-size: 1rem;
+}
+
+.checkboxes {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 1%;
+}
+
+.h1 {
+  margin-bottom: 5%;
+  text-align: center;
+  font-family: 'Montserrat';
+  font-size: 2rem;
+  color: black;
+}
+
+.Editor {
+  background-color: #e6e6e6;
+  height: 70vh;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.EditorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.sendButton {
+  /* margin-top: 3%;
+  margin-left: 40%; */
+  margin-bottom: 3%;
+  background-color: #ebb349;
+  font-family: 'Montserrat';
+  font-size: 1rem;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: white;
+  padding: 15px 32px;
+  cursor: pointer;
+  &:focus,
+  &:hover {
+    outline: 0;
+    background-color: #ebb349;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+      0 3px 15px 0 rgba(0, 0, 0, 0.19);
+  }
+}
+
+.basic-multi-select {
+  width: 50%;
+  margin-top: 20px;
+}
