@@ -35,13 +35,6 @@ const GardenCreation = (props) => {
     },
   ]);
 
-  // test pour react select
-  const options = allPlantFamilies.map((elem) => {
-    return {
-      value: elem.id,
-      label: `${elem.main_category} -  ${elem.sub_category}`,
-    };
-  });
   const {
     match: {
       params: { id },
@@ -50,9 +43,20 @@ const GardenCreation = (props) => {
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
+
   useEffect(() => {
-    getEntity('garden', id).then((data) => setGarden(data));
+    if (id) {
+      getEntity('garden', id).then((data) => setGarden(data));
+    }
   }, [id]);
+
+  // test pour react select
+  const options = allPlantFamilies.map((elem) => {
+    return {
+      value: elem.id,
+      label: `${elem.main_category} -  ${elem.sub_category}`,
+    };
+  });
 
   console.log(Garden);
 
@@ -293,8 +297,7 @@ const GardenCreation = (props) => {
               Zone à creer :
               {inputList.map((x, i) => {
                 return (
-                  // not the best solution for the key but could not find another one - do not replace with Math.random()
-                  <div key={new Date()}>
+                  <div>
                     <input
                       name="zone_name"
                       type="text"
