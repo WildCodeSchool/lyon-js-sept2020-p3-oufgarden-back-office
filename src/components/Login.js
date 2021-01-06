@@ -24,7 +24,6 @@ const Login = (props) => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     API.post('/login', data)
       .then((res) => {
         if (res.data === 'logged') {
