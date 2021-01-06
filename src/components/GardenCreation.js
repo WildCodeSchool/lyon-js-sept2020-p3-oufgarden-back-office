@@ -21,6 +21,12 @@ const errorMessage = (error) => {
 };
 
 const GardenCreation = (props) => {
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
+
   const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
   const [Garden, setGarden] = useState([]);
@@ -35,6 +41,16 @@ const GardenCreation = (props) => {
     },
   ]);
 
+  useEffect(() => {
+    getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
+  }, []);
+
+  useEffect(() => {
+    if (id) {
+      getEntity('garden', id).then((data) => setGarden(data));
+    }
+  }, [id]);
+
   // test pour react select
   const options = allPlantFamilies.map((elem) => {
     return {
@@ -42,17 +58,6 @@ const GardenCreation = (props) => {
       label: `${elem.main_category} -  ${elem.sub_category}`,
     };
   });
-  const {
-    match: {
-      params: { id },
-    },
-  } = props;
-  useEffect(() => {
-    getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
-  }, []);
-  useEffect(() => {
-    getEntity('garden', id).then((data) => setGarden(data));
-  }, [id]);
 
   console.log(Garden);
 
@@ -294,7 +299,7 @@ const GardenCreation = (props) => {
               {inputList.map((x, i) => {
                 return (
                   // not the best solution for the key but could not find another one - do not replace with Math.random()
-                  <div key={new Date()}>
+                  <div>
                     <input
                       name="zone_name"
                       type="text"

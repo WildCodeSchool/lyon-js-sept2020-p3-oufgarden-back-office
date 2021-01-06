@@ -29,7 +29,7 @@ const Garden = () => {
         });
       });
     } catch (err) {
-      addToast('Un problème est survenu lors de la suppression du membre', {
+      addToast('Un problème est survenu lors de la suppression du jardin', {
         appearance: 'error',
         autoDismiss: true,
       });
