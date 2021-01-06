@@ -1,10 +1,7 @@
-.user-list-container {
+.button-user-container {
+  display: flex;
+  justify-content: center;
   margin: 100px 20px 20px 15%;
-  .button-user-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
 
   .button-user-list {
     width: 20vw;
@@ -62,6 +59,10 @@
       color: black;
     }
   }
+}
+
+.user-list-container {
+  margin: 100px 20px 20px 15%;
 
   .adherent-row {
     display: flex;

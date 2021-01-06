@@ -18,13 +18,6 @@ const ListArticles = (props) => {
       setArticles(elem);
     });
   }, []);
-  console.log(articles);
-  /*  useEffect(() => {
-    getCollection('articles').then((elem) => {
-      setArticles(() => elem);
-    });
-  }, [props.location]); */
-
   useEffect(() => {
     getCollection('tags').then((data) => setAllTags(data));
   }, []);
@@ -59,25 +52,11 @@ const ListArticles = (props) => {
     } else {
       setTagList((prevState) => [...prevState, +target.id]);
     }
-    // if (target.className !== 'filterBtn-on') {
-    //   target.className = 'filterBtn-on';
-    // } else {
-    //   target.className = 'filterBtn-off';
-    // }
   };
   console.log(props);
   const handleEdit = (id) => {
     props.history.push(`/adherents/${id}`);
   };
-
-  // const handleDelete = async (id) => {
-  //   await makeEntityDeleter('articles')(id);
-  //   getCollection('articles').then((elem) => {
-  //     console.log(elem);
-  //     setArticles(elem);
-  //   });
-  // };
-
   return (
     <div>
       <div className="articleListContainer">
