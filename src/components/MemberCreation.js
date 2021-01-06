@@ -50,7 +50,7 @@ const MemberCreation = (props) => {
   });
 
   return (
-    <div className="container">
+    <div>
       <div className="button-user-container">
         <button type="button" className="button-user-list">
           <Link to="/adherents">Listes Adhérents</Link>
@@ -59,7 +59,8 @@ const MemberCreation = (props) => {
           <Link to="/adherents/creation">Nouvel Adhérent</Link>
         </button>
       </div>
-      <div>
+
+      <div className="container">
         <form onSubmit={handleSubmit(onSubmit)}>
           <h3>Création d'un membre :</h3>
 
