@@ -38,13 +38,6 @@ const GardenCreation = (props) => {
     },
   ]);
 
-  // test pour react select
-  const options = allPlantFamilies.map((elem) => {
-    return {
-      value: elem.id,
-      label: `${elem.main_category} -  ${elem.sub_category}`,
-    };
-  });
   const {
     match: {
       params: { id },
@@ -53,11 +46,20 @@ const GardenCreation = (props) => {
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
+
   useEffect(() => {
     if (id) {
       getEntity('garden', id).then((data) => setGarden(data));
     }
   }, [id]);
+
+  // test pour react select
+  const options = allPlantFamilies.map((elem) => {
+    return {
+      value: elem.id,
+      label: `${elem.main_category} -  ${elem.sub_category}`,
+    };
+  });
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -107,9 +109,9 @@ const GardenCreation = (props) => {
           : inputList,
     };
     makeEntityAdder('garden')(newData)
-      .then((elem) => {
-        console.log(elem);
-      })
+      // .then((elem) => {
+      //   console.log(elem);
+      // })
       .catch((err) => console.log(err.response.data))
       .then(() => {
         e.target.reset();
