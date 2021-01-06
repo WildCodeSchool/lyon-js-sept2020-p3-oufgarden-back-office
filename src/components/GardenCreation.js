@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
+import _ from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
 
@@ -57,41 +58,32 @@ const GardenCreation = (props) => {
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
-    const list = [...inputList];
-    list[index][name] = value;
-    setInputList(list);
+    const deepCopyList = _.cloneDeep(inputList);
+    // const list = [...inputList]; careful, this does not work for nested arrays + it's a shallow copy
+
+    deepCopyList[index][name] = value;
+    setInputList(deepCopyList);
   };
 
   // handle click event of the Remove button
   const handleRemoveClick = (index) => {
-    const list = [...inputList];
-    list.splice(index, 1);
-    setInputList(list);
+    const deepCopyList = _.cloneDeep(inputList);
+    deepCopyList.splice(index, 1);
+    setInputList(deepCopyList);
   };
 
   // handle click event of the Add button
   const handleAddClick = () => {
-    setInputList([
-      ...inputList,
-      {
-        zone_name: '',
-        type: '',
-        exposition: '',
-        plantFamilyArray: [],
-        description: '',
-      },
-    ]);
+    const deepCopyList = _.cloneDeep(inputList);
+    deepCopyList.push({
+      zone_name: '',
+      type: '',
+      exposition: '',
+      plantFamilyArray: [],
+      description: '',
+    });
+    setInputList(deepCopyList);
   };
-
-  // format de l'objet data: {
-  //   "name": "",
-  //   "description": "",
-  //   "exposition": "",
-  //   "address_street": "",
-  //   "address_city": "",
-  //   "address_zipcode": "",
-  //   "zone_quantity": "0"
-  // }
 
   const onSubmit = (data, e) => {
     const newData = {
@@ -104,7 +96,12 @@ const GardenCreation = (props) => {
       description: data.description,
       exposition: data.exposition,
       zone_quantity: data.zone_quantity,
-      zone_details: [...inputList],
+      zone_details:
+        inputList.length === 1 &&
+        inputList[0].zone_name === '' &&
+        inputList[0].type === ''
+          ? []
+          : inputList,
     };
     console.log(newData);
     makeEntityAdder('garden')(newData)
@@ -136,14 +133,19 @@ const GardenCreation = (props) => {
   };
 
   const handleChangeSelect = (elem, i) => {
-    console.log(elem, i);
+    console.log(elem);
     if (elem.length > 0) {
       const plantFamilySelection = { i, value: elem.map((e) => e.value) };
       const arrFamilyId = plantFamilySelection.value;
-      const list = [...inputList];
-      list[i].plantFamilyArray = [...arrFamilyId];
-      setInputList(list);
+      const deepCopyList = _.cloneDeep(inputList);
+      deepCopyList[i].plantFamilyArray = [...arrFamilyId];
+      setInputList(deepCopyList);
       console.log(plantFamilySelection);
+    }
+    if (elem.length === 0) {
+      const deepCopyList = _.cloneDeep(inputList);
+      deepCopyList[i].plantFamilyArray = [];
+      setInputList(deepCopyList);
     }
   };
 
@@ -239,13 +241,22 @@ const GardenCreation = (props) => {
                 type="text"
                 name="address_zipcode"
                 // rajouter une validation sur le code postal
-                ref={register({ required: true })}
+                ref={register({
+                  required: true,
+                  pattern: {
+                    value: /^(?:[0-8]\d|9[0-8])\d{3}$/,
+                    message: 'Le format du code postal est invalide',
+                  },
+                })}
               />
             </label>
 
             {errors.address_zipcode &&
               errors.address_zipcode.type === 'required' &&
               errorMessage(required)}
+            {errors.address_zipcode && (
+              <p role="alert">{errors.address_zipcode.message}</p>
+            )}
           </div>
 
           <div>
@@ -258,22 +269,32 @@ const GardenCreation = (props) => {
             <label htmlFor="zone_quantity">
               Nombre de zones :{' '}
               <input
-                type="number"
+                type="text"
                 name="zone_quantity"
-                ref={register({ required: true })}
+                ref={register({
+                  required: true,
+                  pattern: {
+                    value: /^[0-9]$|^[1-9][0-9]$|^(100)$/,
+                    message: "Merci d'entrer un nombre",
+                  },
+                })}
               />
             </label>
 
             {errors.zone_quantity &&
               errors.zone_quantity.type === 'required' &&
               errorMessage(required)}
+            {errors.zone_quantity && (
+              <p role="alert">{errors.zone_quantity.message}</p>
+            )}
           </div>
           <div className="inputZoneCreation">
             <label htmlFor="zoneCreer">
               Zone à creer :
               {inputList.map((x, i) => {
                 return (
-                  <div>
+                  // not the best solution for the key but could not find another one - do not replace with Math.random()
+                  <div key={new Date()}>
                     <input
                       name="zone_name"
                       type="text"
@@ -303,14 +324,6 @@ const GardenCreation = (props) => {
                       onChange={(e) => handleInputChange(e, i)}
                     />
 
-                    {/* <Controller
-                      as={<Select onchange={handleSelectChange} />}
-                      options={options}
-                      name="ReactSelect"
-                      isClearable
-                      control={control}
-                      isMulti
-                    /> */}
                     <Controller
                       name="plantfamily"
                       control={control}
@@ -327,28 +340,6 @@ const GardenCreation = (props) => {
                         />
                       )}
                     />
-
-                    {/*  {allPlantFamilies &&
-                      allPlantFamilies.map((plantFamily) => {
-                        return (
-                          <div key={plantFamily.id}>
-                            <label
-                              htmlFor="{plantFamily.main_category + ' - ' +
-                                  plantFamily.sub_category}"
-                            >
-                              <input
-                                type="checkbox"
-                                id={plantFamily.id}
-                                name={`${plantFamily.main_category} - ${plantFamily.sub_category}`}
-                                onChange={(e) =>
-                                  handleCheckboxChange(e.target, i)
-                                }
-                              />
-                              {`${plantFamily.main_category} - ${plantFamily.sub_category}`}
-                            </label>
-                          </div>
-                        );
-                      })} */}
 
                     <div className="btn-box">
                       {inputList.length - 1 === i && (
