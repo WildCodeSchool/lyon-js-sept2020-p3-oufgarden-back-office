@@ -1,8 +1,68 @@
+.button-garden-container {
+  margin: 100px 0 80px 0;
+  display: flex;
+  justify-content: center;
+}
+.button-garden-list {
+  width: 20vw;
+  height: 5vh;
+  border: none;
+  margin: 1%;
+  border-radius: 8px;
+  font-family: 'Montserrat';
+  font-size: 1rem;
+  cursor: pointer;
+  &:active {
+    background-color: #ebb349;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  &:focus,
+  &:hover {
+    outline: 0;
+    background-color: #ebb349;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
+.button-garden {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20vw;
+  height: 5vh;
+  border: none;
+  margin: 1%;
+  border-radius: 8px;
+  font-family: 'Montserrat';
+  font-size: 1rem;
+  cursor: pointer;
+  &:active {
+    background-color: #ebb349;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  &:focus,
+  &:hover {
+    outline: 0;
+    background-color: #ebb349;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
 .containerGarden {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 10%;
   margin-bottom: 100px;
 
   .inputZoneCreation {
@@ -13,11 +73,9 @@
   .formContainer {
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
-    width: 65vw;
     background-color: #e6e6e6;
     padding: 10px;
-    margin-top: 15%;
+
     border-radius: 5px;
     padding: 30px;
     min-width: 500px;
