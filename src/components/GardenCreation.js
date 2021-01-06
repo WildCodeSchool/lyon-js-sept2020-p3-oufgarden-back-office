@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
 
-import { getCollection, makeEntityAdder } from '../services/API';
+import { getCollection, makeEntityAdder, getEntity } from '../services/API';
 import './style/GardenCreation.scss';
 
 // Messages
@@ -22,7 +22,7 @@ const errorMessage = (error) => {
 const GardenCreation = (props) => {
   const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
-  const [allGarden, setAllGarden] = useState([]);
+  const [Garden, setGarden] = useState([]);
 
   const [inputList, setInputList] = useState([
     {
@@ -41,13 +41,19 @@ const GardenCreation = (props) => {
       label: `${elem.main_category} -  ${elem.sub_category}`,
     };
   });
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
   useEffect(() => {
-    getCollection('garden').then((data) => setAllGarden(data));
-  }, []);
-  console.log(allGarden);
+    getEntity('garden', id).then((data) => setGarden(data));
+  }, [id]);
+
+  console.log(Garden);
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -140,16 +146,6 @@ const GardenCreation = (props) => {
       console.log(plantFamilySelection);
     }
   };
-  const {
-    match: {
-      params: { id },
-    },
-  } = props;
-  let gardenToEdit = {};
-  if (id) {
-    gardenToEdit = allGarden.find((e) => e.id === +id);
-    console.log(gardenToEdit);
-  }
 
   return (
     <div className="containerGarden">
@@ -170,6 +166,7 @@ const GardenCreation = (props) => {
                 type="text"
                 name="name"
                 ref={register({ required: true })}
+                defaultValue={Garden.name}
               />
             </label>
 
