@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
@@ -51,10 +52,10 @@ const GardenCreation = (props) => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
   useEffect(() => {
-    getEntity('garden', id).then((data) => setGarden(data));
+    if (id) {
+      getEntity('garden', id).then((data) => setGarden(data));
+    }
   }, [id]);
-
-  console.log(Garden);
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -103,7 +104,6 @@ const GardenCreation = (props) => {
           ? []
           : inputList,
     };
-    console.log(newData);
     makeEntityAdder('garden')(newData)
       .then((elem) => {
         console.log(elem);
@@ -122,25 +122,15 @@ const GardenCreation = (props) => {
         ]);
       })
       .then(() => props.history.push('/garden'));
-    //   .catch((err) => {
-    //     console.log(err.response.data);
-    //     /* if (err.response.data.errorsByField[0].context !== undefined) {
-    //       console.log(err.response.data.errorsByField[1].context.label);
-    //     } else {
-    //       console.log(err.response.data.errorsByField[0].message);
-    //     } */
-    //   });
   };
 
   const handleChangeSelect = (elem, i) => {
-    console.log(elem);
     if (elem.length > 0) {
       const plantFamilySelection = { i, value: elem.map((e) => e.value) };
       const arrFamilyId = plantFamilySelection.value;
       const deepCopyList = _.cloneDeep(inputList);
       deepCopyList[i].plantFamilyArray = [...arrFamilyId];
       setInputList(deepCopyList);
-      console.log(plantFamilySelection);
     }
     if (elem.length === 0) {
       const deepCopyList = _.cloneDeep(inputList);
@@ -294,7 +284,7 @@ const GardenCreation = (props) => {
               {inputList.map((x, i) => {
                 return (
                   // not the best solution for the key but could not find another one - do not replace with Math.random()
-                  <div key={new Date()}>
+                  <div key={i}>
                     <input
                       name="zone_name"
                       type="text"

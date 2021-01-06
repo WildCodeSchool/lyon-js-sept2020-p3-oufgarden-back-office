@@ -41,7 +41,6 @@ const Adherents = (props) => {
   const handleEdit = (id) => {
     props.history.push(`/adherents/${id}`);
   };
-  console.log(props);
 
   return (
     <div>

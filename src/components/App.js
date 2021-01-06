@@ -9,7 +9,6 @@ import TagsPage from './TagsPage';
 import MemberCreation from './MemberCreation';
 import history from '../history';
 import { UserProvider } from './_context/UserContext';
-import MemberEdition from './MemberEdition';
 import ListArticles from './ListArticles';
 import ArticleCreation from './ArticleCreation';
 import Garden from './Garden';
@@ -31,7 +30,7 @@ const App = () => {
                   path="/adherents/creation"
                   component={MemberCreation}
                 />
-                <Route exact path="/adherents/:id" component={MemberEdition} />
+                <Route exact path="/adherents/:id" component={MemberCreation} />
                 <Route exact path="/articles" component={ListArticles} />
 
                 <Route

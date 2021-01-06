@@ -35,7 +35,6 @@ const Garden = (props) => {
       });
     }
   };
-  console.log(props);
   const handleEdit = (id) => {
     props.history.push(`/garden/${id}`);
   };

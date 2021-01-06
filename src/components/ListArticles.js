@@ -53,9 +53,8 @@ const ListArticles = (props) => {
       setTagList((prevState) => [...prevState, +target.id]);
     }
   };
-  console.log(props);
   const handleEdit = (id) => {
-    props.history.push(`/adherents/${id}`);
+    props.history.push(`/articles/${id}`);
   };
   return (
     <div>

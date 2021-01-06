@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToasts } from 'react-toast-notifications';
 import { Link } from 'react-router-dom';
 
-import { makeEntityAdder } from '../services/API';
+import { makeEntityAdder, getEntity } from '../services/API';
 import './style/MemberCreation.scss';
 
 const generator = require('generate-password');
 
 const MemberCreation = (props) => {
+  const [userToEdit, setUserToEdit] = useState([]);
   // Messages
   const required = 'Ce champ est obligatoire';
   const maxLength = 'Vous avez dépassé le nombre maximal de caractères.';
@@ -48,7 +49,19 @@ const MemberCreation = (props) => {
     numbers: true,
     strict: true,
   });
-
+  // Fusion MemberEdition Start here !
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
+  useEffect(() => {
+    if (id) {
+      getEntity('users', id).then((elem) => {
+        setUserToEdit(elem);
+      });
+    }
+  }, [id]);
   return (
     <div>
       <div className="button-user-container">
@@ -71,6 +84,7 @@ const MemberCreation = (props) => {
                 type="text"
                 name="lastname"
                 ref={register({ required: true, maxLength: 50 })}
+                defaultValue={userToEdit.lastname}
               />
             </label>
 
@@ -89,6 +103,7 @@ const MemberCreation = (props) => {
                 type="text"
                 name="firstname"
                 ref={register({ required: true, maxLength: 50 })}
+                defaultValue={userToEdit.firstname}
               />
             </label>
 
@@ -116,6 +131,7 @@ const MemberCreation = (props) => {
                 })}
                 type="email"
                 placeholder="example@mail.com"
+                defaultValue={userToEdit.email}
               />
             </label>
 
