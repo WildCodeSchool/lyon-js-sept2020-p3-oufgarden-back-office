@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 
-import { getCollection, makeEntityDeleter, getEntity } from '../services/API';
+import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/ListArticles.scss';
 
 const ListArticles = (props) => {
@@ -18,12 +18,12 @@ const ListArticles = (props) => {
       setArticles(elem);
     });
   }, []);
-
-  useEffect(() => {
+  console.log(articles);
+  /*  useEffect(() => {
     getCollection('articles').then((elem) => {
       setArticles(() => elem);
     });
-  }, [props.location]);
+  }, [props.location]); */
 
   useEffect(() => {
     getCollection('tags').then((data) => setAllTags(data));
@@ -65,11 +65,9 @@ const ListArticles = (props) => {
     //   target.className = 'filterBtn-off';
     // }
   };
-
-  const handleEdit = async (id, data) => {
-    await getEntity(`/articles/${id}`, data);
-    // makeEntityUpdater('articles')(data);
-    props.history.push(`/articles/${id}`, data);
+  console.log(props);
+  const handleEdit = (id) => {
+    props.history.push(`/adherents/${id}`);
   };
 
   // const handleDelete = async (id) => {
@@ -82,32 +80,32 @@ const ListArticles = (props) => {
 
   return (
     <div>
-      <div className="buttons">
-        <button type="button" className="buttonList">
-          <Link to="/articles">Liste Articles</Link>
-        </button>
-        <button type="button" className="buttonArticle">
-          <Link to="/articles/creation">Nouvel Article</Link>
-        </button>
-      </div>
-      <div className="filterContainer">
-        {allTags &&
-          allTags.map((tag) => {
-            return (
-              <div key={tag.id}>
-                <button
-                  type="button"
-                  className="filterButton"
-                  id={tag.id}
-                  onClick={(e) => handleTagList(e.target)}
-                >
-                  {tag.name}
-                </button>
-              </div>
-            );
-          })}
-      </div>
       <div className="articleListContainer">
+        <div className="buttons">
+          <button type="button" className="buttonList">
+            <Link to="/articles">Liste Articles</Link>
+          </button>
+          <button type="button" className="buttonArticle">
+            <Link to="/articles/creation">Nouvel Article</Link>
+          </button>
+        </div>
+        <div className="filterContainer">
+          {allTags &&
+            allTags.map((tag) => {
+              return (
+                <div key={tag.id}>
+                  <button
+                    type="button"
+                    className="filterButton"
+                    id={tag.id}
+                    onClick={(e) => handleTagList(e.target)}
+                  >
+                    {tag.name}
+                  </button>
+                </div>
+              );
+            })}
+        </div>
         {articlesFiltered.length > 0
           ? articles
               .filter((article) => {
@@ -130,6 +128,7 @@ const ListArticles = (props) => {
                       >
                         <MdEdit
                           size={25}
+                          style={{ cursor: 'pointer' }}
                           onClick={() => {
                             handleEdit(e.id);
                           }}

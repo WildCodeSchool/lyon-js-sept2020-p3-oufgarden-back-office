@@ -17,6 +17,7 @@
 .filterButton {
   font-size: 1rem;
   border: 2px solid #0f294f;
+  margin: 10px;
   &:hover,
   &:focus {
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
@@ -35,11 +36,10 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 70vw;
-  position: relative;
   font-family: 'Montserrat';
   font-size: 1rem;
   color: black;
+  margin: 100px 20px 20px 15%;
 }
 
 .ArticlesRow {

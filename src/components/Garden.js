@@ -8,7 +8,7 @@ import { useToasts } from 'react-toast-notifications';
 import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/Garden.scss';
 
-const Garden = () => {
+const Garden = (props) => {
   const { addToast } = useToasts();
   const [gardenList, setGardenList] = useState([]);
 
@@ -35,6 +35,10 @@ const Garden = () => {
       });
     }
   };
+  console.log(props);
+  const handleEdit = (id) => {
+    props.history.push(`/garden/${id}`);
+  };
   return (
     <div className="garden-list-container">
       <div className="button-garden-container">
@@ -54,7 +58,13 @@ const Garden = () => {
             <div className="garden-list-icons">
               {/* IconContext provider pour personnaliser les props de react-icons */}
               <IconContext.Provider value={{ className: 'react-icons' }}>
-                <MdEdit size={25} />
+                <MdEdit
+                  size={25}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    handleEdit(e.id);
+                  }}
+                />
                 <MdDelete
                   style={{ cursor: 'pointer' }}
                   size={25}
