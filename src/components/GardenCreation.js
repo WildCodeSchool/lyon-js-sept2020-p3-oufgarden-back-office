@@ -59,8 +59,6 @@ const GardenCreation = (props) => {
     };
   });
 
-  console.log(Garden);
-
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const deepCopyList = _.cloneDeep(inputList);
@@ -108,11 +106,11 @@ const GardenCreation = (props) => {
           ? []
           : inputList,
     };
-    console.log(newData);
+
     makeEntityAdder('garden')(newData)
-      .then((elem) => {
-        console.log(elem);
-      })
+      // .then((elem) => {
+      //   console.log(elem);
+      // })
       .catch((err) => console.log(err.response.data))
       .then(() => {
         e.target.reset();
@@ -127,25 +125,15 @@ const GardenCreation = (props) => {
         ]);
       })
       .then(() => props.history.push('/garden'));
-    //   .catch((err) => {
-    //     console.log(err.response.data);
-    //     /* if (err.response.data.errorsByField[0].context !== undefined) {
-    //       console.log(err.response.data.errorsByField[1].context.label);
-    //     } else {
-    //       console.log(err.response.data.errorsByField[0].message);
-    //     } */
-    //   });
   };
 
   const handleChangeSelect = (elem, i) => {
-    console.log(elem);
     if (elem.length > 0) {
       const plantFamilySelection = { i, value: elem.map((e) => e.value) };
       const arrFamilyId = plantFamilySelection.value;
       const deepCopyList = _.cloneDeep(inputList);
       deepCopyList[i].plantFamilyArray = [...arrFamilyId];
       setInputList(deepCopyList);
-      console.log(plantFamilySelection);
     }
     if (elem.length === 0) {
       const deepCopyList = _.cloneDeep(inputList);
@@ -298,8 +286,7 @@ const GardenCreation = (props) => {
               Zone à creer :
               {inputList.map((x, i) => {
                 return (
-                  // not the best solution for the key but could not find another one - do not replace with Math.random()
-                  <div>
+                  <div key={i}>
                     <input
                       name="zone_name"
                       type="text"

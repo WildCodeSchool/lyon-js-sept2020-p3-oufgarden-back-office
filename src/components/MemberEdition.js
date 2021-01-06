@@ -28,11 +28,13 @@ const MemberEdition = (props) => {
     },
   } = props;
   useEffect(() => {
-    getEntity('users', id).then((elem) => {
-      setEmail(elem.email);
-      setFirstname(elem.firstname);
-      setLastname(elem.lastname);
-    });
+    if (id) {
+      getEntity('users', id).then((elem) => {
+        setEmail(elem.email);
+        setFirstname(elem.firstname);
+        setLastname(elem.lastname);
+      });
+    }
   }, [id]);
 
   const onUpdate = async (data) => {
