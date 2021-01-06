@@ -1,7 +1,7 @@
 .TextEditor {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   width: 70vw;
   padding-top: 3%;
@@ -50,10 +50,14 @@
   height: 70vh;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
+.EditorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .sendButton {
-  margin-top: 3%;
-  margin-left: 40%;
+  /* margin-top: 3%;
+  margin-left: 40%; */
   margin-bottom: 3%;
   background-color: #ebb349;
   font-family: 'Montserrat';
@@ -72,4 +76,9 @@
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
       0 3px 15px 0 rgba(0, 0, 0, 0.19);
   }
+}
+
+.basic-multi-select {
+  width: 50%;
+  margin-top: 20px;
 }

@@ -84,7 +84,7 @@ const ListArticles = (props) => {
     <div>
       <div className="buttons">
         <button type="button" className="buttonList">
-          <Link to="/articles">Listes</Link>
+          <Link to="/articles">Liste Articles</Link>
         </button>
         <button type="button" className="buttonArticle">
           <Link to="/articles/creation">Nouvel Article</Link>
