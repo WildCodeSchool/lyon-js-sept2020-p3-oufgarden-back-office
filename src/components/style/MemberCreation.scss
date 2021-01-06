@@ -4,11 +4,13 @@
   align-items: center;
 
   form {
+    display: flex;
+    flex-direction: column;
     margin-top: 50px;
     min-width: 500px;
     background-color: #e6e6e6;
-    border: 2px solid black;
-    border-radius: 25px;
+    border: 2px solid rgba(0, 0, 0, 0.226);
+    border-radius: 5px;
     padding: 10px;
 
     h3 {
@@ -18,8 +20,7 @@
     }
 
     input {
-     
-      border-radius: 4px;
+      border-radius: 2px;
       border: 1px solid white;
       padding: 10px 15px;
       margin-bottom: 10px;
@@ -44,15 +45,19 @@
         content: '⚠ ';
       }
     }
-
+    .submitFormBtn {
+      align-self: center;
+    }
     input[type='submit'] {
-      background: green;
+      background: rgb(103, 158, 103);
       color: white;
       text-transform: uppercase;
       margin-top: 40px;
       padding: 20px;
       font-weight: 100;
       letter-spacing: 10px;
+      width: 100%;
+
       &:hover {
         background: red;
       }

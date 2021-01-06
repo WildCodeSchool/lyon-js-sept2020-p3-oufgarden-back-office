@@ -3,6 +3,8 @@
 // import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+
 import { getEntity, makeEntityUpdater } from '../services/API';
 
 const MemberEdition = (props) => {
@@ -26,7 +28,6 @@ const MemberEdition = (props) => {
     },
   } = props;
   useEffect(() => {
-    console.log(id);
     getEntity('users', id).then((elem) => {
       setEmail(elem.email);
       setFirstname(elem.firstname);
@@ -54,6 +55,14 @@ const MemberEdition = (props) => {
   };
   return (
     <div className="container">
+      <div className="button-user-container">
+        <button type="button" className="button-user-list">
+          <Link to="/adherents">Listes Adhérents</Link>
+        </button>
+        <button type="button" className="button-user">
+          <Link to="/adherents/creation">Nouvel Adhérent</Link>
+        </button>
+      </div>
       <div>
         <form onSubmit={handleSubmit(onUpdate)}>
           <h3>Modification de l'utilisateur :</h3>

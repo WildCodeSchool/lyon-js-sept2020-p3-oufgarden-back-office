@@ -22,6 +22,7 @@ const errorMessage = (error) => {
 const GardenCreation = (props) => {
   const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
+  const [allGarden, setAllGarden] = useState([]);
 
   const [inputList, setInputList] = useState([
     {
@@ -43,6 +44,10 @@ const GardenCreation = (props) => {
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
+  useEffect(() => {
+    getCollection('garden').then((data) => setAllGarden(data));
+  }, []);
+  console.log(allGarden);
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -135,6 +140,17 @@ const GardenCreation = (props) => {
       console.log(plantFamilySelection);
     }
   };
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
+  let gardenToEdit = {};
+  if (id) {
+    gardenToEdit = allGarden.find((e) => e.id === +id);
+    console.log(gardenToEdit);
+  }
+
   return (
     <div className="containerGarden">
       <div>
