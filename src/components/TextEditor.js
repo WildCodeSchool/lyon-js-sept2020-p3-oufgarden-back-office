@@ -48,7 +48,7 @@ const ArticleCreationForm = () => {
     setUrlImage(e.target.value);
   };
 
-  const handleClick = async () => {
+  const handleSubmit = async () => {
     const data = {
       content: articleContent,
       title,
@@ -129,7 +129,7 @@ const ArticleCreationForm = () => {
           handleSelectGardenChange(e);
         }}
       />
-      <button type="button" className="sendButton" onClick={handleClick}>
+      <button type="button" className="sendButton" onClick={handleSubmit}>
         Créer
       </button>
     </div>

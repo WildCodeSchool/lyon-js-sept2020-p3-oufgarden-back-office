@@ -2,19 +2,46 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToasts } from 'react-toast-notifications';
 import { Link } from 'react-router-dom';
+import Select from 'react-select';
 
-import { makeEntityAdder, getEntity } from '../services/API';
+import { makeEntityAdder, getEntity, getCollection } from '../services/API';
 import './style/MemberCreation.scss';
 
 const generator = require('generate-password');
 
 const MemberCreation = (props) => {
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
+
   const [userToEdit, setUserToEdit] = useState([]);
-  // Messages
+  const [gardenList, setGardenList] = useState([]);
+  const [gardenArray, setGardenArray] = useState([]);
+
+  // MemberEdition was merged with MemberCreation | if there is an id in the props, then it's for edition
+  useEffect(() => {
+    getCollection('garden').then((data) => setGardenList(data));
+  }, []);
+
+  useEffect(() => {
+    if (id) {
+      getEntity('users', id).then((elem) => {
+        setUserToEdit(elem);
+      });
+    }
+  }, [id]);
+
+  const { addToast } = useToasts();
+
+  const { register, handleSubmit, errors, getValues } = useForm();
+
+  // Error messages for react hook form
   const required = 'Ce champ est obligatoire';
   const maxLength = 'Vous avez dépassé le nombre maximal de caractères.';
 
-  // Error Component
+  // Error Component for react hook form
   const errorMessage = (error) => {
     return (
       <div className="invalid-feedback">
@@ -22,14 +49,27 @@ const MemberCreation = (props) => {
       </div>
     );
   };
-  const { addToast } = useToasts();
 
-  const { register, handleSubmit, errors, getValues } = useForm();
+  // formatting the options for react-select
+  const gardenOptions = gardenList.map((elem) => {
+    return {
+      value: elem.id,
+      label: `${elem.name}`,
+    };
+  });
+
   const onSubmit = async (data, e) => {
+    // data is updated to add the array with garden ids, before submit
+    const newData = {
+      ...data,
+      gardenArray,
+    };
     try {
-      await makeEntityAdder('users')(data).then(() => {
-        props.history.push('/adherents');
-      });
+      await makeEntityAdder('users')(newData)
+        .then(() => setGardenArray([]))
+        .then(() => {
+          props.history.push('/adherents');
+        });
       addToast('Membre crée avec succès', {
         appearance: 'success',
         autoDismiss: true,
@@ -43,25 +83,21 @@ const MemberCreation = (props) => {
     e.target.reset();
   };
 
+  const handleSelectGardenChange = (elem) => {
+    if (!elem) {
+      setGardenArray([]);
+    } else {
+      setGardenArray(elem.map((e) => e.value));
+    }
+  };
+
   // generation du mot de passe
   const generatedPassword = generator.generate({
     length: 8,
     numbers: true,
     strict: true,
   });
-  // Fusion MemberEdition Start here !
-  const {
-    match: {
-      params: { id },
-    },
-  } = props;
-  useEffect(() => {
-    if (id) {
-      getEntity('users', id).then((elem) => {
-        setUserToEdit(elem);
-      });
-    }
-  }, [id]);
+
   return (
     <div>
       <div className="button-user-container">
@@ -201,6 +237,19 @@ const MemberCreation = (props) => {
               />
             </label>
           </div>
+
+          <Select
+            isMulti
+            name="garden"
+            placeholder="Jardin(s) lié(s) à l'adhérent"
+            options={gardenOptions}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={(e) => {
+              handleSelectGardenChange(e);
+            }}
+          />
+
           <div className="submitFormBtn">
             <input type="submit" value="Créer le membre" />
           </div>
