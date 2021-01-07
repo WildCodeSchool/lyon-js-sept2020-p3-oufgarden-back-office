@@ -3,8 +3,13 @@ import { useForm } from 'react-hook-form';
 import { useToasts } from 'react-toast-notifications';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
+import dayjs from 'dayjs';
 
-import { makeEntityAdder, getEntity, getCollection } from '../services/API';
+import {
+  makeEntityAdder,
+  getEntity,
+  getCollection /* , makeEntityUpdater */,
+} from '../services/API';
 import './style/MemberCreation.scss';
 
 const generator = require('generate-password');
@@ -19,19 +24,28 @@ const MemberCreation = (props) => {
   const [userToEdit, setUserToEdit] = useState([]);
   const [gardenList, setGardenList] = useState([]);
   const [gardenArray, setGardenArray] = useState([]);
+  const [forUpdate, setForUpdate] = useState(false);
 
   // MemberEdition was merged with MemberCreation | if there is an id in the props, then it's for edition
   useEffect(() => {
+    if (id) {
+      setForUpdate(true);
+    }
     getCollection('garden').then((data) => setGardenList(data));
   }, []);
 
   useEffect(() => {
-    if (id) {
-      getEntity('users', id).then((elem) => {
-        setUserToEdit(elem);
+    if (forUpdate) {
+      getEntity('users', id).then((data) => {
+        setUserToEdit(() => ({
+          ...data,
+          birthdate: dayjs(data.birthdate).format('YYYY-MM-DD'),
+          membership_start: dayjs(data.membership_start).format('YYYY-MM-DD'),
+          user_creation: dayjs(data.user_creation).format('YYYY-MM-DD'),
+        }));
       });
     }
-  }, [id]);
+  }, [forUpdate]);
 
   const { addToast } = useToasts();
 
@@ -58,30 +72,50 @@ const MemberCreation = (props) => {
     };
   });
 
+  // const gardenInitialOptionsIfUpdate = userToEdit.map((elem) => {
+  //   return {
+  //     value: elem.id,
+  //     label: `${elem.name}`,
+  //   };
+  // });
+
   const onSubmit = async (data, e) => {
     // data is updated to add the array with garden ids, before submit
-    const newData = {
-      ...data,
-      gardenArray,
-    };
-    console.log(newData);
-    try {
-      await makeEntityAdder('users')(newData)
-        .then(() => setGardenArray([]))
-        .then(() => {
-          props.history.push('/adherents');
+    if (!forUpdate) {
+      const newData = {
+        ...data,
+        gardenArray,
+      };
+      console.log(newData);
+      try {
+        await makeEntityAdder('users')(newData)
+          .then(() => {
+            setGardenArray([]);
+            setGardenList([]);
+            setUserToEdit([]);
+          })
+          .then(() => {
+            props.history.push('/adherents');
+          });
+        addToast('Membre crée avec succès', {
+          appearance: 'success',
+          autoDismiss: true,
         });
-      addToast('Membre crée avec succès', {
-        appearance: 'success',
-        autoDismiss: true,
-      });
-    } catch (err) {
-      addToast('Email déjà utilisé', {
-        appearance: 'error',
-        autoDismiss: true,
-      });
+      } catch (err) {
+        addToast('Email déjà utilisé', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+      }
+      e.target.reset();
+    } else if (forUpdate) {
+      const dataNoUndefined = Object.keys(data).reduce((acc, key) => {
+        const Acc = acc;
+        if (data[key] !== undefined && data[key] !== '') Acc[key] = data[key];
+        return Acc;
+      }, {});
+      console.log(dataNoUndefined);
     }
-    e.target.reset();
   };
 
   const handleSelectGardenChange = (elem) => {
@@ -92,7 +126,7 @@ const MemberCreation = (props) => {
     }
   };
 
-  // generation du mot de passe
+  // generate a random password
   const generatedPassword = generator.generate({
     length: 8,
     numbers: true,
@@ -117,7 +151,11 @@ const MemberCreation = (props) => {
           <div>
             <label htmlFor="gender_marker">
               Civilité :{' '}
-              <select name="gender_marker" ref={register({ required: true })}>
+              <select
+                name="gender_marker"
+                ref={register({ required: !forUpdate })}
+                defaultValue={userToEdit.gender_marker}
+              >
                 <option value="madame">Mme</option>
                 <option value="monsieur">M.</option>
                 <option value="inconnu">Non précisé</option>
@@ -134,7 +172,7 @@ const MemberCreation = (props) => {
               <input
                 type="text"
                 name="lastname"
-                ref={register({ required: true, maxLength: 50 })}
+                ref={register({ required: !forUpdate, maxLength: 50 })}
                 defaultValue={userToEdit.lastname}
               />
             </label>
@@ -153,7 +191,7 @@ const MemberCreation = (props) => {
               <input
                 type="text"
                 name="firstname"
-                ref={register({ required: true, maxLength: 50 })}
+                ref={register({ required: !forUpdate, maxLength: 50 })}
                 defaultValue={userToEdit.firstname}
               />
             </label>
@@ -198,7 +236,7 @@ const MemberCreation = (props) => {
                 name="email"
                 aria-invalid={errors.email ? 'true' : 'false'}
                 ref={register({
-                  required: "L'email est obligatoire",
+                  required: !forUpdate,
                   pattern: {
                     value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                     message: "Le format de l'email est invalide",
@@ -220,12 +258,12 @@ const MemberCreation = (props) => {
                 name="emailConfirmation"
                 aria-invalid={errors.emailConfirmation ? 'true' : 'false'}
                 ref={register({
-                  required: "L'email est obligatoire",
+                  required: !forUpdate,
                   pattern: {
                     value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                     message: "Le format de l'email est invalide",
                   },
-                  validate: {
+                  validate: !forUpdate && {
                     matchesPreviousEmail: (value) => {
                       const { email } = getValues();
                       return (
@@ -250,6 +288,7 @@ const MemberCreation = (props) => {
               <input
                 type="text"
                 name="phone"
+                defaultValue={userToEdit.phone}
                 ref={register({
                   pattern: {
                     value: /^[0-9]{10}$/,
@@ -261,25 +300,88 @@ const MemberCreation = (props) => {
             {errors.phone && <p role="alert">{errors.phone.message}</p>}
           </div>
 
-          <div>
-            <label htmlFor="password">
-              Modifier le mot de passe (si nécessaire):{' '}
-            </label>
-            <input
-              type="text"
-              name="password"
-              defaultValue={generatedPassword}
-              ref={register({
-                required: 'Le mot de passe est obligatoire',
-                pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                  message:
-                    'Format invalide : 8 caractères minimum avec au moins 1 chiffre',
-                },
-              })}
-            />
-            {errors.password && <p role="alert">{errors.password.message}</p>}
-          </div>
+          {!forUpdate && (
+            <div>
+              <label htmlFor="password">
+                Modifier le mot de passe (si nécessaire):{' '}
+              </label>
+              <input
+                type="text"
+                name="password"
+                defaultValue={generatedPassword}
+                ref={register({
+                  required: 'Le mot de passe est obligatoire',
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                    message:
+                      'Format invalide : 8 caractères minimum avec au moins 1 chiffre',
+                  },
+                })}
+              />
+              {errors.password &&
+                errors.password.type === 'required' &&
+                errorMessage(required)}
+              {errors.password && <p role="alert">{errors.password.message}</p>}
+            </div>
+          )}
+          {forUpdate && (
+            <>
+              <div>
+                <label htmlFor="password">
+                  Nouveau mot de passe :
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="******"
+                    ref={register({
+                      pattern: {
+                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                        message:
+                          'Format invalide : 8 caractères minimum avec au moins 1 chiffre',
+                      },
+                    })}
+                  />
+                </label>
+                {errors.password && (
+                  <p role="alert">{errors.password.message}</p>
+                )}
+              </div>
+              <div>
+                <label htmlFor="passwordConfirmation">
+                  Confirmation du nouveau mot de passe :{' '}
+                  <input
+                    id="passwordConfirmation"
+                    name="passwordConfirmation"
+                    aria-invalid={
+                      errors.passwordConfirmation ? 'true' : 'false'
+                    }
+                    ref={register({
+                      pattern: {
+                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                        message:
+                          'Format invalide : 8 caractères minimum avec au moins 1 chiffre',
+                      },
+                      validate: {
+                        matchesPreviousPassword: (value) => {
+                          const { password } = getValues();
+                          return (
+                            password === value ||
+                            'Les mots de passe ne sont pas identiques'
+                          );
+                        },
+                      },
+                    })}
+                    type="password"
+                    placeholder="******"
+                  />
+                </label>
+
+                {errors.passwordConfirmation && (
+                  <p role="alert">{errors.passwordConfirmation.message}</p>
+                )}
+              </div>
+            </>
+          )}
 
           <div>
             <label htmlFor="admin">
@@ -290,6 +392,7 @@ const MemberCreation = (props) => {
                 id="admin"
                 value="true"
                 ref={register}
+                defaultValue={userToEdit.is_admin}
               />
             </label>
           </div>
@@ -299,6 +402,7 @@ const MemberCreation = (props) => {
             name="garden"
             placeholder="Jardin(s) lié(s) à l'adhérent"
             options={gardenOptions}
+            // here, add default values if update
             className="basic-multi-select"
             classNamePrefix="select"
             onChange={(e) => {
