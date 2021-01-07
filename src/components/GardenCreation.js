@@ -1,5 +1,8 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import _ from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
@@ -106,7 +109,6 @@ const GardenCreation = (props) => {
           ? []
           : inputList,
     };
-
     makeEntityAdder('garden')(newData)
       // .then((elem) => {
       //   console.log(elem);
@@ -143,221 +145,234 @@ const GardenCreation = (props) => {
   };
 
   return (
-    <div className="containerGarden">
-      <div>
-        <form
-          method="POST"
-          encType="multipart/form-data"
-          action="http://localhost:5000"
-          className="formContainer"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <h3>Création d'un Jardin :</h3>
+    <div>
+      <div className="button-garden-container">
+        <button type="button" className="button-garden-list">
+          <Link to="/garden">Liste Jardins</Link>
+        </button>
+        <button type="button" className="button-garden">
+          <Link to="/garden/creation">Nouveau Jardin</Link>
+        </button>
+      </div>
 
-          <div>
-            <label htmlFor="GardenName">
-              Nom du jardin:{' '}
-              <input
-                type="text"
-                name="name"
-                ref={register({ required: true })}
-                defaultValue={Garden.name}
-              />
-            </label>
+      <div className="containerGarden">
+        <div>
+          <form
+            method="POST"
+            encType="multipart/form-data"
+            action="http://localhost:5000"
+            className="formContainer"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <h3>Création d'un Jardin :</h3>
 
-            {errors.name &&
-              errors.name.type === 'required' &&
-              errorMessage(required)}
-          </div>
-          {/* partie upload */}
-          <div>
-            <label htmlFor="pic_profile">
-              Photo du jardin :{' '}
-              <input className="inputPics" type="file" name="pic_profile" />
-            </label>
-          </div>
+            <div>
+              <label htmlFor="GardenName">
+                Nom du jardin:{' '}
+                <input
+                  type="text"
+                  name="name"
+                  ref={register({ required: true })}
+                  defaultValue={Garden.name}
+                />
+              </label>
 
-          <div>
-            <label htmlFor="Location">
-              Description :{' '}
-              <input
-                type="textarea"
-                name="description"
-                ref={register({ required: true })}
-              />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="Location">
-              Exposition :{' '}
-              <input
-                type="text"
-                name="exposition"
-                ref={register({ required: true })}
-              />
-            </label>
-          </div>
+              {errors.name &&
+                errors.name.type === 'required' &&
+                errorMessage(required)}
+            </div>
+            {/* partie upload */}
+            <div>
+              <label htmlFor="pic_profile">
+                Photo du jardin :{' '}
+                <input className="inputPics" type="file" name="pic_profile" />
+              </label>
+            </div>
 
-          <div>
-            <label htmlFor="Location">
-              Adresse (rue) :{' '}
-              <input
-                type="text"
-                name="address_street"
-                ref={register({ required: true })}
-              />
-            </label>
+            <div>
+              <label htmlFor="Location">
+                Description :{' '}
+                <input
+                  type="textarea"
+                  name="description"
+                  ref={register({ required: true })}
+                />
+              </label>
+            </div>
+            <div>
+              <label htmlFor="Location">
+                Exposition :{' '}
+                <input
+                  type="text"
+                  name="exposition"
+                  ref={register({ required: true })}
+                />
+              </label>
+            </div>
 
-            {errors.address_street &&
-              errors.address_street.type === 'required' &&
-              errorMessage(required)}
-          </div>
-          <div>
-            <label htmlFor="Location">
-              Adresse (ville) :{' '}
-              <input
-                type="text"
-                name="address_city"
-                ref={register({ required: true })}
-              />
-            </label>
+            <div>
+              <label htmlFor="Location">
+                Adresse (rue) :{' '}
+                <input
+                  type="text"
+                  name="address_street"
+                  ref={register({ required: true })}
+                />
+              </label>
 
-            {errors.address_city &&
-              errors.address_city.type === 'required' &&
-              errorMessage(required)}
-          </div>
+              {errors.address_street &&
+                errors.address_street.type === 'required' &&
+                errorMessage(required)}
+            </div>
+            <div>
+              <label htmlFor="Location">
+                Adresse (ville) :{' '}
+                <input
+                  type="text"
+                  name="address_city"
+                  ref={register({ required: true })}
+                />
+              </label>
 
-          <div>
-            <label htmlFor="Location">
-              Code postal :{' '}
-              <input
-                type="text"
-                name="address_zipcode"
-                // rajouter une validation sur le code postal
-                ref={register({
-                  required: true,
-                  pattern: {
-                    value: /^(?:[0-8]\d|9[0-8])\d{3}$/,
-                    message: 'Le format du code postal est invalide',
-                  },
-                })}
-              />
-            </label>
+              {errors.address_city &&
+                errors.address_city.type === 'required' &&
+                errorMessage(required)}
+            </div>
 
-            {errors.address_zipcode &&
-              errors.address_zipcode.type === 'required' &&
-              errorMessage(required)}
-            {errors.address_zipcode && (
-              <p role="alert">{errors.address_zipcode.message}</p>
-            )}
-          </div>
+            <div>
+              <label htmlFor="Location">
+                Code postal :{' '}
+                <input
+                  type="text"
+                  name="address_zipcode"
+                  // rajouter une validation sur le code postal
+                  ref={register({
+                    required: true,
+                    pattern: {
+                      value: /^(?:[0-8]\d|9[0-8])\d{3}$/,
+                      message: 'Le format du code postal est invalide',
+                    },
+                  })}
+                />
+              </label>
 
-          <div>
-            <label htmlFor="pic_plan">
-              Plan : <input className="inputPics" type="file" name="pic_plan" />
-            </label>
-          </div>
+              {errors.address_zipcode &&
+                errors.address_zipcode.type === 'required' &&
+                errorMessage(required)}
+              {errors.address_zipcode && (
+                <p role="alert">{errors.address_zipcode.message}</p>
+              )}
+            </div>
 
-          <div>
-            <label htmlFor="zone_quantity">
-              Nombre de zones :{' '}
-              <input
-                type="text"
-                name="zone_quantity"
-                ref={register({
-                  required: true,
-                  pattern: {
-                    value: /^[0-9]$|^[1-9][0-9]$|^(100)$/,
-                    message: "Merci d'entrer un nombre",
-                  },
-                })}
-              />
-            </label>
+            <div>
+              <label htmlFor="pic_plan">
+                Plan :{' '}
+                <input className="inputPics" type="file" name="pic_plan" />
+              </label>
+            </div>
 
-            {errors.zone_quantity &&
-              errors.zone_quantity.type === 'required' &&
-              errorMessage(required)}
-            {errors.zone_quantity && (
-              <p role="alert">{errors.zone_quantity.message}</p>
-            )}
-          </div>
-          <div className="inputZoneCreation">
-            <label htmlFor="zoneCreer">
-              Zone à creer :
-              {inputList.map((x, i) => {
-                return (
-                  <div key={i}>
-                    <input
-                      name="zone_name"
-                      type="text"
-                      placeholder="Nom de la zone"
-                      value={x.zone_name}
-                      onChange={(e) => handleInputChange(e, i)}
-                    />
-                    <input
-                      name="type"
-                      type="text"
-                      placeholder="Quelle type de zone ? Serre, compost, potager.."
-                      value={x.type}
-                      onChange={(e) => handleInputChange(e, i)}
-                    />
-                    <input
-                      name="description"
-                      type="text"
-                      placeholder="Description de la zone"
-                      value={x.description}
-                      onChange={(e) => handleInputChange(e, i)}
-                    />
-                    <input
-                      name="exposition"
-                      type="text"
-                      placeholder="Exposition"
-                      value={x.exposition}
-                      onChange={(e) => handleInputChange(e, i)}
-                    />
+            <div>
+              <label htmlFor="zone_quantity">
+                Nombre de zones :{' '}
+                <input
+                  type="text"
+                  name="zone_quantity"
+                  ref={register({
+                    required: true,
+                    pattern: {
+                      value: /^[0-9]$|^[1-9][0-9]$|^(100)$/,
+                      message: "Merci d'entrer un nombre",
+                    },
+                  })}
+                />
+              </label>
 
-                    <Controller
-                      name="plantfamily"
-                      control={control}
-                      defaultValue=""
-                      render={({ onChange, value }) => (
-                        <Select
-                          options={options}
-                          onChange={(e) => {
-                            onChange(e.value);
-                            handleChangeSelect(e, i);
-                          }}
-                          value={value}
-                          isMulti
-                        />
-                      )}
-                    />
+              {errors.zone_quantity &&
+                errors.zone_quantity.type === 'required' &&
+                errorMessage(required)}
+              {errors.zone_quantity && (
+                <p role="alert">{errors.zone_quantity.message}</p>
+              )}
+            </div>
+            <div className="inputZoneCreation">
+              <label htmlFor="zoneCreer">
+                Zone à creer :
+                {inputList.map((x, i) => {
+                  return (
+                    // not the best solution for the key but could not find another one - do not replace with Math.random()
+                    <div key={i}>
+                      <input
+                        name="zone_name"
+                        type="text"
+                        placeholder="Nom de la zone"
+                        value={x.zone_name}
+                        onChange={(e) => handleInputChange(e, i)}
+                      />
+                      <input
+                        name="type"
+                        type="text"
+                        placeholder="Quelle type de zone ? Serre, compost, potager.."
+                        value={x.type}
+                        onChange={(e) => handleInputChange(e, i)}
+                      />
+                      <input
+                        name="description"
+                        type="text"
+                        placeholder="Description de la zone"
+                        value={x.description}
+                        onChange={(e) => handleInputChange(e, i)}
+                      />
+                      <input
+                        name="exposition"
+                        type="text"
+                        placeholder="Exposition"
+                        value={x.exposition}
+                        onChange={(e) => handleInputChange(e, i)}
+                      />
 
-                    <div className="btn-box">
-                      {inputList.length - 1 === i && (
-                        <button type="button" onClick={handleAddClick}>
-                          Ajouter
-                        </button>
-                      )}
-                      {inputList.length !== 1 && (
-                        <button
-                          type="button"
-                          onClick={() => handleRemoveClick(i)}
-                        >
-                          Supprimer
-                        </button>
-                      )}
+                      <Controller
+                        name="plantfamily"
+                        control={control}
+                        defaultValue=""
+                        render={({ onChange, value }) => (
+                          <Select
+                            options={options}
+                            onChange={(e) => {
+                              onChange(e.value);
+                              handleChangeSelect(e, i);
+                            }}
+                            value={value}
+                            isMulti
+                          />
+                        )}
+                      />
+
+                      <div className="btn-box">
+                        {inputList.length - 1 === i && (
+                          <button type="button" onClick={handleAddClick}>
+                            Ajouter
+                          </button>
+                        )}
+                        {inputList.length !== 1 && (
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveClick(i)}
+                          >
+                            Supprimer
+                          </button>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </label>
-          </div>
+                  );
+                })}
+              </label>
+            </div>
 
-          <div>
-            <input type="submit" value="Créer le jardin" />
-          </div>
-        </form>
+            <div className="submitFormBtn">
+              <input type="submit" value="Créer le jardin" />
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
