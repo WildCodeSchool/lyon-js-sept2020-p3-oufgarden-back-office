@@ -5,6 +5,8 @@ import { MdDelete, MdEdit } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 
 import { useToasts } from 'react-toast-notifications';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/Garden.scss';
 
@@ -19,21 +21,39 @@ const Garden = (props) => {
   }, []);
 
   const handleDelete = async (id) => {
-    try {
-      await makeEntityDeleter('garden')(id);
-      getCollection('garden').then((elem) => {
-        setGardenList(elem);
-        addToast('Jardin supprimé avec succès', {
-          appearance: 'success',
-          autoDismiss: true,
-        });
-      });
-    } catch (err) {
-      addToast('Un problème est survenu lors de la suppression du membre', {
-        appearance: 'error',
-        autoDismiss: true,
-      });
-    }
+    confirmAlert({
+      title: 'Confirmez la suppression',
+      message: 'Etes vous sûr de vouloir supprimer cet utilisateur ?',
+      buttons: [
+        {
+          label: 'Confirmer',
+          onClick: async () => {
+            try {
+              await makeEntityDeleter('garden')(id);
+              getCollection('garden').then((elem) => {
+                setGardenList(elem);
+                addToast('Jardin supprimé avec succès', {
+                  appearance: 'success',
+                  autoDismiss: true,
+                });
+              });
+            } catch (err) {
+              addToast(
+                'Un problème est survenu lors de la suppression du jardin',
+                {
+                  appearance: 'error',
+                  autoDismiss: true,
+                }
+              );
+            }
+          },
+        },
+        {
+          label: 'Annuler',
+          onClick: () => null,
+        },
+      ],
+    });
   };
   const handleEdit = (id) => {
     props.history.push(`/garden/${id}`);
