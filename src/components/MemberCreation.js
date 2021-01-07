@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-// import { useToasts } from 'react-toast-notifications';
+import { useToasts } from 'react-toast-notifications';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 
-import {
-  /* makeEntityAdder, */ getEntity,
-  getCollection,
-} from '../services/API';
+import { makeEntityAdder, getEntity, getCollection } from '../services/API';
 import './style/MemberCreation.scss';
 
 const generator = require('generate-password');
@@ -36,7 +33,7 @@ const MemberCreation = (props) => {
     }
   }, [id]);
 
-  // const { addToast } = useToasts();
+  const { addToast } = useToasts();
 
   const { register, handleSubmit, errors, getValues } = useForm();
 
@@ -61,30 +58,30 @@ const MemberCreation = (props) => {
     };
   });
 
-  const onSubmit = async (data /* , e */) => {
+  const onSubmit = async (data, e) => {
     // data is updated to add the array with garden ids, before submit
     const newData = {
       ...data,
       gardenArray,
     };
     console.log(newData);
-    // try {
-    //   await makeEntityAdder('users')(newData)
-    //     .then(() => setGardenArray([]))
-    //     .then(() => {
-    //       props.history.push('/adherents');
-    //     });
-    //   addToast('Membre crée avec succès', {
-    //     appearance: 'success',
-    //     autoDismiss: true,
-    //   });
-    // } catch (err) {
-    //   addToast('Email déjà utilisé', {
-    //     appearance: 'error',
-    //     autoDismiss: true,
-    //   });
-    // }
-    // e.target.reset();
+    try {
+      await makeEntityAdder('users')(newData)
+        .then(() => setGardenArray([]))
+        .then(() => {
+          props.history.push('/adherents');
+        });
+      addToast('Membre crée avec succès', {
+        appearance: 'success',
+        autoDismiss: true,
+      });
+    } catch (err) {
+      addToast('Email déjà utilisé', {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+    }
+    e.target.reset();
   };
 
   const handleSelectGardenChange = (elem) => {
@@ -118,16 +115,16 @@ const MemberCreation = (props) => {
           <h3>Création d'un membre :</h3>
 
           <div>
-            <label htmlFor="gender">
+            <label htmlFor="gender_marker">
               Civilité :{' '}
-              <select name="gender" ref={register({ required: true })}>
+              <select name="gender_marker" ref={register({ required: true })}>
                 <option value="madame">Mme</option>
                 <option value="monsieur">M.</option>
                 <option value="inconnu">Non précisé</option>
               </select>
             </label>
-            {errors.gender &&
-              errors.gender.type === 'required' &&
+            {errors.gender_marker &&
+              errors.gender_marker.type === 'required' &&
               errorMessage(required)}
           </div>
 
@@ -175,14 +172,10 @@ const MemberCreation = (props) => {
               <input
                 type="date"
                 name="birthdate"
-                ref={register({ required: true })}
+                ref={register}
                 defaultValue={userToEdit.birthdate}
               />
             </label>
-
-            {errors.birthdate &&
-              errors.birthdate.type === 'required' &&
-              errorMessage(required)}
           </div>
 
           <div>
@@ -191,14 +184,10 @@ const MemberCreation = (props) => {
               <input
                 type="date"
                 name="membership_start"
-                ref={register({ required: true })}
+                ref={register}
                 defaultValue={userToEdit.membership_start}
               />
             </label>
-
-            {errors.membership_start &&
-              errors.membership_start.type === 'required' &&
-              errorMessage(required)}
           </div>
 
           <div>
@@ -262,7 +251,6 @@ const MemberCreation = (props) => {
                 type="text"
                 name="phone"
                 ref={register({
-                  required: true,
                   pattern: {
                     value: /^[0-9]{10}$/,
                     message: 'Le format du numéro de téléphone est invalide',
@@ -270,10 +258,6 @@ const MemberCreation = (props) => {
                 })}
               />
             </label>
-
-            {errors.phone &&
-              errors.phone.type === 'required' &&
-              errorMessage(required)}
             {errors.phone && <p role="alert">{errors.phone.message}</p>}
           </div>
 
