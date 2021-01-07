@@ -129,17 +129,19 @@ const GardenCreation = (props) => {
   };
 
   const handleChangeSelect = (elem, i) => {
-    if (elem.length > 0) {
-      const plantFamilySelection = { i, value: elem.map((e) => e.value) };
-      const arrFamilyId = plantFamilySelection.value;
-      const deepCopyList = _.cloneDeep(inputList);
-      deepCopyList[i].plantFamilyArray = [...arrFamilyId];
-      setInputList(deepCopyList);
-    }
-    if (elem.length === 0) {
-      const deepCopyList = _.cloneDeep(inputList);
-      deepCopyList[i].plantFamilyArray = [];
-      setInputList(deepCopyList);
+    if (elem) {
+      if (elem.length > 0) {
+        const plantFamilySelection = { i, value: elem.map((e) => e.value) };
+        const arrFamilyId = plantFamilySelection.value;
+        const deepCopyList = _.cloneDeep(inputList);
+        deepCopyList[i].plantFamilyArray = [...arrFamilyId];
+        setInputList(deepCopyList);
+      }
+      if (!elem) {
+        const deepCopyList = _.cloneDeep(inputList);
+        deepCopyList[i].plantFamilyArray = [];
+        setInputList(deepCopyList);
+      }
     }
   };
 
@@ -337,7 +339,7 @@ const GardenCreation = (props) => {
                           <Select
                             options={options}
                             onChange={(e) => {
-                              onChange(e.value);
+                              onChange(e);
                               handleChangeSelect(e, i);
                             }}
                             value={value}
