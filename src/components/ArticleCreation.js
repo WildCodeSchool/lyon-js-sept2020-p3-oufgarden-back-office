@@ -4,13 +4,14 @@ import { useHistory, Link } from 'react-router-dom';
 import { Editor } from '@tinymce/tinymce-react';
 import Select from 'react-select';
 
-import { makeEntityAdder, getCollection } from '../services/API';
+import { makeEntityAdder, getCollection, getEntity } from '../services/API';
 
 import './style/ArticleCreation.scss';
 
-const ArticleCreation = () => {
+const ArticleCreation = (props) => {
   const textEditorApi = process.env.REACT_APP_TEXT_EDITOR_API;
   const [articleContent, setArticleContent] = useState('');
+  const [articleContentUpdate, setArticleContentUpdate] = useState('');
   const [title, setTitle] = useState('');
   const [urlImage, setUrlImage] = useState('');
   const [allTags, setAllTags] = useState([]);
@@ -80,7 +81,17 @@ const ArticleCreation = () => {
       setGardenArray(elem.map((e) => e.value));
     }
   };
-
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
+  useEffect(() => {
+    if (id) {
+      getEntity('articles', id).then((data) => setArticleContentUpdate(data));
+    }
+  }, [id]);
+  console.log(articleContent);
   return (
     <div className="ArticleCreationContainer">
       <div className="buttonNav">
@@ -92,15 +103,21 @@ const ArticleCreation = () => {
         </button>
       </div>
       <div className="EditorContainer">
-        <input className="Title" placeholder="Titre" onChange={handleTitle} />
+        <input
+          className="Title"
+          placeholder="Titre"
+          defaultValue={articleContentUpdate.title}
+          onChange={handleTitle}
+        />
         <input
           className="Image"
           placeholder="url de l'image"
+          defaultValue={articleContentUpdate.url}
           onChange={handleImage}
         />
         <Editor
           apiKey={textEditorApi}
-          initialValue=""
+          initialValue={articleContentUpdate.content}
           init={{
             height: 500,
             menubar: false,
