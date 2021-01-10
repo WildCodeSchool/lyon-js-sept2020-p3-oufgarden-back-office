@@ -1,28 +1,50 @@
 import React, { useEffect, useState } from 'react';
 
 import { useHistory, Link } from 'react-router-dom';
+
 import { Editor } from '@tinymce/tinymce-react';
 import Select from 'react-select';
-
-import { makeEntityAdder, getCollection, getEntity } from '../services/API';
+import dayjs from 'dayjs';
+import {
+  makeEntityAdder,
+  getCollection,
+  getEntity,
+  makeEntityUpdater,
+} from '../services/API';
 
 import './style/ArticleCreation.scss';
 
 const ArticleCreation = (props) => {
   const textEditorApi = process.env.REACT_APP_TEXT_EDITOR_API;
   const [articleContent, setArticleContent] = useState('');
-  const [articleContentUpdate, setArticleContentUpdate] = useState('');
   const [title, setTitle] = useState('');
   const [urlImage, setUrlImage] = useState('');
   const [allTags, setAllTags] = useState([]);
   const [tagsArray, setTagsArray] = useState([]);
   const [gardenList, setGardenList] = useState([]);
   const [gardenArray, setGardenArray] = useState([]);
+  const [update, setUpdate] = useState('');
   const history = useHistory();
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
+  useEffect(() => {
+    if (id) {
+      getEntity('articles', id).then((data) => {
+        setArticleContent(data.content);
+        setUrlImage(data.url);
+        setTitle(data.title);
+      });
+      setUpdate(true);
+    }
+  }, [id]);
 
+  console.log(articleContent);
   useEffect(() => {
     getCollection('tags').then((data) => setAllTags(data));
-  }, []);
+  }, [id]);
   useEffect(() => {
     getCollection('garden').then((data) => setGardenList(data));
   }, []);
@@ -50,7 +72,7 @@ const ArticleCreation = (props) => {
     setUrlImage(e.target.value);
   };
 
-  const handleClick = async () => {
+  const handleCreate = async () => {
     const data = {
       content: articleContent,
       title,
@@ -58,13 +80,30 @@ const ArticleCreation = (props) => {
       tagsArray,
       gardenArray,
     };
-    console.log(data);
     await makeEntityAdder('articles')(data);
     setArticleContent('');
     setTitle('');
     setUrlImage('');
     setGardenArray([]);
     history.push('/articles');
+  };
+  const handleUpdate = async () => {
+    const data = {
+      content: articleContent,
+      title,
+      url: urlImage,
+      updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+      tagsArray,
+      gardenArray,
+    };
+    await makeEntityUpdater('articles')(id, data).then(() => {
+      setArticleContent('');
+      setTitle('');
+      setUrlImage('');
+      setGardenArray([]);
+      setTagsArray([]);
+      props.history.push('/articles');
+    });
   };
 
   const handleSelectTagChange = (elem) => {
@@ -81,17 +120,7 @@ const ArticleCreation = (props) => {
       setGardenArray(elem.map((e) => e.value));
     }
   };
-  const {
-    match: {
-      params: { id },
-    },
-  } = props;
-  useEffect(() => {
-    if (id) {
-      getEntity('articles', id).then((data) => setArticleContentUpdate(data));
-    }
-  }, [id]);
-  console.log(articleContent);
+
   return (
     <div className="ArticleCreationContainer">
       <div className="buttonNav">
@@ -106,18 +135,18 @@ const ArticleCreation = (props) => {
         <input
           className="Title"
           placeholder="Titre"
-          defaultValue={articleContentUpdate.title}
+          defaultValue={title}
           onChange={handleTitle}
         />
         <input
           className="Image"
           placeholder="url de l'image"
-          defaultValue={articleContentUpdate.url}
+          defaultValue={urlImage}
           onChange={handleImage}
         />
         <Editor
           apiKey={textEditorApi}
-          initialValue={articleContentUpdate.content}
+          value={`${articleContent}`}
           init={{
             height: 500,
             menubar: false,
@@ -156,10 +185,16 @@ const ArticleCreation = (props) => {
             handleSelectTagChange(e);
           }}
         />
-
-        <button type="button" className="sendButton" onClick={handleClick}>
-          Créer
-        </button>
+        {update && (
+          <button type="button" className="sendButton" onClick={handleUpdate}>
+            Mettre à jour
+          </button>
+        )}
+        {!update && (
+          <button type="button" className="sendButton" onClick={handleCreate}>
+            Créer
+          </button>
+        )}
       </div>
     </div>
   );
