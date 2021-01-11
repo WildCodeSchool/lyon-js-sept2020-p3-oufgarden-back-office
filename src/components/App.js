@@ -14,6 +14,8 @@ import Articles from './Articles';
 import ArticleCreation from './ArticleCreation';
 import Garden from './Garden';
 import GardenCreation from './GardenCreation';
+import ListCalendar from './ListCalendar';
+import Calendar from './Calendar';
 
 const App = () => {
   return (
@@ -44,7 +46,8 @@ const App = () => {
                 <Route exact path="/garden" component={Garden} />
                 <Route path="/garden/creation" component={GardenCreation} />
                 <Route path="/garden/:id" component={GardenCreation} />
-                <Route path="/calendar" />
+                <Route path="/calendar" component={ListCalendar} />
+                <Route path="/calendar/:id" component={Calendar} />
               </Switch>
             </div>
           </Router>
