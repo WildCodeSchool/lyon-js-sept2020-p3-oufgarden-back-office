@@ -21,8 +21,12 @@ const ArticleCreation = (props) => {
   const [urlImage, setUrlImage] = useState('');
   const [allTags, setAllTags] = useState([]);
   const [tagsArray, setTagsArray] = useState([]);
+  const [loadedTags, setLoadedTags] = useState([]);
+  const [initialTagsValue, setInitialTagsValue] = useState([]);
   const [gardenList, setGardenList] = useState([]);
   const [gardenArray, setGardenArray] = useState([]);
+  const [loadedGarden, setLoadedGarden] = useState([]);
+  const [initialGardenValue, setInitialGardenValue] = useState([]);
   const [update, setUpdate] = useState('');
   const history = useHistory();
   const {
@@ -42,6 +46,12 @@ const ArticleCreation = (props) => {
           setUrlImage(data.url);
           setTitle(data.title);
         }
+        if (data.garden) {
+          setLoadedGarden(data.garden);
+        }
+        if (data.tag) {
+          setLoadedTags(data.tag);
+        }
       });
       setUpdate(true);
     }
@@ -53,7 +63,28 @@ const ArticleCreation = (props) => {
   useEffect(() => {
     getCollection('garden').then((data) => setGardenList(data));
   }, []);
-
+  useEffect(() => {
+    if (loadedTags) {
+      // eslint-disable-next-line array-callback-return
+      loadedTags.forEach((elem) => {
+        setInitialTagsValue((prevState) => [
+          ...prevState,
+          { value: elem.tag_id, label: elem.name },
+        ]);
+      });
+    }
+  }, [loadedTags]);
+  useEffect(() => {
+    if (loadedGarden) {
+      // eslint-disable-next-line array-callback-return
+      loadedGarden.forEach((elem) => {
+        setInitialGardenValue((prevState) => [
+          ...prevState,
+          { value: elem.garden_id, label: elem.name },
+        ]);
+      });
+    }
+  }, [loadedGarden]);
   const handleEditorChange = (content) => {
     setArticleContent(content);
   };
@@ -101,6 +132,7 @@ const ArticleCreation = (props) => {
       tagsArray,
       gardenArray,
     };
+
     await makeEntityUpdater('articles')(id, data).then(() => {
       setArticleContent('');
       setTitle('');
@@ -125,7 +157,6 @@ const ArticleCreation = (props) => {
       setGardenArray(elem.map((e) => e.value));
     }
   };
-
   return (
     <div className="ArticleCreationContainer">
       <div className="buttonNav">
@@ -168,28 +199,63 @@ const ArticleCreation = (props) => {
           }}
           onEditorChange={handleEditorChange}
         />
-        <Select
-          isMulti
-          name="garden"
-          placeholder="Choisissez votre jardin"
-          options={gardenOptions}
-          className="basic-multi-select"
-          classNamePrefix="select"
-          onChange={(e) => {
-            handleSelectGardenChange(e);
-          }}
-        />
-        <Select
-          isMulti
-          name="tags"
-          placeholder="Votre tag ici"
-          options={tagOptions}
-          className="basic-multi-select"
-          classNamePrefix="select"
-          onChange={(e) => {
-            handleSelectTagChange(e);
-          }}
-        />
+        {initialGardenValue.length > 0 && update && (
+          <Select
+            isMulti
+            name="garden"
+            defaultValue={initialGardenValue}
+            placeholder="Choisissez votre jardin"
+            options={gardenOptions}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={(e) => {
+              handleSelectGardenChange(e);
+            }}
+          />
+        )}
+        {!update ||
+          (update && initialGardenValue.length < 1 && (
+            <Select
+              isMulti
+              name="garden"
+              placeholder="Choisissez votre jardin"
+              options={gardenOptions}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              onChange={(e) => {
+                handleSelectGardenChange(e);
+              }}
+            />
+          ))}
+        {initialTagsValue.length > 0 && update && (
+          <Select
+            isMulti
+            defaultValue={initialTagsValue}
+            name="tags"
+            placeholder="Votre tag ici"
+            options={tagOptions}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={(e) => {
+              handleSelectTagChange(e);
+            }}
+          />
+        )}
+        {!update ||
+          (update && initialTagsValue.length < 1 && (
+            <Select
+              isMulti
+              name="tags"
+              placeholder="Votre tag ici"
+              options={tagOptions}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              onChange={(e) => {
+                handleSelectTagChange(e);
+              }}
+            />
+          ))}
+
         {update && (
           <button type="button" className="sendButton" onClick={handleUpdate}>
             Mettre à jour
