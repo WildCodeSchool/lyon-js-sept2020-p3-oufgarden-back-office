@@ -24,6 +24,12 @@ const errorMessage = (error) => {
 };
 
 const GardenCreation = (props) => {
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
+
   const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
   const [Garden, setGarden] = useState([]);
@@ -38,11 +44,6 @@ const GardenCreation = (props) => {
     },
   ]);
 
-  const {
-    match: {
-      params: { id },
-    },
-  } = props;
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
