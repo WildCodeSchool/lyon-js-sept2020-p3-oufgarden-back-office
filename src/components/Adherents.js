@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FiMail } from 'react-icons/fi';
-import { MdDelete, MdEdit } from 'react-icons/md';
+import { MdDelete, MdAccountCircle } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 import { useToasts } from 'react-toast-notifications';
 
@@ -65,7 +65,7 @@ const Adherents = (props) => {
                 {/* IconContext provider pour personnaliser les props de react-icons */}
                 <IconContext.Provider value={{ className: 'react-icons' }}>
                   <FiMail size={25} />
-                  <MdEdit
+                  <MdAccountCircle
                     size={25}
                     style={{ cursor: 'pointer' }}
                     onClick={() => {
