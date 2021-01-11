@@ -71,6 +71,7 @@ const ArticleCreation = (props) => {
           ...prevState,
           { value: elem.tag_id, label: elem.name },
         ]);
+        setTagsArray((prevState) => [...prevState, elem.tag_id]);
       });
     }
   }, [loadedTags]);
@@ -82,6 +83,7 @@ const ArticleCreation = (props) => {
           ...prevState,
           { value: elem.garden_id, label: elem.name },
         ]);
+        setGardenArray((prevState) => [...prevState, elem.garden_id]);
       });
     }
   }, [loadedGarden]);
