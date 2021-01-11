@@ -1,59 +1,101 @@
-.CreationArticle {
+.ArticleCreationContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
+  .buttonNav {
+    display: flex;
+    margin: 5% 0 3% 0;
 
-.buttonNav {
-  margin-top: 2%;
-  display: flex;
-}
+    a {
+      text-decoration: none;
+      color: black;
+    }
 
-.buttonList {
-  width: 20vw;
-  height: 5vh;
-  border: none;
-  margin: 1%;
-  border-radius: 8px;
-  font-family: 'Montserrat';
-  font-size: 1rem;
-  text-decoration: none;
-  cursor: pointer;
-  &:active {
-    background-color: #ebb349;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    .buttonList {
+      width: 20vw;
+      height: 5vh;
+      border: solid 1px grey;
+      margin: 1%;
+      border-radius: 5px;
+      font-family: 'Montserrat';
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      &:hover {
+        outline: 0;
+        background-color: #ebb349;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+    }
+    .buttonArticle {
+      width: 20vw;
+      height: 5vh;
+      border: solid 1px grey;
+      margin: 1%;
+      border-radius: 5px;
+      font-family: 'Montserrat';
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      &:hover {
+        outline: 0;
+        background-color: #ebb349;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      }
+    }
   }
-  &:focus,
-  &:hover {
-    outline: 0;
-    background-color: #ebb349;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-      0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-}
+  .EditorContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
 
-.buttonArticle {
-  width: 20vw;
-  height: 5vh;
-  border: none;
-  margin: 1%;
-  border-radius: 8px;
-  font-family: 'Montserrat';
-  font-size: 1rem;
-  text-decoration: none;
-  cursor: pointer;
-  &:active {
-    background-color: #ebb349;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    .Title {
+      text-align: center;
+      width: 50%;
+      position: relative;
+      margin-bottom: 1%;
+      font-family: 'Montserrat';
+      font-size: 1rem;
+    }
+    .Image {
+      text-align: center;
+      width: 50%;
+      margin-bottom: 1%;
+      position: relative;
+      font-family: 'Montserrat';
+      font-size: 1rem;
+    }
   }
-  &:focus,
-  &:hover {
-    outline: 0;
+
+  .sendButton {
+    /* margin-top: 3%;
+    margin-left: 40%; */
+    margin-bottom: 3%;
     background-color: #ebb349;
+    font-family: 'Montserrat';
+    font-size: 1rem;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
       0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: white;
+    padding: 15px 32px;
+    cursor: pointer;
+    &:focus,
+    &:hover {
+      outline: 0;
+      background-color: #ebb349;
+      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+        0 3px 15px 0 rgba(0, 0, 0, 0.19);
+    }
+  }
+  //Those lines are for the react select coponent
+  .basic-multi-select {
+    width: 50%;
+    margin-top: 20px;
   }
 }

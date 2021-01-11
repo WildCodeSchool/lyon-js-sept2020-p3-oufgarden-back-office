@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useToasts } from 'react-toast-notifications';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { IconContext } from 'react-icons';
 import { MdDelete } from 'react-icons/md';
 import {
@@ -27,20 +29,42 @@ const TagsPage = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    try {
-      await makeEntityDeleter('tags')(id);
-      const updatedList = await getCollection('tags');
-      const sortedUpdatedList = updatedList.sort((a, b) => {
-        return a.name.localeCompare(b.name);
-      });
-      setTagList(sortedUpdatedList);
-      setNewTag(() => '');
-    } catch (err) {
-      addToast('problème serveur lors de la suppression', {
-        appearance: 'error',
-        autoDismiss: true,
-      });
-    }
+    confirmAlert({
+      title: 'Confirmez la suppression',
+      message: 'Etes vous sûr de vouloir supprimer cet utilisateur ?',
+      buttons: [
+        {
+          label: 'Confirmer',
+          onClick: async () => {
+            try {
+              await makeEntityDeleter('tags')(id);
+              const updatedList = await getCollection('tags');
+              const sortedUpdatedList = updatedList.sort((a, b) => {
+                addToast('Catégorie supprimée avec succès', {
+                  appearance: 'success',
+                  autoDismiss: true,
+                });
+                return a.name.localeCompare(b.name);
+              });
+              setTagList(sortedUpdatedList);
+              setNewTag(() => '');
+            } catch (err) {
+              addToast(
+                'problème serveur lors de la suppression de la catégorie',
+                {
+                  appearance: 'error',
+                  autoDismiss: true,
+                }
+              );
+            }
+          },
+        },
+        {
+          label: 'Annuler',
+          onClick: () => null,
+        },
+      ],
+    });
   };
 
   const handleSubmit = async (e) => {
