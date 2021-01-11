@@ -33,15 +33,21 @@ const ArticleCreation = (props) => {
   useEffect(() => {
     if (id) {
       getEntity('articles', id).then((data) => {
-        setArticleContent(data.content);
-        setUrlImage(data.url);
-        setTitle(data.title);
+        console.log(data);
+        if (data.row) {
+          setArticleContent(data.row.content);
+          setUrlImage(data.row.url);
+          setTitle(data.row.title);
+        } else {
+          setArticleContent(data.content);
+          setUrlImage(data.url);
+          setTitle(data.title);
+        }
       });
       setUpdate(true);
     }
   }, [id]);
 
-  console.log(articleContent);
   useEffect(() => {
     getCollection('tags').then((data) => setAllTags(data));
   }, [id]);
