@@ -33,7 +33,6 @@ const ArticleCreation = (props) => {
   useEffect(() => {
     if (id) {
       getEntity('articles', id).then((data) => {
-        console.log(data);
         if (data.row) {
           setArticleContent(data.row.content);
           setUrlImage(data.row.url);
