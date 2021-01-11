@@ -112,7 +112,7 @@ const MemberCreation = (props) => {
 
   const onSubmit = async (data, e) => {
     // data is updated to add the array with garden ids, before submit
-    console.log(data);
+
     if (!forUpdate) {
       const newData = {
         ...data,
@@ -145,23 +145,18 @@ const MemberCreation = (props) => {
       }
       e.target.reset();
     } else if (forUpdate) {
-      // const dataNoUndefined = Object.keys(data).reduce((acc, key) => {
-      //   const Acc = acc;
-      //   if (data[key] !== undefined && data[key] !== '') Acc[key] = data[key];
-      //   return Acc;
-      // }, {});
-      // console.log(dataNoUndefined);
       const newData = {
         ...data,
         gardenArray: data.garden.map((elem) => elem.value),
       };
-      console.log(newData);
+
       try {
-        await makeEntityUpdater('users')(newData)
+        await makeEntityUpdater('users')(id, newData)
           .then(() => {
             setGardenArray([]);
             setGardenList([]);
             setUserToEdit([]);
+            setGardenInitialOptions([]);
           })
           .then(() => {
             props.history.push('/adherents');
@@ -179,14 +174,6 @@ const MemberCreation = (props) => {
       e.target.reset();
     }
   };
-
-  // const handleSelectGardenChange = (elem) => {
-  //   if (!elem) {
-  //     setGardenArray([]);
-  //   } else {
-  //     setGardenArray(elem.map((e) => e.value));
-  //   }
-  // };
 
   // generate a random password
   const generatedPassword = generator.generate({
@@ -311,37 +298,40 @@ const MemberCreation = (props) => {
 
             {errors.email && <p role="alert">{errors.email.message}</p>}
           </div>
-          <div>
-            <label htmlFor="emailConfirmation">
-              Confirmation de l'email :{' '}
-              <input
-                id="emailConfirmation"
-                name="emailConfirmation"
-                aria-invalid={errors.emailConfirmation ? 'true' : 'false'}
-                ref={register({
-                  required: !forUpdate,
-                  pattern: {
-                    value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                    message: "Le format de l'email est invalide",
-                  },
-                  validate: !forUpdate && {
-                    matchesPreviousEmail: (value) => {
-                      const { email } = getValues();
-                      return (
-                        email === value || 'Les emails ne sont pas identiques'
-                      );
+          {/* // for now, no email confirmation on update, would be better to add one */}
+          {!forUpdate && (
+            <div>
+              <label htmlFor="emailConfirmation">
+                Confirmation de l'email :{' '}
+                <input
+                  id="emailConfirmation"
+                  name="emailConfirmation"
+                  aria-invalid={errors.emailConfirmation ? 'true' : 'false'}
+                  ref={register({
+                    required: !forUpdate,
+                    pattern: {
+                      value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                      message: "Le format de l'email est invalide",
                     },
-                  },
-                })}
-                type="email"
-                placeholder="example@mail.com"
-              />
-            </label>
+                    validate: !forUpdate && {
+                      matchesPreviousEmail: (value) => {
+                        const { email } = getValues();
+                        return (
+                          email === value || 'Les emails ne sont pas identiques'
+                        );
+                      },
+                    },
+                  })}
+                  type="email"
+                  placeholder="example@mail.com"
+                />
+              </label>
 
-            {errors.emailConfirmation && (
-              <p role="alert">{errors.emailConfirmation.message}</p>
-            )}
-          </div>
+              {errors.emailConfirmation && (
+                <p role="alert">{errors.emailConfirmation.message}</p>
+              )}
+            </div>
+          )}
 
           <div>
             <label htmlFor="phone">
@@ -484,7 +474,10 @@ const MemberCreation = (props) => {
           )}
 
           <div className="submitFormBtn">
-            <input type="submit" value="Créer le membre" />
+            <input
+              type="submit"
+              value={forUpdate ? 'Mettre à jour' : 'Créer le membre'}
+            />
           </div>
         </form>
       </div>
