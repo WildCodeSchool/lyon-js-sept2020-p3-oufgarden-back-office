@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useToasts } from 'react-toast-notifications';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
@@ -8,7 +8,8 @@ import dayjs from 'dayjs';
 import {
   makeEntityAdder,
   getEntity,
-  getCollection /* , makeEntityUpdater */,
+  getCollection,
+  makeEntityUpdater,
 } from '../services/API';
 import './style/MemberCreation.scss';
 
@@ -21,10 +22,22 @@ const MemberCreation = (props) => {
     },
   } = props;
 
-  const [userToEdit, setUserToEdit] = useState([]);
+  const [userToEdit, setUserToEdit] = useState({});
   const [gardenList, setGardenList] = useState([]);
   const [gardenArray, setGardenArray] = useState([]);
+  const [gardenInitialOptions, setGardenInitialOptions] = useState([]);
   const [forUpdate, setForUpdate] = useState(false);
+
+  const { addToast } = useToasts();
+
+  const {
+    register,
+    handleSubmit,
+    errors,
+    control,
+    setValue,
+    getValues,
+  } = useForm();
 
   // MemberEdition was merged with MemberCreation | if there is an id in the props, then it's for edition
   useEffect(() => {
@@ -43,13 +56,38 @@ const MemberCreation = (props) => {
           membership_start: dayjs(data.membership_start).format('YYYY-MM-DD'),
           user_creation: dayjs(data.user_creation).format('YYYY-MM-DD'),
         }));
+        setGardenArray(() =>
+          data.garden_id_concat.split(',').map((gardenId) => +gardenId)
+        );
       });
     }
   }, [forUpdate]);
 
-  const { addToast } = useToasts();
+  useEffect(() => {
+    setValue('gender_marker', userToEdit.gender_marker);
+  }, [userToEdit]);
 
-  const { register, handleSubmit, errors, getValues } = useForm();
+  useEffect(() => {
+    if (gardenArray.length > 0) {
+      setGardenInitialOptions(() =>
+        gardenList
+          .filter((garden) => gardenArray.includes(garden.id))
+          .map((garden) => {
+            return {
+              value: garden.id,
+              label: `${garden.name}`,
+            };
+          })
+      );
+    }
+  }, [gardenArray]);
+
+  useEffect(() => {
+    if (gardenInitialOptions.length > 0) {
+      // setValue comes from react hook form and enables to set default value
+      setValue('garden', gardenInitialOptions);
+    }
+  }, [gardenInitialOptions]);
 
   // Error messages for react hook form
   const required = 'Ce champ est obligatoire';
@@ -72,19 +110,13 @@ const MemberCreation = (props) => {
     };
   });
 
-  // const gardenInitialOptionsIfUpdate = userToEdit.map((elem) => {
-  //   return {
-  //     value: elem.id,
-  //     label: `${elem.name}`,
-  //   };
-  // });
-
   const onSubmit = async (data, e) => {
     // data is updated to add the array with garden ids, before submit
+    console.log(data);
     if (!forUpdate) {
       const newData = {
         ...data,
-        gardenArray,
+        gardenArray: data.garden.map((elem) => elem.value),
       };
       console.log(newData);
       try {
@@ -93,6 +125,7 @@ const MemberCreation = (props) => {
             setGardenArray([]);
             setGardenList([]);
             setUserToEdit([]);
+            setGardenInitialOptions([]);
           })
           .then(() => {
             props.history.push('/adherents');
@@ -102,29 +135,58 @@ const MemberCreation = (props) => {
           autoDismiss: true,
         });
       } catch (err) {
-        addToast('Email déjà utilisé', {
+        addToast(
+          "Email déjà utilisé/erreur lors de la création de l'adhérent",
+          {
+            appearance: 'error',
+            autoDismiss: true,
+          }
+        );
+      }
+      e.target.reset();
+    } else if (forUpdate) {
+      // const dataNoUndefined = Object.keys(data).reduce((acc, key) => {
+      //   const Acc = acc;
+      //   if (data[key] !== undefined && data[key] !== '') Acc[key] = data[key];
+      //   return Acc;
+      // }, {});
+      // console.log(dataNoUndefined);
+      const newData = {
+        ...data,
+        gardenArray: data.garden.map((elem) => elem.value),
+      };
+      console.log(newData);
+      try {
+        await makeEntityUpdater('users')(newData)
+          .then(() => {
+            setGardenArray([]);
+            setGardenList([]);
+            setUserToEdit([]);
+          })
+          .then(() => {
+            props.history.push('/adherents');
+          });
+        addToast('Membre mis à jour avec succès', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+      } catch (err) {
+        addToast('Erreur lors de la mise à jour', {
           appearance: 'error',
           autoDismiss: true,
         });
       }
       e.target.reset();
-    } else if (forUpdate) {
-      const dataNoUndefined = Object.keys(data).reduce((acc, key) => {
-        const Acc = acc;
-        if (data[key] !== undefined && data[key] !== '') Acc[key] = data[key];
-        return Acc;
-      }, {});
-      console.log(dataNoUndefined);
     }
   };
 
-  const handleSelectGardenChange = (elem) => {
-    if (!elem) {
-      setGardenArray([]);
-    } else {
-      setGardenArray(elem.map((e) => e.value));
-    }
-  };
+  // const handleSelectGardenChange = (elem) => {
+  //   if (!elem) {
+  //     setGardenArray([]);
+  //   } else {
+  //     setGardenArray(elem.map((e) => e.value));
+  //   }
+  // };
 
   // generate a random password
   const generatedPassword = generator.generate({
@@ -154,7 +216,6 @@ const MemberCreation = (props) => {
               <select
                 name="gender_marker"
                 ref={register({ required: !forUpdate })}
-                defaultValue={userToEdit.gender_marker}
               >
                 <option value="madame">Mme</option>
                 <option value="monsieur">M.</option>
@@ -397,18 +458,30 @@ const MemberCreation = (props) => {
             </label>
           </div>
 
-          <Select
-            isMulti
-            name="garden"
-            placeholder="Jardin(s) lié(s) à l'adhérent"
-            options={gardenOptions}
-            // here, add default values if update
-            className="basic-multi-select"
-            classNamePrefix="select"
-            onChange={(e) => {
-              handleSelectGardenChange(e);
-            }}
-          />
+          {/* <Select
+              isMulti
+              name="garden"
+              placeholder="Jardin(s) lié(s) à l'adhérent"
+              options={gardenOptions}
+              // here, add default values if update
+              className="basic-multi-select"
+              classNamePrefix="select"
+              onChange={(e) => {
+                handleSelectGardenChange(e);
+              }}
+              defaultValue={[gardenOptionsInitial[0], gardenOptionsInitial[1]]}
+            /> */}
+          {gardenInitialOptions && (
+            <Controller
+              as={Select}
+              options={gardenOptions}
+              name="garden"
+              isClearable
+              isMulti
+              control={control}
+              defaultValue={gardenInitialOptions}
+            />
+          )}
 
           <div className="submitFormBtn">
             <input type="submit" value="Créer le membre" />
