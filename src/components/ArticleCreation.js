@@ -28,6 +28,7 @@ const ArticleCreation = (props) => {
   const [loadedGarden, setLoadedGarden] = useState([]);
   const [initialGardenValue, setInitialGardenValue] = useState([]);
   const [update, setUpdate] = useState('');
+  const [disabledArticle, setDisabledArticle] = useState(false);
   const history = useHistory();
   const {
     match: {
@@ -133,6 +134,7 @@ const ArticleCreation = (props) => {
       updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       tagsArray,
       gardenArray,
+      disabledArticle,
     };
 
     await makeEntityUpdater('articles')(id, data).then(() => {
@@ -259,9 +261,18 @@ const ArticleCreation = (props) => {
           ))}
 
         {update && (
-          <button type="button" className="sendButton" onClick={handleUpdate}>
-            Mettre à jour
-          </button>
+          <div className="buttonArticlePublishDisable">
+            <button type="button" className="sendButton" onClick={handleUpdate}>
+              Mettre à jour
+            </button>
+            <button
+              type="button"
+              className="sendButton"
+              onClick={() => setDisabledArticle(true)}
+            >
+              Désactiver
+            </button>
+          </div>
         )}
         {!update && (
           <button type="button" className="sendButton" onClick={handleCreate}>
