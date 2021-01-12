@@ -1,6 +1,5 @@
-.googleContainer {
-  margin-top: 20px;
-
+.calendar-list-container {
+  margin: 100px 20px 20px 15%;
   .button-calendar-container {
     display: flex;
     justify-content: center;
@@ -24,12 +23,27 @@
     &:hover {
       outline: 0;
       background-color: #ebb349;
-      box-shadow: 0 8px 16px 0 rgba(32, 22, 22, 0.2),
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
     a {
       text-decoration: none;
       color: black;
+    }
+  }
+  .garden-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin: 0 20px 20px 20px;
+    background-color: #e5e7e9;
+    box-shadow: 10px;
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2),
+      0 6px 10px 0 rgba(0, 0, 0, 0.19);
+
+    .react-icons {
+      margin: 10px;
     }
   }
 }

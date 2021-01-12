@@ -1,5 +1,6 @@
 import React from 'react';
 import Calendar from '@ericz1803/react-google-calendar';
+import { Link } from 'react-router-dom';
 
 import './style/GoogleCalendar.scss';
 
@@ -11,6 +12,11 @@ function GoogleCalendar() {
 
   return (
     <div className="googleContainer">
+      <div className="button-calendar-container">
+        <button type="button" className="button-calendar-list">
+          <Link to="/calendar">Liste des agendas</Link>
+        </button>
+      </div>
       <Calendar apiKey={API_KEY} calendars={calendars} />
     </div>
   );

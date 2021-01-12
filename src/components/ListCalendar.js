@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { MdEdit } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 
 import { getCollection } from '../services/API';
-import './style/Garden.scss';
+import './style/ListCalendar.scss';
 
-const Garden = () => {
+const ListCalendar = () => {
   const [gardenList, setGardenList] = useState([]);
 
   useEffect(() => {
@@ -16,7 +17,12 @@ const Garden = () => {
   }, []);
 
   return (
-    <div className="garden-list-container">
+    <div className="calendar-list-container">
+      <div className="button-calendar-container">
+        <button type="button" className="button-calendar-list">
+          <Link to="/calendar/google">Agenda Google des évenements</Link>
+        </button>
+      </div>
       {gardenList.map((e) => {
         return (
           <div key={e.id} className="garden-row">
@@ -36,4 +42,4 @@ const Garden = () => {
   );
 };
 
-export default Garden;
+export default ListCalendar;
