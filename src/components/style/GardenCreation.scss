@@ -3,62 +3,7 @@
   display: flex;
   justify-content: center;
 }
-.button-garden-list {
-  width: 20vw;
-  height: 5vh;
-  border: none;
-  margin: 1%;
-  border-radius: 8px;
-  font-family: 'Montserrat';
-  font-size: 1rem;
-  cursor: pointer;
-  &:active {
-    background-color: #ebb349;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-      0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  &:focus,
-  &:hover {
-    outline: 0;
-    background-color: #ebb349;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-      0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  a {
-    text-decoration: none;
-    color: black;
-  }
-}
-.button-garden {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20vw;
-  height: 5vh;
-  border: none;
-  margin: 1%;
-  border-radius: 8px;
-  font-family: 'Montserrat';
-  font-size: 1rem;
-  cursor: pointer;
-  &:active {
-    background-color: #ebb349;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-      0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  &:focus,
-  &:hover {
-    outline: 0;
-    background-color: #ebb349;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-      0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
 
-  a {
-    text-decoration: none;
-    color: black;
-  }
-}
 .containerGarden {
   display: flex;
   justify-content: center;
