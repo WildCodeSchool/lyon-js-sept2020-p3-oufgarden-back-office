@@ -1,38 +1,42 @@
-import React from 'react';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import * as React from 'react';
+import Paper from '@material-ui/core/Paper';
+import { ViewState } from '@devexpress/dx-react-scheduler';
+import {
+  Scheduler,
+  WeekView,
+  Appointments,
+  AllDayPanel,
+} from '@devexpress/dx-react-scheduler-material-ui';
+
 import './style/Calendar.scss';
 
-function Calendar() {
-  const handleDateClick = (dateClickInfo) => {
-    console.log(dateClickInfo.dateStr);
-  };
+const currentDate = '2018-06-27';
+const schedulerData = [
+  {
+    startDate: '2018-11-01T09:45',
+    endDate: '2018-11-01T11:00',
+    title: 'Meeting',
+  },
+  {
+    startDate: '2018-11-01T12:00',
+    endDate: '2018-11-01T13:30',
+    title: 'Go to a gym',
+  },
+];
+
+const Calendar = () => {
   return (
     <div className="calendar">
-      <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-        headerToolbar={{
-          left: 'dayGridMonth,timeGridWeek,timeGridDay',
-          center: 'title',
-          right: 'prevYear,prev,next,nextYear',
-        }}
-        views={{
-          dayGridMonth: {
-            // name of view
-            titleFormat: { day: '2-digit', month: '2-digit', year: 'numeric' },
-            // other view-specific options here
-          },
-        }}
-        dateClick={handleDateClick}
-        initialView="timeGridWeek"
-        events={[
-          { title: 'event 1', date: '2021-01-13' },
-          { title: 'event 2', date: '2021-01-15' },
-        ]}
-      />
+      <Paper>
+        <Scheduler data={schedulerData} height={660}>
+          <ViewState defaultCurrentDate={currentDate} />
+          <WeekView startDayHour={9} endDayHour={19} />
+          <Appointments />
+          <AllDayPanel />
+        </Scheduler>
+      </Paper>
     </div>
   );
-}
+};
+
 export default Calendar;
