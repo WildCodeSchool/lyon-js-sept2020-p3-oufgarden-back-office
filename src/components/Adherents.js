@@ -75,38 +75,39 @@ const Adherents = (props) => {
           }}
         />
       </div>
-
-      {adherentList.map((e) => {
-        return (
-          <div key={e.id} className="adherent-row">
-            <div className="user-infos">
-              <p>
-                {e.firstname} {e.lastname} {e.email}
-              </p>
+      <div className="container-to-color-rows">
+        {adherentList.map((e) => {
+          return (
+            <div key={e.id} className="adherent-row">
+              <div className="user-infos">
+                <p>
+                  {e.firstname} {e.lastname} {e.email}
+                </p>
+              </div>
+              <div className="user-list-icons">
+                {/* IconContext provider pour personnaliser les props de react-icons */}
+                <IconContext.Provider value={{ className: 'react-icons' }}>
+                  <FiMail size={25} />
+                  <MdEdit
+                    size={25}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      handleEdit(e.id);
+                    }}
+                  />
+                  <MdDelete
+                    style={{ cursor: 'pointer' }}
+                    size={25}
+                    onClick={() => {
+                      handleDelete(e.id);
+                    }}
+                  />
+                </IconContext.Provider>
+              </div>
             </div>
-            <div className="user-list-icons">
-              {/* IconContext provider pour personnaliser les props de react-icons */}
-              <IconContext.Provider value={{ className: 'react-icons' }}>
-                <FiMail size={25} />
-                <MdEdit
-                  size={25}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    handleEdit(e.id);
-                  }}
-                />
-                <MdDelete
-                  style={{ cursor: 'pointer' }}
-                  size={25}
-                  onClick={() => {
-                    handleDelete(e.id);
-                  }}
-                />
-              </IconContext.Provider>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };
