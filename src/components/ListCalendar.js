@@ -20,7 +20,7 @@ const ListCalendar = () => {
     <div className="calendar-list-container">
       <div className="button-calendar-container">
         <button type="button" className="button-calendar-list">
-          <Link to="/calendar/google">Agenda Google des évenements</Link>
+          <Link to="/calendar/google">Agenda des évenements</Link>
         </button>
       </div>
       {gardenList.map((e) => {
