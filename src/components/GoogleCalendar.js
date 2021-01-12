@@ -1,21 +1,17 @@
 import React from 'react';
-import Iframe from 'react-iframe';
+import Calendar from '@ericz1803/react-google-calendar';
+
 import './style/GoogleCalendar.scss';
 
+require('dotenv').config();
+
 function GoogleCalendar() {
-  const urlAgenda =
-    'https://calendar.google.com/calendar/embed?height=600&amp;wkst=2&amp;bgcolor=%23ffffff&amp;ctz=Europe%2FParis&amp;src=dGVhbW91ZmdhcmRlbkBnbWFpbC5jb20&amp;src=ZnIuZnJlbmNoI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&amp;color=%23039BE5&amp;color=%230B8043';
+  const API_KEY = `AIzaSyCRPjtIgWPGyLwLNPK-IL-2WgwOpXJaMfQ`; // a mettre dans le .env
+  const calendars = [{ calendarId: 'teamoufgarden@gmail.com' }];
 
   return (
-    <div className="googleIframe">
-      <Iframe
-        url={urlAgenda}
-        width="450px"
-        height="450px"
-        id="myId"
-        className="myClassname"
-        display="initial"
-      />
+    <div className="googleContainer">
+      <Calendar apiKey={API_KEY} calendars={calendars} />
     </div>
   );
 }

@@ -15,6 +15,7 @@ import ArticleCreation from './ArticleCreation';
 import Garden from './Garden';
 import GardenCreation from './GardenCreation';
 import Calendar from './Calendar';
+import ListCalendar from './ListCalendar';
 import GoogleCalendar from './GoogleCalendar';
 
 const App = () => {
@@ -35,7 +36,6 @@ const App = () => {
                 />
                 <Route exact path="/adherents/:id" component={MemberEdition} />
                 <Route exact path="/articles" component={Articles} />
-
                 <Route
                   exact
                   path="/articles/creation"
@@ -46,8 +46,14 @@ const App = () => {
                 <Route exact path="/garden" component={Garden} />
                 <Route path="/garden/creation" component={GardenCreation} />
                 <Route path="/garden/:id" component={GardenCreation} />
-                <Route path="/calendar" component={Calendar} />
-                <Route path="/google" component={GoogleCalendar} />
+                <Route exact path="/calendar" component={ListCalendar} />
+                <Route exact path="/calendar/test" component={Calendar} />
+                {/* a remplacer test par :id */}
+                <Route
+                  exact
+                  path="/calendar/google"
+                  component={GoogleCalendar}
+                />
               </Switch>
             </div>
           </Router>
