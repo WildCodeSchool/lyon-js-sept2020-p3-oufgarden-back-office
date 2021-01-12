@@ -14,8 +14,8 @@ import Articles from './Articles';
 import ArticleCreation from './ArticleCreation';
 import Garden from './Garden';
 import GardenCreation from './GardenCreation';
-import ListCalendar from './ListCalendar';
 import Calendar from './Calendar';
+import GoogleCalendar from './GoogleCalendar';
 
 const App = () => {
   return (
@@ -46,8 +46,8 @@ const App = () => {
                 <Route exact path="/garden" component={Garden} />
                 <Route path="/garden/creation" component={GardenCreation} />
                 <Route path="/garden/:id" component={GardenCreation} />
-                <Route path="/calendar" component={ListCalendar} />
-                <Route path="/calendar/:id" component={Calendar} />
+                <Route path="/calendar" component={Calendar} />
+                <Route path="/google" component={GoogleCalendar} />
               </Switch>
             </div>
           </Router>
