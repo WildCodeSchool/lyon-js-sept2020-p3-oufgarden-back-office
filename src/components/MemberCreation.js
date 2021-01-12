@@ -64,11 +64,14 @@ const MemberCreation = (props) => {
   }, [id]);
   return (
     <div>
-      <div className="button-user-container">
-        <ButtonListCreation
-          link={{ list: '/adherents', creation: '/adherents/creation' }}
-        />
-      </div>
+      <ButtonListCreation
+        attributes={{
+          list: '/adherents',
+          creation: '/adherents/creation',
+          name: 'Adhérent',
+          names: 'Adhérents',
+        }}
+      />
 
       <div className="container">
         <form onSubmit={handleSubmit(onSubmit)}>

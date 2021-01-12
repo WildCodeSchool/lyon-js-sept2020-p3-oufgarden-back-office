@@ -1,82 +1,20 @@
 .garden-list-container {
   margin: 100px 20px 20px 15%;
-  .button-garden-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 80px;
+}
+.garden-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin: 0 20px 20px 20px;
+  background-color: #e5e7e9;
+  box-shadow: 10px;
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.19);
+  &:hover {
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+      0 3px 15px 0 rgba(0, 0, 0, 0.19);
   }
-  .button-garden-list {
-    width: 20vw;
-    height: 5vh;
-    border: none;
-    margin: 1%;
-    border-radius: 8px;
-    font-family: 'Montserrat';
-    font-size: 1rem;
-    cursor: pointer;
-    &:active {
-      background-color: #ebb349;
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-        0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
-    &:focus,
-    &:hover {
-      outline: 0;
-      background-color: #ebb349;
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-        0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
-    a {
-      text-decoration: none;
-      color: black;
-    }
-  }
-  .button-garden {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 20vw;
-    height: 5vh;
-    border: none;
-    margin: 1%;
-    border-radius: 8px;
-    font-family: 'Montserrat';
-    font-size: 1rem;
-    cursor: pointer;
-    &:active {
-      background-color: #ebb349;
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-        0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
-    &:focus,
-    &:hover {
-      outline: 0;
-      background-color: #ebb349;
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
-        0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
-
-    a {
-      text-decoration: none;
-      color: black;
-    }
-  }
-  .garden-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    margin: 0 20px 20px 20px;
-    background-color: #e5e7e9;
-    box-shadow: 10px;
-    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2),
-      0 6px 10px 0 rgba(0, 0, 0, 0.19);
-    &:hover {
-      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
-        0 3px 15px 0 rgba(0, 0, 0, 0.19);
-    }
-    .react-icons {
-      margin: 10px;
-    }
+  .react-icons {
+    margin: 10px;
   }
 }
