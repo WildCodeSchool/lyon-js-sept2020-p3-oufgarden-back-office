@@ -9,8 +9,7 @@ import API from '../services/API';
 
 const Login = (props) => {
   const { addToast } = useToasts();
-  /* const { setIsAdmin } = useContext(UserContext);
-   */
+
   const { register, handleSubmit, errors } = useForm();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,16 +24,13 @@ const Login = (props) => {
 
   const onSubmit = (data) => {
     API.post('/login', data)
-      .then((res) => {
-        if (res.data === 'logged') {
-          // setIsAdmin(true);
-          setIsLogged(true);
-          addToast('Connecté avec succès !', {
-            appearance: 'success',
-            autoDismiss: true,
-          });
-          props.history.push('/adherents');
-        }
+      .then(() => {
+        setIsLogged(true);
+        addToast('Connecté avec succès !', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+        props.history.push('/adherents');
       })
       .catch((err) => {
         console.log(err);
