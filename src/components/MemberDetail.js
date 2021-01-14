@@ -1,13 +1,19 @@
 /* eslint-disable no-nested-ternary */
+/* eslint-disable import/first */
+/* eslint-disable import/order */
+
 import React, { useEffect, useState } from 'react';
 import { MdEdit, MdKeyboardBackspace } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 
 // import { Link } from 'react-router-dom';
 
-import dayjs from 'dayjs';
+// import * as dayjs from 'dayjs';
 
 import { getEntity, getCollection } from '../services/API';
+
+import dayjs from 'dayjs';
+
 import './style/MemberDetail.scss';
 
 const today = dayjs();
