@@ -25,7 +25,9 @@ const MemberCreation = (props) => {
   const { addToast } = useToasts();
 
   const { register, handleSubmit, errors, getValues } = useForm();
+
   const onSubmit = async (data, e) => {
+    console.log(data);
     try {
       await makeEntityAdder('users')(data).then(() => {
         props.history.push('/adherents');
@@ -62,6 +64,7 @@ const MemberCreation = (props) => {
       });
     }
   }, [id]);
+
   return (
     <div>
       <ButtonListCreation
