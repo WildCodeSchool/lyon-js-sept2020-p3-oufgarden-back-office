@@ -5,6 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import { MdEdit, MdKeyboardBackspace } from 'react-icons/md';
 import { IconContext } from 'react-icons';
+// import { IoLeaf } from 'react-icons/io';
 
 // import { Link } from 'react-router-dom';
 
@@ -90,36 +91,50 @@ const MemberDetail = (props) => {
           <div className="is-admin">
             {userDetails.is_admin === 1 ? 'Admin' : ''}
           </div>
-          <div className="contact">
-            <h3>Informations de contact</h3>
-            <p>{userDetails.email}</p>
-            <p>{userDetails.phone}</p>
-          </div>
-          <div className="membership-infos">
-            <h3>Adhésion</h3>
-            <p>
-              Date d'adhésion :{' '}
-              {dayjs(userDetails.membership_start).format('DD/MM/YYYY')}
-            </p>
-            <p>
-              Temps restant avant le renouvellement d'adhésion :{' '}
-              {dayjs(userDetails.membership_start)
-                .add(1, 'year')
-                .diff(today, 'month')}{' '}
-              mois
-            </p>
-            <p>
-              Profil d'utilisateur créé le :{' '}
-              {dayjs(userDetails.user_creation).format('DD/MM/YYYY')}
-            </p>
-          </div>
-          <div className="garden-infos">
-            <h3>Jardins associés</h3>
-            {gardenList
-              .filter((garden) => gardenArray.includes(garden.id))
-              .map((garden) => (
-                <p>{garden.name}</p>
-              ))}
+          <div className="user-infos">
+            <div className="contact">
+              <h3>Informations de contact</h3>
+              <p>{userDetails.email}</p>
+              <p>{userDetails.phone}</p>
+            </div>
+            <div className="membership-infos">
+              <h3>Adhésion</h3>
+              <p>
+                <span className="emph">Date d'adhésion : </span>
+                {dayjs(userDetails.membership_start).format('DD/MM/YYYY')}
+              </p>
+              <p>
+                <span className="emph">
+                  Temps restant avant le renouvellement d'adhésion :{' '}
+                </span>
+                <span
+                  className={
+                    dayjs(userDetails.membership_start)
+                      .add(1, 'year')
+                      .diff(today, 'days') < 30
+                      ? 'alert'
+                      : 'ok'
+                  }
+                >
+                  {dayjs(userDetails.membership_start)
+                    .add(1, 'year')
+                    .diff(today, 'days')}{' '}
+                  jours
+                </span>
+              </p>
+              <p>
+                <span className="emph">Profil d'utilisateur créé le : </span>
+                {dayjs(userDetails.user_creation).format('DD/MM/YYYY')}
+              </p>
+            </div>
+            <div className="garden-infos">
+              <h3>Jardins associés</h3>
+              {gardenList
+                .filter((garden) => gardenArray.includes(garden.id))
+                .map((garden) => (
+                  <p>{garden.name}</p>
+                ))}
+            </div>
           </div>
         </div>
       )}
