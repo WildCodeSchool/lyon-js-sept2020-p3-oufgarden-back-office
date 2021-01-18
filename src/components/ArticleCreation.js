@@ -135,8 +135,10 @@ const ArticleCreation = (props) => {
       gardenArray,
       disabledArticle,
     };
-
-    await makeEntityUpdater('articles')(id, data).then(() => {
+    const formData = new FormData();
+    formData.append('picture', articleImage);
+    formData.append('data', JSON.stringify(data));
+    await makeEntityUpdater('articles')(id, formData).then(() => {
       setArticleContent('');
       setTitle('');
       setArticleImage('');

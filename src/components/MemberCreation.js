@@ -152,9 +152,11 @@ const MemberCreation = (props) => {
         ...data,
         gardenArray: data.garden.map((elem) => elem.value),
       };
-
+      const formData = new FormData();
+      formData.append('picture', data.picture[0]);
+      formData.append('data', JSON.stringify(newData));
       try {
-        await makeEntityUpdater('users')(id, newData)
+        await makeEntityUpdater('users')(id, formData)
           .then(() => {
             setGardenArray([]);
             setGardenList([]);
