@@ -40,14 +40,15 @@ const TagsPage = () => {
               await makeEntityDeleter('tags')(id);
               const updatedList = await getCollection('tags');
               const sortedUpdatedList = updatedList.sort((a, b) => {
-                addToast('Catégorie supprimée avec succès', {
-                  appearance: 'success',
-                  autoDismiss: true,
-                });
                 return a.name.localeCompare(b.name);
               });
               setTagList(sortedUpdatedList);
               setNewTag(() => '');
+
+              addToast('Catégorie supprimée avec succès', {
+                appearance: 'success',
+                autoDismiss: true,
+              });
             } catch (err) {
               addToast(
                 'problème serveur lors de la suppression de la catégorie',
