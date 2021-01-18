@@ -12,7 +12,6 @@ import './style/GardenCreation.scss';
 
 // Messages
 const required = 'Ce champ est obligatoire';
-/* const maxLength = 'Vous avez dépassé le nombre maximal de caractères.'; */
 
 // Error Component
 const errorMessage = (error) => {
@@ -53,7 +52,6 @@ const GardenCreation = (props) => {
     }
   }, [id]);
 
-  // test pour react select
   const options = allPlantFamilies.map((elem) => {
     return {
       value: elem.id,
@@ -170,7 +168,7 @@ const GardenCreation = (props) => {
         <div>
           <div className="imgUploadContainer">
             {/*   Just to inform the team, the form here is necessary to make file upload working with react hook form  */}
-            <form method="post" encType="multipart/form-data">
+            <form>
               <div className="uploadRows">
                 <label htmlFor="gardenPicture">
                   Image du jardin:

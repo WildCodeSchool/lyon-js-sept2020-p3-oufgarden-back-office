@@ -28,6 +28,9 @@ const MemberCreation = (props) => {
 
   const onSubmit = async (data, e) => {
     console.log(data);
+    const formData = new FormData();
+    formData.append('picture', data.picture[0]);
+    formData.append('data', data);
     try {
       await makeEntityAdder('users')(data).then(() => {
         props.history.push('/adherents');
@@ -77,9 +80,16 @@ const MemberCreation = (props) => {
       />
 
       <div className="container">
+        <h3>Création d'un membre :</h3>
+        <form className="uploadRows">
+          <div>
+            <label htmlFor="picture">
+              Votre image de profil:
+              <input ref={register} type="file" name="picture" />
+            </label>
+          </div>
+        </form>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h3>Création d'un membre :</h3>
-
           <div>
             <label htmlFor="lastname">
               Nom:{' '}
