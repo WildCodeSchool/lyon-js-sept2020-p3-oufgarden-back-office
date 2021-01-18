@@ -31,7 +31,7 @@ const TagsPage = () => {
   const handleDelete = async (id) => {
     confirmAlert({
       title: 'Confirmez la suppression',
-      message: 'Etes vous sûr de vouloir supprimer cet utilisateur ?',
+      message: 'Etes vous sûr de vouloir supprimer cete gatégorie ?',
       buttons: [
         {
           label: 'Confirmer',
@@ -75,6 +75,10 @@ const TagsPage = () => {
       const updatedList = await getCollection('tags');
       const sortedUpdatedList = updatedList.sort((a, b) => {
         return a.name.localeCompare(b.name);
+      });
+      addToast('Catégorie crée avec succès', {
+        appearance: 'success',
+        autoDismiss: true,
       });
       setTagList(sortedUpdatedList);
       setNewTag(() => '');

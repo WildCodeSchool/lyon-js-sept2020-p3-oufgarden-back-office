@@ -1,12 +1,13 @@
 /* eslint-disable no-unused-vars */
 
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { FiMail } from 'react-icons/fi';
 import { MdDelete, MdAccountCircle } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 import { useToasts } from 'react-toast-notifications';
 import { confirmAlert } from 'react-confirm-alert';
+import ButtonListCreation from './ButtonListCreation';
+
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import { getCollection, makeEntityDeleter } from '../services/API';
@@ -85,14 +86,16 @@ const Adherents = (props) => {
   };
 
   return (
-    <div>
+    <div className="user-list-container">
       <div className="button-user-container">
-        <button type="button" className="button-user-list">
-          <Link to="/adherents">Listes Adhérents</Link>
-        </button>
-        <button type="button" className="button-user">
-          <Link to="/adherents/creation">Nouvel Adhérent</Link>
-        </button>
+        <ButtonListCreation
+          attributes={{
+            list: '/adherents',
+            creation: '/adherents/creation',
+            name: 'Adhérent',
+            names: 'Adhérents',
+          }}
+        />
       </div>
       <div className="filterContainer">
         {gardenList &&
