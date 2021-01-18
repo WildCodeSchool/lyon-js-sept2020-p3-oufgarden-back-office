@@ -25,19 +25,12 @@ const App = () => {
             <div className="App">
               <Switch>
                 <Route exact path="/" component={Login} />
+
+                <Route path="/adherents/creation" component={MemberCreation} />
+                <Route path="/adherents/edit/:id" component={MemberCreation} />
+                <Route path="/adherents/:id" component={MemberDetail} />
                 <Route exact path="/adherents" component={Adherents} />
-                <Route
-                  exact
-                  path="/adherents/creation"
-                  component={MemberCreation}
-                />
-                {/* // changed here */}
-                <Route exact path="/adherents/:id" component={MemberDetail} />
-                <Route
-                  exact
-                  path="/adherents/edit/:id"
-                  component={MemberCreation}
-                />
+
                 <Route exact path="/articles" component={ArticleList} />
 
                 <Route

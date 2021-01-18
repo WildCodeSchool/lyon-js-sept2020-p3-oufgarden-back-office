@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useToasts } from 'react-toast-notifications';
+import { MdKeyboardBackspace } from 'react-icons/md';
+import { IconContext } from 'react-icons';
 // import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import dayjs from 'dayjs';
-import ButtonListCreation from './ButtonListCreation';
 
 import {
   makeEntityAdder,
@@ -58,7 +59,9 @@ const MemberCreation = (props) => {
           user_creation: dayjs(data.user_creation).format('YYYY-MM-DD'),
         }));
         setGardenArray(() =>
-          data.garden_id_concat.split(',').map((gardenId) => +gardenId)
+          data.garden_id_concat
+            ? data.garden_id_concat.split(',').map((gardenId) => +gardenId)
+            : []
         );
       });
     }
@@ -148,10 +151,16 @@ const MemberCreation = (props) => {
       }
       e.target.reset();
     } else if (forUpdate) {
+      // here remove password if null
+
       const newData = {
         ...data,
         gardenArray: data.garden.map((elem) => elem.value),
       };
+      if (newData.password === '') {
+        delete newData.password;
+        delete newData.passwordConfirmation;
+      }
       const formData = new FormData();
       formData.append('picture', data.picture[0]);
       formData.append('data', JSON.stringify(newData));
@@ -180,6 +189,10 @@ const MemberCreation = (props) => {
     }
   };
 
+  const handleBack = () => {
+    props.history.push(`/adherents`);
+  };
+
   // generate a random password
   const generatedPassword = generator.generate({
     length: 8,
@@ -198,15 +211,6 @@ const MemberCreation = (props) => {
 
   return (
     <div>
-      <ButtonListCreation
-        attributes={{
-          list: '/adherents',
-          creation: '/adherents/creation',
-          name: 'Adhérent',
-          names: 'Adhérents',
-        }}
-      />
-
       <div className="container">
         <h3>Création d'un membre :</h3>
         <form className="uploadRows">
@@ -218,6 +222,18 @@ const MemberCreation = (props) => {
           </div>
         </form>
         <form onSubmit={handleSubmit(onSubmit)}>
+          <IconContext.Provider value={{ className: 'react-icons' }}>
+            <MdKeyboardBackspace
+              size={25}
+              className="back"
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                handleBack();
+              }}
+            />
+          </IconContext.Provider>
+          <h3>Création d'un membre :</h3>
+
           <div>
             <label htmlFor="gender_marker">
               Civilité :{' '}
@@ -455,17 +471,18 @@ const MemberCreation = (props) => {
             </>
           )}
 
-          <div>
-            <label htmlFor="admin">
-              Membre administrateur ?{' '}
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span className="label">Membre administrateur ? {'   '}</span>
+            <label htmlFor="admin" className="switch">
               <input
                 name="is_admin"
                 type="checkbox"
                 id="admin"
                 value="true"
                 ref={register}
-                defaultValue={userToEdit.is_admin}
+                defaultChecked={userToEdit.is_admin}
               />
+              <span className="slider round" />
             </label>
           </div>
 
