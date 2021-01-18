@@ -1,0 +1,39 @@
+.member-detail-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 50%;
+  margin: auto;
+  margin-top: 200px;
+  align-items: center;
+
+  padding: 10px;
+
+  background-color: #e5e7e9;
+
+  .icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .user-infos {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+
+    h3 {
+      margin-top: 10px;
+    }
+
+    .emph {
+      font-weight: bold;
+    }
+
+    .alert {
+      color: rgb(214, 0, 0);
+    }
+  }
+}

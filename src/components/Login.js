@@ -84,7 +84,7 @@ const Login = (props) => {
                       value={stayConnected}
                       onClick={() => setStayConnected(true)}
                     />
-                    Stay connected ?
+                    Rester connecté.e
                   </label>
                 </div>
               </div>

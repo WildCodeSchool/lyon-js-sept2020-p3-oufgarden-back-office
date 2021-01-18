@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useContext } from 'react';
 import { FiMail } from 'react-icons/fi';
-import { MdDelete, MdEdit } from 'react-icons/md';
+import { MdDelete, MdAccountCircle } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 import { useToasts } from 'react-toast-notifications';
 import { confirmAlert } from 'react-confirm-alert';
@@ -17,12 +17,34 @@ const Adherents = (props) => {
   const { addToast } = useToasts();
 
   const [adherentList, setAdherentList] = useState([]);
+  const [gardenList, setGardenList] = useState([]);
+  const [filterArray, setFilterArray] = useState([]);
 
   useEffect(() => {
-    getCollection('users').then((elem) => {
-      setAdherentList(elem);
+    getCollection('users').then((data) => {
+      setAdherentList(
+        data.map((userData) => ({
+          ...userData,
+          gardenArray: userData.garden_id_concat
+            .split(',')
+            .map((gardenId) => +gardenId),
+        }))
+      );
     });
   }, []);
+
+  useEffect(() => {
+    getCollection('garden').then((data) => setGardenList(data));
+  }, []);
+
+  const handleGardenList = (target) => {
+    if (filterArray.includes(+target.id)) {
+      const newFilterArray = filterArray.filter((item) => item !== +target.id);
+      setFilterArray(newFilterArray);
+    } else {
+      setFilterArray((prevState) => [...prevState, +target.id]);
+    }
+  };
 
   const handleDelete = async (id) => {
     confirmAlert({
@@ -75,38 +97,76 @@ const Adherents = (props) => {
           }}
         />
       </div>
-      <div className="container-to-color-rows">
-        {adherentList.map((e) => {
-          return (
-            <div key={e.id} className="adherent-row">
-              <div className="user-infos">
-                <p>
-                  {e.firstname} {e.lastname} {e.email}
-                </p>
+      <div className="filterContainer">
+        {gardenList &&
+          gardenList.map((garden) => {
+            return (
+              <div key={garden.id}>
+                <button
+                  type="button"
+                  className="filterButton"
+                  id={garden.id}
+                  onClick={(e) => handleGardenList(e.target)}
+                >
+                  {garden.name}
+                </button>
               </div>
-              <div className="user-list-icons">
-                {/* IconContext provider pour personnaliser les props de react-icons */}
-                <IconContext.Provider value={{ className: 'react-icons' }}>
-                  <FiMail size={25} />
-                  <MdEdit
-                    size={25}
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => {
-                      handleEdit(e.id);
-                    }}
-                  />
-                  <MdDelete
-                    style={{ cursor: 'pointer' }}
-                    size={25}
-                    onClick={() => {
-                      handleDelete(e.id);
-                    }}
-                  />
-                </IconContext.Provider>
+            );
+          })}
+      </div>
+      <div className="user-list-container">
+        {adherentList
+          .filter((user) => {
+            if (filterArray.length > 0) {
+              return user.gardenArray.some((gardenId) =>
+                filterArray.includes(gardenId)
+              );
+            }
+            return true;
+          })
+          .map((e) => {
+            return (
+              <div key={e.id} className="adherent-row">
+                <div className="user-infos">
+                  <p>
+                    <span className="bold">
+                      {e.firstname} {e.lastname.toUpperCase()}
+                    </span>{' '}
+                    <br /> {e.email}
+                  </p>
+                  <ul className="garden-list">
+                    {gardenList.length > 0 &&
+                      gardenList.map((garden) => {
+                        if (e.gardenArray.includes(garden.id)) {
+                          return <li>{garden.name}</li>;
+                        }
+                        return null;
+                      })}
+                  </ul>
+                </div>
+                <div className="user-list-icons">
+                  {/* IconContext provider pour personnaliser les props de react-icons */}
+                  <IconContext.Provider value={{ className: 'react-icons' }}>
+                    <FiMail size={25} />
+                    <MdAccountCircle
+                      size={25}
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        handleEdit(e.id);
+                      }}
+                    />
+                    <MdDelete
+                      style={{ cursor: 'pointer' }}
+                      size={25}
+                      onClick={() => {
+                        handleDelete(e.id);
+                      }}
+                    />
+                  </IconContext.Provider>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );

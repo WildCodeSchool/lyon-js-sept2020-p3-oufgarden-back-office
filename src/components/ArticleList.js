@@ -20,10 +20,10 @@ const ArticleList = (props) => {
 
   useEffect(() => {
     getCollection('articles').then((elem) => {
-      console.log(elem);
       setArticles(elem);
     });
   }, []);
+
   useEffect(() => {
     getCollection('tags').then((data) => setAllTags(data));
   }, []);
