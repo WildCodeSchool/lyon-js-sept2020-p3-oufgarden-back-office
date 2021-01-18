@@ -18,7 +18,7 @@ const ArticleCreation = (props) => {
   const textEditorApi = process.env.REACT_APP_TEXT_EDITOR_API;
   const [articleContent, setArticleContent] = useState('');
   const [title, setTitle] = useState('');
-  const [urlImage, setUrlImage] = useState('');
+  const [articleImage, setArticleImage] = useState('');
   const [allTags, setAllTags] = useState([]);
   const [tagsArray, setTagsArray] = useState([]);
   const [loadedTags, setLoadedTags] = useState([]);
@@ -40,11 +40,11 @@ const ArticleCreation = (props) => {
       getEntity('articles', id).then((data) => {
         if (data.row) {
           setArticleContent(data.row.content);
-          setUrlImage(data.row.url);
+          setArticleImage(data.row.url);
           setTitle(data.row.title);
         } else {
           setArticleContent(data.content);
-          setUrlImage(data.url);
+          setArticleImage(data.url);
           setTitle(data.title);
         }
         if (data.garden) {
@@ -107,22 +107,22 @@ const ArticleCreation = (props) => {
   const handleTitle = (e) => {
     setTitle(e.target.value);
   };
-  const handleImage = (e) => {
-    setUrlImage(e.target.value);
-  };
 
   const handleCreate = async () => {
     const data = {
       content: articleContent,
       title,
-      url: urlImage,
       tagsArray,
       gardenArray,
     };
-    await makeEntityAdder('articles')(data);
+    const formData = new FormData();
+    formData.append('picture', articleImage);
+    formData.append('data', JSON.stringify(data));
+    console.log(articleImage);
+    await makeEntityAdder('articles')(formData);
     setArticleContent('');
     setTitle('');
-    setUrlImage('');
+    setArticleImage('');
     setGardenArray([]);
     history.push('/articles');
   };
@@ -130,7 +130,6 @@ const ArticleCreation = (props) => {
     const data = {
       content: articleContent,
       title,
-      url: urlImage,
       updated_at: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       tagsArray,
       gardenArray,
@@ -140,7 +139,7 @@ const ArticleCreation = (props) => {
     await makeEntityUpdater('articles')(id, data).then(() => {
       setArticleContent('');
       setTitle('');
-      setUrlImage('');
+      setArticleImage('');
       setGardenArray([]);
       setTagsArray([]);
       props.history.push('/articles');
@@ -178,12 +177,16 @@ const ArticleCreation = (props) => {
           defaultValue={title}
           onChange={handleTitle}
         />
-        <input
-          className="Image"
-          placeholder="url de l'image"
-          defaultValue={urlImage}
-          onChange={handleImage}
-        />
+        <form>
+          <input
+            type="file"
+            className="picture"
+            placeholder="url de l'image"
+            defaultValue={articleImage}
+            onChange={(e) => setArticleImage(e.target.files[0])}
+          />
+        </form>
+
         <Editor
           apiKey={textEditorApi}
           value={`${articleContent}`}
