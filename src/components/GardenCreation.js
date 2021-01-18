@@ -164,7 +164,6 @@ const GardenCreation = (props) => {
           <form
             method="POST"
             encType="multipart/form-data"
-            action="http://localhost:5000"
             className="formContainer"
             onSubmit={handleSubmit(onSubmit)}
           >
@@ -334,21 +333,14 @@ const GardenCreation = (props) => {
                         onChange={(e) => handleInputChange(e, i)}
                       />
 
-                      <Controller
-                        name="plantfamily"
-                        control={control}
-                        defaultValue=""
-                        render={({ onChange, value }) => (
-                          <Select
-                            options={options}
-                            onChange={(e) => {
-                              onChange(e);
-                              handleChangeSelect(e, i);
-                            }}
-                            value={value}
-                            isMulti
-                          />
-                        )}
+                      <Select
+                        options={options}
+                        onChange={(e) => {
+                          handleChangeSelect(e, i);
+                        }}
+                        // value={value}
+                        isMulti
+                        name="plantFamily"
                       />
 
                       <div className="btn-box">

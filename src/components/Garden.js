@@ -24,7 +24,7 @@ const Garden = (props) => {
   const handleDelete = async (id) => {
     confirmAlert({
       title: 'Confirmez la suppression',
-      message: 'Etes vous sûr de vouloir supprimer cet utilisateur ?',
+      message: 'Etes vous sûr de vouloir supprimer ce jardin ?',
       buttons: [
         {
           label: 'Confirmer',
