@@ -40,7 +40,9 @@ const MemberDetail = (props) => {
         user_creation: dayjs(data.user_creation).format('YYYY-MM-DD'),
       }));
       setGardenArray(() =>
-        data.garden_id_concat.split(',').map((gardenId) => +gardenId)
+        data.garden_id_concat
+          ? data.garden_id_concat.split(',').map((gardenId) => +gardenId)
+          : []
       );
     });
   }, []);
@@ -49,7 +51,6 @@ const MemberDetail = (props) => {
     getCollection('garden').then((data) => setGardenList(data));
   }, []);
 
-  console.log(userDetails);
   const handleEdit = (userId) => {
     props.history.push(`/adherents/edit/${userId}`);
   };
