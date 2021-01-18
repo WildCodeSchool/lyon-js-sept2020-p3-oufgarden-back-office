@@ -11,6 +11,7 @@ import ButtonListCreation from './ButtonListCreation';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import { getCollection, makeEntityDeleter } from '../services/API';
+
 import './style/AdherentList.scss';
 
 const Adherents = (props) => {
@@ -115,58 +116,60 @@ const Adherents = (props) => {
           })}
       </div>
       <div className="user-list-container">
-        {adherentList
-          .filter((user) => {
-            if (filterArray.length > 0) {
-              return user.gardenArray.some((gardenId) =>
-                filterArray.includes(gardenId)
+        <div className="container-to-color-rows">
+          {adherentList
+            .filter((user) => {
+              if (filterArray.length > 0) {
+                return user.gardenArray.some((gardenId) =>
+                  filterArray.includes(gardenId)
+                );
+              }
+              return true;
+            })
+            .map((e) => {
+              return (
+                <div key={e.id} className="adherent-row">
+                  <div className="user-infos">
+                    <p>
+                      <span className="bold">
+                        {e.firstname} {e.lastname.toUpperCase()}
+                      </span>{' '}
+                      <br /> {e.email}
+                    </p>
+                    <ul className="garden-list">
+                      {gardenList.length > 0 &&
+                        gardenList.map((garden) => {
+                          if (e.gardenArray.includes(garden.id)) {
+                            return <li>{garden.name}</li>;
+                          }
+                          return null;
+                        })}
+                    </ul>
+                  </div>
+                  <div className="user-list-icons">
+                    {/* IconContext provider pour personnaliser les props de react-icons */}
+                    <IconContext.Provider value={{ className: 'react-icons' }}>
+                      <FiMail size={25} />
+                      <MdAccountCircle
+                        size={25}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                          handleEdit(e.id);
+                        }}
+                      />
+                      <MdDelete
+                        style={{ cursor: 'pointer' }}
+                        size={25}
+                        onClick={() => {
+                          handleDelete(e.id);
+                        }}
+                      />
+                    </IconContext.Provider>
+                  </div>
+                </div>
               );
-            }
-            return true;
-          })
-          .map((e) => {
-            return (
-              <div key={e.id} className="adherent-row">
-                <div className="user-infos">
-                  <p>
-                    <span className="bold">
-                      {e.firstname} {e.lastname.toUpperCase()}
-                    </span>{' '}
-                    <br /> {e.email}
-                  </p>
-                  <ul className="garden-list">
-                    {gardenList.length > 0 &&
-                      gardenList.map((garden) => {
-                        if (e.gardenArray.includes(garden.id)) {
-                          return <li>{garden.name}</li>;
-                        }
-                        return null;
-                      })}
-                  </ul>
-                </div>
-                <div className="user-list-icons">
-                  {/* IconContext provider pour personnaliser les props de react-icons */}
-                  <IconContext.Provider value={{ className: 'react-icons' }}>
-                    <FiMail size={25} />
-                    <MdAccountCircle
-                      size={25}
-                      style={{ cursor: 'pointer' }}
-                      onClick={() => {
-                        handleEdit(e.id);
-                      }}
-                    />
-                    <MdDelete
-                      style={{ cursor: 'pointer' }}
-                      size={25}
-                      onClick={() => {
-                        handleDelete(e.id);
-                      }}
-                    />
-                  </IconContext.Provider>
-                </div>
-              </div>
-            );
-          })}
+            })}
+        </div>
       </div>
     </div>
   );
