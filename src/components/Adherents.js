@@ -139,7 +139,10 @@ const Adherents = (props) => {
                     <ul className="garden-list">
                       {gardenList.length > 0 &&
                         gardenList.map((garden) => {
-                          if (e.gardenArray.includes(garden.id)) {
+                          if (
+                            e.gardenArray &&
+                            e.gardenArray.includes(garden.id)
+                          ) {
                             return <li>{garden.name}</li>;
                           }
                           return null;
