@@ -1,11 +1,12 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 import { useToasts } from 'react-toast-notifications';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import ButtonListCreation from './ButtonListCreation';
 
 import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/ListArticles.scss';
@@ -19,6 +20,7 @@ const ArticleList = (props) => {
 
   useEffect(() => {
     getCollection('articles').then((elem) => {
+      console.log(elem);
       setArticles(elem);
     });
   }, []);
@@ -92,14 +94,15 @@ const ArticleList = (props) => {
   return (
     <div>
       <div className="articleListContainer">
-        <div className="buttons">
-          <button type="button" className="buttonList">
-            <Link to="/articles">Liste Articles</Link>
-          </button>
-          <button type="button" className="buttonArticle">
-            <Link to="/articles/creation">Nouvel Article</Link>
-          </button>
-        </div>
+        <ButtonListCreation
+          attributes={{
+            list: '/articles',
+            creation: '/articles/creation',
+            name: 'Article',
+            names: 'Articles',
+          }}
+        />
+
         <div className="filterContainer">
           {allTags &&
             allTags.map((tag) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useToasts } from 'react-toast-notifications';
-import { Link } from 'react-router-dom';
+import ButtonListCreation from './ButtonListCreation';
 
 import { makeEntityAdder, getEntity } from '../services/API';
 import './style/MemberCreation.scss';
@@ -64,14 +64,14 @@ const MemberCreation = (props) => {
   }, [id]);
   return (
     <div>
-      <div className="button-user-container">
-        <button type="button" className="button-user-list">
-          <Link to="/adherents">Listes Adhérents</Link>
-        </button>
-        <button type="button" className="button-user">
-          <Link to="/adherents/creation">Nouvel Adhérent</Link>
-        </button>
-      </div>
+      <ButtonListCreation
+        attributes={{
+          list: '/adherents',
+          creation: '/adherents/creation',
+          name: 'Adhérent',
+          names: 'Adhérents',
+        }}
+      />
 
       <div className="container">
         <form onSubmit={handleSubmit(onSubmit)}>
