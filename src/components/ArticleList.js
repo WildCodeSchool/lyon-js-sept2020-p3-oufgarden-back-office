@@ -22,6 +22,7 @@ const ArticleList = (props) => {
       setArticles(elem);
     });
   }, []);
+
   useEffect(() => {
     getCollection('tags').then((data) => setAllTags(data));
   }, []);

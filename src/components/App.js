@@ -4,7 +4,7 @@ import { Router } from 'react-router';
 import { ToastProvider } from 'react-toast-notifications';
 import Navbar from './Navbar';
 import Login from './Login';
-import Adherent from './Adherents';
+import Adherents from './Adherents';
 import TagsPage from './TagsPage';
 import MemberCreation from './MemberCreation';
 import history from '../history';
@@ -13,6 +13,7 @@ import ArticleCreation from './ArticleCreation';
 import Garden from './Garden';
 import GardenCreation from './GardenCreation';
 import ArticleList from './ArticleList';
+import MemberDetail from './MemberDetail';
 
 const App = () => {
   return (
@@ -24,13 +25,19 @@ const App = () => {
             <div className="App">
               <Switch>
                 <Route exact path="/" component={Login} />
-                <Route exact path="/adherents" component={Adherent} />
+                <Route exact path="/adherents" component={Adherents} />
                 <Route
                   exact
                   path="/adherents/creation"
                   component={MemberCreation}
                 />
-                <Route exact path="/adherents/:id" component={MemberCreation} />
+                {/* // changed here */}
+                <Route exact path="/adherents/:id" component={MemberDetail} />
+                <Route
+                  exact
+                  path="/adherents/edit/:id"
+                  component={MemberCreation}
+                />
                 <Route exact path="/articles" component={ArticleList} />
 
                 <Route
