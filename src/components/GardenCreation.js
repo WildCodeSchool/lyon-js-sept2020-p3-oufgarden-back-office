@@ -1,11 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 import _ from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
+import ButtonListCreation from './ButtonListCreation';
 
 import { getCollection, makeEntityAdder, getEntity } from '../services/API';
 import './style/GardenCreation.scss';
@@ -130,29 +130,33 @@ const GardenCreation = (props) => {
   };
 
   const handleChangeSelect = (elem, i) => {
-    if (elem.length > 0) {
-      const plantFamilySelection = { i, value: elem.map((e) => e.value) };
-      const arrFamilyId = plantFamilySelection.value;
-      const deepCopyList = _.cloneDeep(inputList);
-      deepCopyList[i].plantFamilyArray = [...arrFamilyId];
-      setInputList(deepCopyList);
-    }
-    if (elem.length === 0) {
-      const deepCopyList = _.cloneDeep(inputList);
-      deepCopyList[i].plantFamilyArray = [];
-      setInputList(deepCopyList);
+    if (elem) {
+      if (elem.length > 0) {
+        const plantFamilySelection = { i, value: elem.map((e) => e.value) };
+        const arrFamilyId = plantFamilySelection.value;
+        const deepCopyList = _.cloneDeep(inputList);
+        deepCopyList[i].plantFamilyArray = [...arrFamilyId];
+        setInputList(deepCopyList);
+      }
+      if (!elem) {
+        const deepCopyList = _.cloneDeep(inputList);
+        deepCopyList[i].plantFamilyArray = [];
+        setInputList(deepCopyList);
+      }
     }
   };
 
   return (
     <div>
       <div className="button-garden-container">
-        <button type="button" className="button-garden-list">
-          <Link to="/garden">Liste Jardins</Link>
-        </button>
-        <button type="button" className="button-garden">
-          <Link to="/garden/creation">Nouveau Jardin</Link>
-        </button>
+        <ButtonListCreation
+          attributes={{
+            list: '/garden',
+            creation: '/garden/creation',
+            name: 'Jardin',
+            names: 'Jardins',
+          }}
+        />
       </div>
 
       <div className="containerGarden">
@@ -338,7 +342,7 @@ const GardenCreation = (props) => {
                           <Select
                             options={options}
                             onChange={(e) => {
-                              onChange(e.value);
+                              onChange(e);
                               handleChangeSelect(e, i);
                             }}
                             value={value}

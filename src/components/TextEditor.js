@@ -5,7 +5,7 @@ import Select from 'react-select';
 
 import { makeEntityAdder, getCollection } from '../services/API';
 
-import './style/TextEditor.scss';
+// import './style/TextEditor.scss';
 
 const ArticleCreationForm = () => {
   const textEditorApi = process.env.REACT_APP_TEXT_EDITOR_API;

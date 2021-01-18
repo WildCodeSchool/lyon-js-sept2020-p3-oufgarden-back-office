@@ -1,8 +1,12 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { IconContext } from 'react-icons';
+import { useToasts } from 'react-toast-notifications';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import ButtonListCreation from './ButtonListCreation';
 
 import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/ListArticles.scss';
@@ -12,6 +16,7 @@ const ArticleList = (props) => {
   const [articlesFiltered, setArticlesFiltered] = useState([]);
   const [tagList, setTagList] = useState([]);
   const [allTags, setAllTags] = useState([]);
+  const { addToast } = useToasts();
 
   useEffect(() => {
     getCollection('articles').then((elem) => {
@@ -24,9 +29,38 @@ const ArticleList = (props) => {
   }, []);
 
   const handleDelete = async (id) => {
-    await makeEntityDeleter('articles')(id);
-    getCollection('articles').then((elem) => {
-      setArticles(elem);
+    confirmAlert({
+      title: 'Confirmez la suppression',
+      message: 'Etes vous sûr de vouloir supprimer cet article ?',
+      buttons: [
+        {
+          label: 'Confirmer',
+          onClick: async () => {
+            try {
+              await makeEntityDeleter('articles')(id);
+              getCollection('articles').then((elem) => {
+                setArticles(elem);
+                addToast('Article supprimé avec succès', {
+                  appearance: 'success',
+                  autoDismiss: true,
+                });
+              });
+            } catch (err) {
+              addToast(
+                "Un problème est survenu lors de la suppression de l'article",
+                {
+                  appearance: 'error',
+                  autoDismiss: true,
+                }
+              );
+            }
+          },
+        },
+        {
+          label: 'Annuler',
+          onClick: () => null,
+        },
+      ],
     });
   };
 
@@ -60,14 +94,15 @@ const ArticleList = (props) => {
   return (
     <div>
       <div className="articleListContainer">
-        <div className="buttons">
-          <button type="button" className="buttonList">
-            <Link to="/articles">Liste Articles</Link>
-          </button>
-          <button type="button" className="buttonArticle">
-            <Link to="/articles/creation">Nouvel Article</Link>
-          </button>
-        </div>
+        <ButtonListCreation
+          attributes={{
+            list: '/articles',
+            creation: '/articles/creation',
+            name: 'Article',
+            names: 'Articles',
+          }}
+        />
+
         <div className="filterContainer">
           {allTags &&
             allTags.map((tag) => {
