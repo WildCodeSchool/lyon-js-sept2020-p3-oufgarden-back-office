@@ -33,7 +33,6 @@ const GardenCreation = (props) => {
   const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
   const [Garden, setGarden] = useState([]);
-  const [gardenPic, setGardenPic] = useState(null);
 
   const [inputList, setInputList] = useState([
     {
@@ -44,7 +43,6 @@ const GardenCreation = (props) => {
       description: '',
     },
   ]);
-  console.log(gardenPic);
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
@@ -93,7 +91,6 @@ const GardenCreation = (props) => {
   };
 
   const onSubmit = (data, e) => {
-    console.log(data);
     const newData = {
       address: {
         address_city: data.address_city,
@@ -111,7 +108,13 @@ const GardenCreation = (props) => {
           ? []
           : inputList,
     };
-    makeEntityAdder('garden')(newData)
+    const formData = new FormData();
+    formData.append('gardenPicture', data.gardenPicture[0]);
+    formData.append('zonePicture', data.zonePicture[0]);
+    // We use JSON.stringify here to send neste object in formdata
+    formData.append('newData', JSON.stringify(newData));
+
+    makeEntityAdder('garden')(formData)
       // .then((elem) => {
       //   console.log(elem);
       // })
@@ -167,7 +170,7 @@ const GardenCreation = (props) => {
         <div>
           <div className="imgUploadContainer">
             {/*   Just to inform the team, the form here is necessary to make file upload working with react hook form  */}
-            <form>
+            <form method="post" encType="multipart/form-data">
               <div className="uploadRows">
                 <label htmlFor="gardenPicture">
                   Image du jardin:
@@ -175,7 +178,7 @@ const GardenCreation = (props) => {
                 </label>
               </div>
               <div className="uploadRows">
-                <label htmlFor="zonesPicture">
+                <label htmlFor="zonePicture">
                   Image des zones:
                   <input ref={register} type="file" name="zonePicture" />
                 </label>
