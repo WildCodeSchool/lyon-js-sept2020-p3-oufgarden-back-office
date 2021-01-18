@@ -26,8 +26,8 @@ const Adherents = (props) => {
         data.map((userData) => ({
           ...userData,
           gardenArray: userData.garden_id_concat
-            .split(',')
-            .map((gardenId) => +gardenId),
+            ? userData.garden_id_concat.split(',').map((gardenId) => +gardenId)
+            : [],
         }))
       );
     });
