@@ -10,17 +10,23 @@ import {
 
 import './style/Calendar.scss';
 
-const currentDate = '2018-06-27';
+const currentDate = '2021-01-18';
 const schedulerData = [
   {
-    startDate: '2018-11-01T09:45',
-    endDate: '2018-11-01T11:00',
+    startDate: '2021-01-22T09:45',
+    endDate: '2021-01-22T11:00',
     title: 'Meeting',
   },
   {
-    startDate: '2018-11-01T12:00',
-    endDate: '2018-11-01T13:30',
+    startDate: '2021-01-18T12:00',
+    endDate: '2021-01-18T13:30',
     title: 'Go to a gym',
+  },
+  {
+    startDate: '2021-01-19',
+    endDate: '2021-01-19',
+    title: 'all day event',
+    allDay: 1,
   },
 ];
 
