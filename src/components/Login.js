@@ -9,8 +9,7 @@ import API from '../services/API';
 
 const Login = (props) => {
   const { addToast } = useToasts();
-  /* const { setIsAdmin } = useContext(UserContext);
-   */
+
   const { register, handleSubmit, errors } = useForm();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,16 +24,13 @@ const Login = (props) => {
 
   const onSubmit = (data) => {
     API.post('/login', data)
-      .then((res) => {
-        if (res.data === 'logged') {
-          // setIsAdmin(true);
-          setIsLogged(true);
-          addToast('Connecté avec succès !', {
-            appearance: 'success',
-            autoDismiss: true,
-          });
-          props.history.push('/adherents');
-        }
+      .then(() => {
+        setIsLogged(true);
+        addToast('Connecté avec succès !', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+        props.history.push('/adherents');
       })
       .catch((err) => {
         console.log(err);
@@ -47,57 +43,55 @@ const Login = (props) => {
 
   return (
     <div className="containerLogin">
+      <h1 className="admin">Espace administrateur</h1>
+      <div className="logo" />
       <div className="boxLogin">
-        <h3>Se connecter</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="input-wrapper">
-            <div className="field">
-              <input
-                onChange={(event) => setEmail(event.target.value)}
-                value={email}
-                className="form-control"
-                type="email"
-                placeholder="Email"
-                name="email"
-                ref={register({ required: true, pattern: /^\S+@\S+$/i })}
-              />
-              {errors.email &&
-                errors.email.type === 'required' &&
-                errorMessage(required)}
+          <div className="field">
+            <input
+              onChange={(event) => setEmail(event.target.value)}
+              value={email}
+              className="form-control"
+              type="email"
+              placeholder="Email"
+              name="email"
+              ref={register({ required: true, pattern: /^\S+@\S+$/i })}
+            />
+            {errors.email &&
+              errors.email.type === 'required' &&
+              errorMessage(required)}
 
-              <input
-                onChange={(event) => setPassword(event.target.value)}
-                value={password}
-                className="form-control"
-                type="password"
-                placeholder="Mot de passe"
-                name="password"
-                ref={register({ required: true })}
-              />
-              {errors.password &&
-                errors.password.type === 'required' &&
-                errorMessage(required)}
-              <div className="stay-connected-container">
-                <div className="stay-connected">
-                  <label htmlFor="stayConnected">
-                    <input
-                      ref={register}
-                      name="stayConnected"
-                      id="stayConnected"
-                      type="checkbox"
-                      value={stayConnected}
-                      onClick={() => setStayConnected(true)}
-                    />
-                    Stay connected ?
-                  </label>
-                </div>
+            <input
+              onChange={(event) => setPassword(event.target.value)}
+              value={password}
+              className="form-control"
+              type="password"
+              placeholder="Mot de passe"
+              name="password"
+              ref={register({ required: true })}
+            />
+            {errors.password &&
+              errors.password.type === 'required' &&
+              errorMessage(required)}
+            <div className="stay-connected-container">
+              <div className="stay-connected">
+                <label htmlFor="stayConnected">
+                  <input
+                    ref={register}
+                    name="stayConnected"
+                    id="stayConnected"
+                    type="checkbox"
+                    value={stayConnected}
+                    onClick={() => setStayConnected(true)}
+                  />
+                  Rester connecté.e
+                </label>
               </div>
-
-              <div className="form-group">
-                <button type="submit" className="button">
-                  connexion
-                </button>
-              </div>
+            </div>
+            <div className="form-group">
+              <button type="submit" className="button">
+                connexion
+              </button>
             </div>
           </div>
         </form>

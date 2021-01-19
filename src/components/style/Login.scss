@@ -2,93 +2,86 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ffffff;
+  flex-direction: column;
+  background: #dfdddb;
+  width: 100vw;
+  height: 100vh;
+}
+.admin {
+  border: solid;
+  border-radius: 50px;
+  padding: 15px;
+  background-color: white;
+  font-size: 40px;
+}
+.logo {
+  background-image: url('../../images/black_logo.png');
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100px;
+  width: 40%;
+  padding: 10%;
 }
 
 .boxLogin {
-  margin-top: 150px;
-  border-radius: 20px;
-  padding: 30px;
-  min-width: 500px;
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.1), 0px 0px 20px rgb(175, 182, 182);
-  font-size: 90px;
   align-items: center;
-}
-
-.boxLogin h3 {
-  margin: 30px;
-  font-size: 30px;
+  flex-direction: column;
 }
 
 .field {
-  text-align: center;
-  width: 100%;
-  margin-bottom: 20px;
-  margin-bottom: 5px;
-  font-weight: bold;
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .form-control {
-  margin: 10px;
-  font-size: 20px;
+  margin: 5px;
+  background-color: white;
+  border: unset;
+  border-radius: 50px;
+  padding: 8px;
+  width: 70vw;
+  outline: none;
 }
 
-.input-wrapper {
+.form-group {
   display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  width: 350px;
   justify-content: center;
   align-items: center;
-}
-
-.input-wrapper label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  width: 100%;
-}
-
-.input-wrapper input {
-  background-color: transparent;
-  border: unset;
-  border-radius: 10px;
-  padding: 10px;
-  outline: none;
-  box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.1),
-    inset -3px -3px 5px rgb(255, 255, 255);
+  flex-direction: column;
 }
 
 button {
-  margin-top: 20px;
-  width: 130px;
-  background-color: transparent;
-  outline: none;
-  color: #292929;
-  font-weight: bold;
-  border-radius: 10px;
-  padding: 10px;
-  transition: ease all 250ms;
-  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.1),
-    -7px -7px 20px rgba(255, 255, 255, 0.062);
+  margin: 5px;
+  background-color: #28841f;
   border: unset;
-  font-size: 20px;
+  border-radius: 50px;
+  padding: 8px;
+  width: 40vw;
+  outline: none;
+  color: white;
+}
+.infoCreation {
+  margin: 10px;
+  width: 70vw;
+  text-align: center;
 }
 
 button:hover {
   cursor: pointer;
   color: #292929;
-  box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.1),
-    inset -3px -3px 5px rgb(172, 172, 172);
 }
+
 .invalid-feedback {
   display: block !important;
   color: red;
-  font-size: 20px;
+  font-size: 12px;
 }
+
 .stay-connected-container {
   display: flex;
   justify-content: center;
@@ -99,5 +92,16 @@ button:hover {
     #stayConnected {
       margin: 20px;
     }
+  }
+}
+@media screen and (max-width: 480px) {
+  .logo {
+    width: 80%;
+  }
+}
+@media screen and (min-width: 600px) and (max-width: 800px) {
+  .logo {
+    margin: 20px;
+    width: 80%;
   }
 }

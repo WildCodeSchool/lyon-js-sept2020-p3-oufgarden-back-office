@@ -97,9 +97,13 @@
     box-shadow: 10px;
     box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2),
       0 6px 10px 0 rgba(0, 0, 0, 0.19);
-
+    &:hover {
+      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+        0 3px 15px 0 rgba(0, 0, 0, 0.19);
+    }
     .react-icons {
       margin: 10px;
+      cursor: pointer;
     }
   }
 }

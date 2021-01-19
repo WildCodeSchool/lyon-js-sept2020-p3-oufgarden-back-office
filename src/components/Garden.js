@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 
 import { useToasts } from 'react-toast-notifications';
+import { confirmAlert } from 'react-confirm-alert';
+import ButtonListCreation from './ButtonListCreation';
+
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/Garden.scss';
 
-const Garden = () => {
+const Garden = (props) => {
   const { addToast } = useToasts();
   const [gardenList, setGardenList] = useState([]);
 
@@ -19,32 +22,54 @@ const Garden = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    try {
-      await makeEntityDeleter('garden')(id);
-      getCollection('garden').then((elem) => {
-        setGardenList(elem);
-        addToast('Jardin supprimé avec succès', {
-          appearance: 'success',
-          autoDismiss: true,
-        });
-      });
-    } catch (err) {
-      addToast('Un problème est survenu lors de la suppression du membre', {
-        appearance: 'error',
-        autoDismiss: true,
-      });
-    }
+    confirmAlert({
+      title: 'Confirmez la suppression',
+      message: 'Etes vous sûr de vouloir supprimer cet utilisateur ?',
+      buttons: [
+        {
+          label: 'Confirmer',
+          onClick: async () => {
+            try {
+              await makeEntityDeleter('garden')(id);
+              getCollection('garden').then((elem) => {
+                setGardenList(elem);
+                addToast('Jardin supprimé avec succès', {
+                  appearance: 'success',
+                  autoDismiss: true,
+                });
+              });
+            } catch (err) {
+              addToast(
+                'Un problème est survenu lors de la suppression du jardin',
+                {
+                  appearance: 'error',
+                  autoDismiss: true,
+                }
+              );
+            }
+          },
+        },
+        {
+          label: 'Annuler',
+          onClick: () => null,
+        },
+      ],
+    });
+  };
+  const handleEdit = (id) => {
+    props.history.push(`/garden/${id}`);
   };
   return (
     <div className="garden-list-container">
-      <div className="button-garden-container">
-        <button type="button" className="button-garden-list">
-          <Link to="/garden">Liste Jardins</Link>
-        </button>
-        <button type="button" className="button-garden">
-          <Link to="/garden/creation">Nouveau Jardin</Link>
-        </button>
-      </div>
+      <ButtonListCreation
+        attributes={{
+          list: '/garden',
+          creation: '/garden/creation',
+          name: 'Jardin',
+          names: 'Jardins',
+        }}
+      />
+
       {gardenList.map((e) => {
         return (
           <div key={e.id} className="garden-row">
@@ -54,7 +79,13 @@ const Garden = () => {
             <div className="garden-list-icons">
               {/* IconContext provider pour personnaliser les props de react-icons */}
               <IconContext.Provider value={{ className: 'react-icons' }}>
-                <MdEdit size={25} />
+                <MdEdit
+                  size={25}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    handleEdit(e.id);
+                  }}
+                />
                 <MdDelete
                   style={{ cursor: 'pointer' }}
                   size={25}
