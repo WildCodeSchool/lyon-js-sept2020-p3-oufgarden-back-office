@@ -9,6 +9,7 @@ import {
   Toolbar,
   ViewSwitcher,
   DateNavigator,
+  AppointmentTooltip,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import './style/Calendar.scss';
 
@@ -57,6 +58,7 @@ const Calendar = () => {
           <DateNavigator />
           <ViewSwitcher />
           <Appointments />
+          <AppointmentTooltip showCloseButton showDeleteButton showOpenButton />
         </Scheduler>
       </Paper>
     </div>
