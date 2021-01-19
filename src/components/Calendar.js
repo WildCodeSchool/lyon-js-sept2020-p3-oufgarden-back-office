@@ -10,10 +10,19 @@ import {
   ViewSwitcher,
   DateNavigator,
   AppointmentTooltip,
+  Resources,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import './style/Calendar.scss';
 
-import { appointments } from './CalendarData';
+import { appointments, users } from './CalendarData';
+
+const resources = [
+  {
+    fieldName: 'userId',
+    title: 'Participant',
+    instances: users,
+  },
+];
 
 const Calendar = () => {
   const [data, setData] = useState(appointments);
@@ -58,7 +67,8 @@ const Calendar = () => {
           <DateNavigator />
           <ViewSwitcher />
           <Appointments />
-          <AppointmentTooltip showCloseButton showDeleteButton showOpenButton />
+          <AppointmentTooltip showCloseButton showDeleteButton />
+          <Resources data={resources} />
         </Scheduler>
       </Paper>
     </div>

@@ -70,6 +70,13 @@ export const appointments = [
     endDate: new Date(2018, 6, 9, 12, 0),
     ownerId: 3,
   },
+  {
+    id: 12,
+    title: 'evenement test',
+    startDate: new Date(2018, 5, 28, 9, 30),
+    endDate: new Date(2018, 5, 28, 11, 30),
+    ownerId: 1,
+  },
 ];
 
 export const tasks = [
