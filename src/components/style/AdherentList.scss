@@ -24,5 +24,24 @@
         margin: 10px;
       }
     }
+
+    .bold {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .user-infos {
+      display: flex;
+      flex-direction: row;
+
+      justify-content: flex-start;
+    }
+
+    .garden-list {
+      margin-left: 40px;
+      li {
+        list-style-type: '- ';
+      }
+    }
   }
 }

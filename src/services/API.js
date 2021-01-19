@@ -72,6 +72,7 @@ export const makeEntityUpdater = (collectionName) => (id, attributes) =>
   makeCancellable('put', `/${collectionName}/${id}`, attributes).then(
     extractData
   );
+
 instance.interceptors.response.use(
   (res) => res,
   (err) => {

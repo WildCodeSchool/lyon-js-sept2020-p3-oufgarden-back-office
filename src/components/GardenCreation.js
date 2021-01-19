@@ -12,7 +12,6 @@ import './style/GardenCreation.scss';
 
 // Messages
 const required = 'Ce champ est obligatoire';
-/* const maxLength = 'Vous avez dépassé le nombre maximal de caractères.'; */
 
 // Error Component
 const errorMessage = (error) => {
@@ -43,7 +42,6 @@ const GardenCreation = (props) => {
       description: '',
     },
   ]);
-
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
@@ -54,7 +52,6 @@ const GardenCreation = (props) => {
     }
   }, [id]);
 
-  // test pour react select
   const options = allPlantFamilies.map((elem) => {
     return {
       value: elem.id,
@@ -109,7 +106,13 @@ const GardenCreation = (props) => {
           ? []
           : inputList,
     };
-    makeEntityAdder('garden')(newData)
+    const formData = new FormData();
+    formData.append('gardenPicture', data.gardenPicture[0]);
+    formData.append('zonePicture', data.zonePicture[0]);
+    // We use JSON.stringify here to send neste object in formdata
+    formData.append('newData', JSON.stringify(newData));
+
+    makeEntityAdder('garden')(formData)
       // .then((elem) => {
       //   console.log(elem);
       // })
@@ -160,16 +163,27 @@ const GardenCreation = (props) => {
       </div>
 
       <div className="containerGarden">
-        <div>
-          <form
-            method="POST"
-            encType="multipart/form-data"
-            action="http://localhost:5000"
-            className="formContainer"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <h3>Création d'un Jardin :</h3>
+        <h3>Création d'un Jardin :</h3>
 
+        <div>
+          <div className="imgUploadContainer">
+            {/*   Just to inform the team, the form here is necessary to make file upload working with react hook form  */}
+            <form>
+              <div className="uploadRows">
+                <label htmlFor="gardenPicture">
+                  Image du jardin:
+                  <input ref={register} type="file" name="gardenPicture" />
+                </label>
+              </div>
+              <div className="uploadRows">
+                <label htmlFor="zonePicture">
+                  Image des zones:
+                  <input ref={register} type="file" name="zonePicture" />
+                </label>
+              </div>
+            </form>
+          </div>
+          <form className="formContainer" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label htmlFor="GardenName">
                 Nom du jardin:{' '}
@@ -184,13 +198,6 @@ const GardenCreation = (props) => {
               {errors.name &&
                 errors.name.type === 'required' &&
                 errorMessage(required)}
-            </div>
-            {/* partie upload */}
-            <div>
-              <label htmlFor="pic_profile">
-                Photo du jardin :{' '}
-                <input className="inputPics" type="file" name="pic_profile" />
-              </label>
             </div>
 
             <div>
@@ -266,13 +273,6 @@ const GardenCreation = (props) => {
               {errors.address_zipcode && (
                 <p role="alert">{errors.address_zipcode.message}</p>
               )}
-            </div>
-
-            <div>
-              <label htmlFor="pic_plan">
-                Plan :{' '}
-                <input className="inputPics" type="file" name="pic_plan" />
-              </label>
             </div>
 
             <div>
