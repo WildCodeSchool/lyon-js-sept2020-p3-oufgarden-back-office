@@ -1,38 +1,66 @@
 /* eslint-disable react/destructuring-assignment */
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { IconContext } from 'react-icons';
+import { useToasts } from 'react-toast-notifications';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import ButtonListCreation from './ButtonListCreation';
 
-import { getCollection, makeEntityDeleter, getEntity } from '../services/API';
+import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/ListArticles.scss';
 
-const ListArticles = (props) => {
+const ArticleList = (props) => {
   const [articles, setArticles] = useState([]);
   const [articlesFiltered, setArticlesFiltered] = useState([]);
   const [tagList, setTagList] = useState([]);
   const [allTags, setAllTags] = useState([]);
+  const { addToast } = useToasts();
 
   useEffect(() => {
     getCollection('articles').then((elem) => {
       setArticles(elem);
     });
   }, []);
-
-  useEffect(() => {
-    getCollection('articles').then((elem) => {
-      setArticles(() => elem);
-    });
-  }, [props.location]);
 
   useEffect(() => {
     getCollection('tags').then((data) => setAllTags(data));
   }, []);
 
   const handleDelete = async (id) => {
-    await makeEntityDeleter('articles')(id);
-    getCollection('articles').then((elem) => {
-      setArticles(elem);
+    confirmAlert({
+      title: 'Confirmez la suppression',
+      message: 'Etes vous sûr de vouloir supprimer cet article ?',
+      buttons: [
+        {
+          label: 'Confirmer',
+          onClick: async () => {
+            try {
+              await makeEntityDeleter('articles')(id);
+              getCollection('articles').then((elem) => {
+                setArticles(elem);
+                addToast('Article supprimé avec succès', {
+                  appearance: 'success',
+                  autoDismiss: true,
+                });
+              });
+            } catch (err) {
+              addToast(
+                "Un problème est survenu lors de la suppression de l'article",
+                {
+                  appearance: 'error',
+                  autoDismiss: true,
+                }
+              );
+            }
+          },
+        },
+        {
+          label: 'Annuler',
+          onClick: () => null,
+        },
+      ],
     });
   };
 
@@ -59,55 +87,39 @@ const ListArticles = (props) => {
     } else {
       setTagList((prevState) => [...prevState, +target.id]);
     }
-    // if (target.className !== 'filterBtn-on') {
-    //   target.className = 'filterBtn-on';
-    // } else {
-    //   target.className = 'filterBtn-off';
-    // }
   };
-
-  const handleEdit = async (id, data) => {
-    await getEntity(`/articles/${id}`, data);
-    // makeEntityUpdater('articles')(data);
-    props.history.push(`/articles/${id}`, data);
+  const handleEdit = (id) => {
+    props.history.push(`/articles/${id}`);
   };
-
-  // const handleDelete = async (id) => {
-  //   await makeEntityDeleter('articles')(id);
-  //   getCollection('articles').then((elem) => {
-  //     console.log(elem);
-  //     setArticles(elem);
-  //   });
-  // };
-
   return (
     <div>
-      <div className="buttons">
-        <button type="button" className="buttonList">
-          <Link to="/articles">Liste Articles</Link>
-        </button>
-        <button type="button" className="buttonArticle">
-          <Link to="/articles/creation">Nouvel Article</Link>
-        </button>
-      </div>
-      <div className="filterContainer">
-        {allTags &&
-          allTags.map((tag) => {
-            return (
-              <div key={tag.id}>
-                <button
-                  type="button"
-                  className="filterButton"
-                  id={tag.id}
-                  onClick={(e) => handleTagList(e.target)}
-                >
-                  {tag.name}
-                </button>
-              </div>
-            );
-          })}
-      </div>
       <div className="articleListContainer">
+        <ButtonListCreation
+          attributes={{
+            list: '/articles',
+            creation: '/articles/creation',
+            name: 'Article',
+            names: 'Articles',
+          }}
+        />
+
+        <div className="filterContainer">
+          {allTags &&
+            allTags.map((tag) => {
+              return (
+                <div key={tag.id}>
+                  <button
+                    type="button"
+                    className="filterButton"
+                    id={tag.id}
+                    onClick={(e) => handleTagList(e.target)}
+                  >
+                    {tag.name}
+                  </button>
+                </div>
+              );
+            })}
+        </div>
         {articlesFiltered.length > 0
           ? articles
               .filter((article) => {
@@ -130,6 +142,7 @@ const ListArticles = (props) => {
                       >
                         <MdEdit
                           size={25}
+                          style={{ cursor: 'pointer' }}
                           onClick={() => {
                             handleEdit(e.id);
                           }}
@@ -176,4 +189,4 @@ const ListArticles = (props) => {
     </div>
   );
 };
-export default ListArticles;
+export default ArticleList;

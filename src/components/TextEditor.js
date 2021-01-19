@@ -5,7 +5,7 @@ import Select from 'react-select';
 
 import { makeEntityAdder, getCollection } from '../services/API';
 
-import './style/TextEditor.scss';
+// import './style/TextEditor.scss';
 
 const ArticleCreationForm = () => {
   const textEditorApi = process.env.REACT_APP_TEXT_EDITOR_API;
@@ -48,7 +48,7 @@ const ArticleCreationForm = () => {
     setUrlImage(e.target.value);
   };
 
-  const handleClick = async () => {
+  const handleSubmit = async () => {
     const data = {
       content: articleContent,
       title,
@@ -56,11 +56,12 @@ const ArticleCreationForm = () => {
       tagsArray,
       gardenArray,
     };
-
+    console.log(data);
     await makeEntityAdder('articles')(data);
     setArticleContent('');
     setTitle('');
     setUrlImage('');
+    setGardenArray([]);
     history.push('/articles');
   };
 
@@ -128,7 +129,7 @@ const ArticleCreationForm = () => {
           handleSelectGardenChange(e);
         }}
       />
-      <button type="button" className="sendButton" onClick={handleClick}>
+      <button type="button" className="sendButton" onClick={handleSubmit}>
         Créer
       </button>
     </div>
