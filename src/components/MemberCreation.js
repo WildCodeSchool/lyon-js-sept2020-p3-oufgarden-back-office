@@ -122,9 +122,11 @@ const MemberCreation = (props) => {
         ...data,
         gardenArray: data.garden.map((elem) => elem.value),
       };
-
+      const formData = new FormData();
+      formData.append('picture', data.picture[0]);
+      formData.append('data', JSON.stringify(newData));
       try {
-        await makeEntityAdder('users')(newData)
+        await makeEntityAdder('users')(formData)
           .then(() => {
             setGardenArray([]);
             setGardenList([]);
@@ -155,13 +157,16 @@ const MemberCreation = (props) => {
         ...data,
         gardenArray: data.garden.map((elem) => elem.value),
       };
+      console.log(gardenArray);
       if (newData.password === '') {
         delete newData.password;
         delete newData.passwordConfirmation;
       }
-
+      const formData = new FormData();
+      formData.append('picture', data.picture[0]);
+      formData.append('data', JSON.stringify(newData));
       try {
-        await makeEntityUpdater('users')(id, newData)
+        await makeEntityUpdater('users')(id, formData)
           .then(() => {
             setGardenArray([]);
             setGardenList([]);
@@ -195,10 +200,28 @@ const MemberCreation = (props) => {
     numbers: true,
     strict: true,
   });
+  // Fusion MemberEdition Start here !
+
+  useEffect(() => {
+    if (id) {
+      getEntity('users', id).then((elem) => {
+        setUserToEdit(elem);
+      });
+    }
+  }, [id]);
 
   return (
     <div>
       <div className="container">
+        <h3>Création d'un membre :</h3>
+        <form className="uploadRows">
+          <div>
+            <label htmlFor="picture">
+              Votre image de profil:
+              <input ref={register} type="file" name="picture" />
+            </label>
+          </div>
+        </form>
         <form onSubmit={handleSubmit(onSubmit)}>
           <IconContext.Provider value={{ className: 'react-icons' }}>
             <MdKeyboardBackspace
