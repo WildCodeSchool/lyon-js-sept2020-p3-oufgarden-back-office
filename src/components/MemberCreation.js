@@ -157,6 +157,7 @@ const MemberCreation = (props) => {
         ...data,
         gardenArray: data.garden.map((elem) => elem.value),
       };
+      console.log(gardenArray);
       if (newData.password === '') {
         delete newData.password;
         delete newData.passwordConfirmation;
