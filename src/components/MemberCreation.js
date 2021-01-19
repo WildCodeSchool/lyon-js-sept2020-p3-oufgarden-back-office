@@ -152,11 +152,17 @@ const MemberCreation = (props) => {
       e.target.reset();
     } else if (forUpdate) {
       // here remove password if null
+      let newData = {};
+      if (!data.garden) {
+        newData = { data };
+        setGardenArray([]);
+      } else {
+        newData = {
+          ...data,
+          gardenArray: data.garden.map((elem) => elem.value),
+        };
+      }
 
-      const newData = {
-        ...data,
-        gardenArray: data.garden.map((elem) => elem.value),
-      };
       console.log(gardenArray);
       if (newData.password === '') {
         delete newData.password;
