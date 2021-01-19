@@ -8,6 +8,7 @@ import {
   Appointments,
   Toolbar,
   ViewSwitcher,
+  DateNavigator,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import './style/Calendar.scss';
 
@@ -50,10 +51,10 @@ const Calendar = () => {
             defaultCurrentViewName="Week"
           />
 
-          <DayView startDayHour={9} endDayHour={18} />
-          <WeekView startDayHour={10} endDayHour={19} />
-
+          <DayView startDayHour={8} endDayHour={20} />
+          <WeekView startDayHour={8} endDayHour={20} />
           <Toolbar />
+          <DateNavigator />
           <ViewSwitcher />
           <Appointments />
         </Scheduler>
