@@ -90,7 +90,7 @@ const Login = (props) => {
               </div>
 
               <div className="form-group">
-                <button type="submit" className="button">
+                <button type="submit" className="buttonLogin">
                   connexion
                 </button>
               </div>
