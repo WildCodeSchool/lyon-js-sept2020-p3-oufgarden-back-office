@@ -126,52 +126,50 @@ const Adherents = (props) => {
               }
               return true;
             })
-            .map((e) => {
-              return (
-                <div key={e.id} className="adherent-row">
-                  <div className="user-infos">
-                    <p>
-                      <span className="bold">
-                        {e.firstname} {e.lastname.toUpperCase()}
-                      </span>{' '}
-                      <br /> {e.email}
-                    </p>
-                    <ul className="garden-list">
-                      {gardenList.length > 0 &&
-                        gardenList.map((garden) => {
-                          if (
-                            e.gardenArray &&
-                            e.gardenArray.includes(garden.id)
-                          ) {
-                            return <li>{garden.name}</li>;
-                          }
-                          return null;
-                        })}
-                    </ul>
-                  </div>
-                  <div className="user-list-icons">
-                    {/* IconContext provider pour personnaliser les props de react-icons */}
-                    <IconContext.Provider value={{ className: 'react-icons' }}>
-                      <FiMail size={25} />
-                      <MdAccountCircle
-                        size={25}
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => {
-                          handleEdit(e.id);
-                        }}
-                      />
-                      <MdDelete
-                        style={{ cursor: 'pointer' }}
-                        size={25}
-                        onClick={() => {
-                          handleDelete(e.id);
-                        }}
-                      />
-                    </IconContext.Provider>
-                  </div>
+            .map((e) => (
+              <div key={e.id} className="adherent-row">
+                <div className="user-infos">
+                  <p>
+                    <span className="bold">
+                      {e.firstname} {e.lastname.toUpperCase()}
+                    </span>{' '}
+                    <br /> {e.email}
+                  </p>
+                  <ul className="garden-list">
+                    {gardenList.length > 0 &&
+                      gardenList.map((garden) => {
+                        if (
+                          e.gardenArray &&
+                          e.gardenArray.includes(garden.id)
+                        ) {
+                          return <li>{garden.name}</li>;
+                        }
+                        return null;
+                      })}
+                  </ul>
                 </div>
-              );
-            })}
+                <div className="user-list-icons">
+                  {/* IconContext provider pour personnaliser les props de react-icons */}
+                  <IconContext.Provider value={{ className: 'react-icons' }}>
+                    <FiMail size={25} />
+                    <MdAccountCircle
+                      size={25}
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        handleEdit(e.id);
+                      }}
+                    />
+                    <MdDelete
+                      style={{ cursor: 'pointer' }}
+                      size={25}
+                      onClick={() => {
+                        handleDelete(e.id);
+                      }}
+                    />
+                  </IconContext.Provider>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </div>

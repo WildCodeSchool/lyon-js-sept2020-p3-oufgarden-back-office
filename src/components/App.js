@@ -12,6 +12,7 @@ import { UserProvider } from './_context/UserContext';
 import ArticleCreation from './ArticleCreation';
 import Garden from './Garden';
 import GardenCreation from './GardenCreation';
+import GardenEdition from './GardenEdition';
 import ArticleList from './ArticleList';
 import MemberDetail from './MemberDetail';
 
@@ -42,7 +43,7 @@ const App = () => {
                 <Route exact path="/category" component={TagsPage} />
                 <Route exact path="/garden" component={Garden} />
                 <Route path="/garden/creation" component={GardenCreation} />
-                <Route path="/garden/:id" component={GardenCreation} />
+                <Route path="/garden/:id" component={GardenEdition} />
                 <Route path="/calendar" />
               </Switch>
             </div>
