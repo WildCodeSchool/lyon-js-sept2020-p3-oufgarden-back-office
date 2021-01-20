@@ -23,15 +23,8 @@ const errorMessage = (error) => {
 };
 
 const GardenCreation = (props) => {
-  const {
-    match: {
-      params: { id },
-    },
-  } = props;
-
   const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
-  const [Garden, setGarden] = useState([]);
 
   const [inputList, setInputList] = useState([
     {
@@ -45,12 +38,6 @@ const GardenCreation = (props) => {
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
-
-  useEffect(() => {
-    if (id) {
-      getEntity('garden', id).then((data) => setGarden(data));
-    }
-  }, [id]);
 
   const options = allPlantFamilies.map((elem) => {
     return {
@@ -109,13 +96,10 @@ const GardenCreation = (props) => {
     const formData = new FormData();
     formData.append('gardenPicture', data.gardenPicture[0]);
     formData.append('zonePicture', data.zonePicture[0]);
-    // We use JSON.stringify here to send neste object in formdata
+    // We use JSON.stringify here to send nested object in formdata
     formData.append('newData', JSON.stringify(newData));
 
     makeEntityAdder('garden')(formData)
-      // .then((elem) => {
-      //   console.log(elem);
-      // })
       .catch((err) => console.log(err.response.data))
       .then(() => {
         e.target.reset();
@@ -151,17 +135,6 @@ const GardenCreation = (props) => {
 
   return (
     <div>
-      <div className="button-garden-container">
-        <ButtonListCreation
-          attributes={{
-            list: '/garden',
-            creation: '/garden/creation',
-            name: 'Jardin',
-            names: 'Jardins',
-          }}
-        />
-      </div>
-
       <div className="containerGarden">
         <h3>Création d'un Jardin :</h3>
 
@@ -191,7 +164,6 @@ const GardenCreation = (props) => {
                   type="text"
                   name="name"
                   ref={register({ required: true })}
-                  defaultValue={Garden.name}
                 />
               </label>
 
@@ -256,7 +228,6 @@ const GardenCreation = (props) => {
                 <input
                   type="text"
                   name="address_zipcode"
-                  // rajouter une validation sur le code postal
                   ref={register({
                     required: true,
                     pattern: {
@@ -300,7 +271,7 @@ const GardenCreation = (props) => {
             </div>
             <div className="inputZoneCreation">
               <label htmlFor="zoneCreer">
-                Zone à creer :
+                Création des zones
                 {inputList.map((x, i) => {
                   return (
                     // not the best solution for the key but could not find another one - do not replace with Math.random()
@@ -334,21 +305,16 @@ const GardenCreation = (props) => {
                         onChange={(e) => handleInputChange(e, i)}
                       />
 
-                      <Controller
-                        name="plantfamily"
-                        control={control}
-                        defaultValue=""
-                        render={({ onChange, value }) => (
-                          <Select
-                            options={options}
-                            onChange={(e) => {
-                              onChange(e);
-                              handleChangeSelect(e, i);
-                            }}
-                            value={value}
-                            isMulti
-                          />
-                        )}
+                      <Select
+                        isMulti
+                        name="plantFamily"
+                        placeholder="Choisissez la famille de plantes"
+                        options={options}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(e) => {
+                          handleChangeSelect(e, i);
+                        }}
                       />
 
                       <div className="btn-box">

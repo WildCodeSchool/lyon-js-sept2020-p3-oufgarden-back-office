@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 import _ from 'lodash';
 import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
-import ButtonListCreation from './ButtonListCreation';
 
 import { getCollection, makeEntityAdder, getEntity } from '../services/API';
 import './style/GardenCreation.scss';
@@ -33,6 +32,7 @@ const GardenEdition = (props) => {
   const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
   const [initialGarden, setGarden] = useState([]);
+  const [initialZones, setInitialZones] = useState([]);
 
   // list of the zones of the current garden
   const [inputList, setInputList] = useState([
@@ -48,6 +48,12 @@ const GardenEdition = (props) => {
   // ok for edition
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
+  }, []);
+
+  useEffect(() => {
+    // here, map on data before putting it in initial zones
+    getCollection(`garden/${id}/zones`).then((data) => setInitialZones(data));
+    // here, map on data before putting it in initial zones
   }, []);
 
   // ok for edition
@@ -292,7 +298,7 @@ const GardenEdition = (props) => {
             </div>
             <div className="inputZoneCreation">
               <label htmlFor="zoneCreer">
-                Zone à creer :
+                Edition des zones
                 {inputList.map((x, i) => {
                   return (
                     <div key={i}>
