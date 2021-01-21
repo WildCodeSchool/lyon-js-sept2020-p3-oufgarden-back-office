@@ -1,4 +1,4 @@
-import React, { useEffect /*  useState */ } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -7,7 +7,7 @@ import { getEntity } from '../services/API';
 
 const localizer = momentLocalizer(moment);
 const MyCalendar = (props) => {
-  /* const [myReservations, setMyReservations] = useState([]); */
+  const [myReservations, setMyReservations] = useState([]);
 
   const {
     match: {
@@ -15,8 +15,11 @@ const MyCalendar = (props) => {
     },
   } = props;
   useEffect(() => {
-    getEntity('reservation', id).then((data) => console.log(data));
-  });
+    getEntity('reservation', id).then((data) => {
+      setMyReservations(data);
+    });
+  }, []);
+  console.log(myReservations);
   const now = new Date();
   const events = [
     {
