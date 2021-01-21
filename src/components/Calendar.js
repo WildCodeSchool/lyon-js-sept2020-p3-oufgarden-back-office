@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import {
@@ -53,24 +54,31 @@ const Calendar = () => {
 
   return (
     <div className="calendar">
-      <Paper>
-        <Scheduler data={data} height={660}>
-          <EditingState onCommitChanges={commitChanges} />
-          <ViewState
-            defaultCurrentDate="2018-07-25"
-            defaultCurrentViewName="Week"
-          />
+      <div className="gardenCalendar">
+        <Paper>
+          <Scheduler data={data} height={660}>
+            <EditingState onCommitChanges={commitChanges} />
+            <ViewState
+              defaultCurrentDate="2018-07-25"
+              defaultCurrentViewName="Week"
+            />
 
-          <DayView startDayHour={8} endDayHour={20} />
-          <WeekView startDayHour={8} endDayHour={20} />
-          <Toolbar />
-          <DateNavigator />
-          <ViewSwitcher />
-          <Appointments />
-          <AppointmentTooltip showCloseButton showDeleteButton />
-          <Resources data={resources} />
-        </Scheduler>
-      </Paper>
+            <DayView startDayHour={8} endDayHour={20} />
+            <WeekView startDayHour={8} endDayHour={20} />
+            <Toolbar />
+            <DateNavigator />
+            <ViewSwitcher />
+            <Appointments />
+            <AppointmentTooltip showCloseButton showDeleteButton />
+            <Resources data={resources} />
+          </Scheduler>
+        </Paper>
+      </div>
+      <div className="button-calendar-container">
+        <button type="button" className="button-calendar-list">
+          <Link to="/calendar">Liste des agendas</Link>
+        </button>
+      </div>
     </div>
   );
 };
