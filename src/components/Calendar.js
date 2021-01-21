@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useEffect /*  useState */ } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import './style/Calendar.scss';
+import { getEntity } from '../services/API';
 
 const localizer = momentLocalizer(moment);
-const MyCalendar = () => {
+const MyCalendar = (props) => {
+  /* const [myReservations, setMyReservations] = useState([]); */
+
+  const {
+    match: {
+      params: { id },
+    },
+  } = props;
+  useEffect(() => {
+    getEntity('reservation', id).then((data) => console.log(data));
+  });
   const now = new Date();
   const events = [
     {
@@ -37,6 +48,8 @@ const MyCalendar = () => {
         defaultDate={moment().toDate()}
         localizer={localizer}
         views={['month', 'day', 'agenda']}
+        min={new Date(2017, 10, 0, 10, 0, 0)}
+        max={new Date(2017, 10, 0, 22, 0, 0)}
       />
     </div>
   );
