@@ -87,7 +87,7 @@ const Adherents = (props) => {
   };
 
   return (
-    <div className="user-list-container">
+    <div className="user-container">
       <div className="button-user-container">
         <ButtonListCreation
           attributes={{
