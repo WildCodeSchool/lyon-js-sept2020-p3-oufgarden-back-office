@@ -494,19 +494,6 @@ const MemberCreation = (props) => {
             </label>
           </div>
 
-          {/* <Select
-              isMulti
-              name="garden"
-              placeholder="Jardin(s) lié(s) à l'adhérent"
-              options={gardenOptions}
-              // here, add default values if update
-              className="basic-multi-select"
-              classNamePrefix="select"
-              onChange={(e) => {
-                handleSelectGardenChange(e);
-              }}
-              defaultValue={[gardenOptionsInitial[0], gardenOptionsInitial[1]]}
-            /> */}
           {gardenInitialOptions && (
             <Controller
               as={Select}

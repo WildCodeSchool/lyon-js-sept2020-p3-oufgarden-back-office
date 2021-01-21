@@ -26,6 +26,7 @@ const GardenCreation = (props) => {
   const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
 
+  // stocker les infos de chaque zone
   const [inputList, setInputList] = useState([
     {
       zone_name: '',
@@ -51,7 +52,7 @@ const GardenCreation = (props) => {
     const deepCopyList = _.cloneDeep(inputList);
     // const list = [...inputList]; careful, this does not work for nested arrays + it's a shallow copy
 
-    deepCopyList[index][name] = value;
+    deepCopyList[index][name] = value; // name = type => {type: value}
     setInputList(deepCopyList);
   };
 
@@ -86,6 +87,7 @@ const GardenCreation = (props) => {
       description: data.description,
       exposition: data.exposition,
       zone_quantity: data.zone_quantity,
+      max_users: data.max_users,
       zone_details:
         inputList.length === 1 &&
         inputList[0].zone_name === '' &&
@@ -156,6 +158,7 @@ const GardenCreation = (props) => {
               </div>
             </form>
           </div>
+
           <form className="formContainer" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label htmlFor="GardenName">
@@ -269,6 +272,31 @@ const GardenCreation = (props) => {
                 <p role="alert">{errors.zone_quantity.message}</p>
               )}
             </div>
+
+            <div>
+              <label htmlFor="max_users">
+                Nombre maximal d'utilisateurs :{' '}
+                <input
+                  type="text"
+                  name="max_users"
+                  ref={register({
+                    required: true,
+                    pattern: {
+                      value: /^[0-9]$|^[1-9][0-9]$|^(100)$/,
+                      message: "Merci d'entrer un nombre",
+                    },
+                  })}
+                />
+              </label>
+
+              {errors.max_users &&
+                errors.max_users.type === 'required' &&
+                errorMessage(required)}
+              {errors.max_users && (
+                <p role="alert">{errors.max_users.message}</p>
+              )}
+            </div>
+
             <div className="inputZoneCreation">
               <label htmlFor="zoneCreer">
                 Création des zones
