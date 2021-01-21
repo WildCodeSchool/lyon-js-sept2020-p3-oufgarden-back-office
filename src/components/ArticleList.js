@@ -120,15 +120,46 @@ const ArticleList = (props) => {
               );
             })}
         </div>
-        {articlesFiltered.length > 0
-          ? articles
-              .filter((article) => {
-                if (articlesFiltered.includes(article.id)) {
-                  return true;
-                }
-                return false;
-              })
-              .map((e) => {
+        <div className="container-to-color-rows">
+          {articlesFiltered.length > 0
+            ? articles
+                .filter((article) => {
+                  if (articlesFiltered.includes(article.id)) {
+                    return true;
+                  }
+                  return false;
+                })
+                .map((e) => {
+                  return (
+                    <div key={e.id} className="ArticlesRow">
+                      <div className="articlesInfos">
+                        <p>
+                          {e.title} {e.text}
+                        </p>
+                      </div>
+                      <div className="articleListIcons">
+                        <IconContext.Provider
+                          value={{ className: 'react-icons' }}
+                        >
+                          <MdEdit
+                            size={25}
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => {
+                              handleEdit(e.id);
+                            }}
+                          />
+                          <MdDelete
+                            size={25}
+                            onClick={() => {
+                              handleDelete(e.id);
+                            }}
+                          />
+                        </IconContext.Provider>
+                      </div>
+                    </div>
+                  );
+                })
+            : articles.map((e) => {
                 return (
                   <div key={e.id} className="ArticlesRow">
                     <div className="articlesInfos">
@@ -142,7 +173,6 @@ const ArticleList = (props) => {
                       >
                         <MdEdit
                           size={25}
-                          style={{ cursor: 'pointer' }}
                           onClick={() => {
                             handleEdit(e.id);
                           }}
@@ -157,34 +187,8 @@ const ArticleList = (props) => {
                     </div>
                   </div>
                 );
-              })
-          : articles.map((e) => {
-              return (
-                <div key={e.id} className="ArticlesRow">
-                  <div className="articlesInfos">
-                    <p>
-                      {e.title} {e.text}
-                    </p>
-                  </div>
-                  <div className="articleListIcons">
-                    <IconContext.Provider value={{ className: 'react-icons' }}>
-                      <MdEdit
-                        size={25}
-                        onClick={() => {
-                          handleEdit(e.id);
-                        }}
-                      />
-                      <MdDelete
-                        size={25}
-                        onClick={() => {
-                          handleDelete(e.id);
-                        }}
-                      />
-                    </IconContext.Provider>
-                  </div>
-                </div>
-              );
-            })}
+              })}
+        </div>
       </div>
     </div>
   );
