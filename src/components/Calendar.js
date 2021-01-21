@@ -29,7 +29,7 @@ const MyCalendar = () => {
     },
   ];
   return (
-    <div className="calendar-container" style={{ height: 700, width: 200 }}>
+    <div className="calendar-container">
       <Calendar
         events={events}
         startAccessor="start"

@@ -55,7 +55,7 @@
   flex-direction: column;
 }
 
-button {
+.buttonLogin {
   margin: 5px;
   background-color: #28841f;
   border: unset;
@@ -71,7 +71,7 @@ button {
   text-align: center;
 }
 
-button:hover {
+.buttonLogin:hover {
   cursor: pointer;
   color: #292929;
 }
