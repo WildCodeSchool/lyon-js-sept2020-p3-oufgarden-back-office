@@ -8,6 +8,7 @@ import { getEntity } from '../services/API';
 const localizer = momentLocalizer(moment);
 const MyCalendar = (props) => {
   const [myReservations, setMyReservations] = useState([]);
+  const [startingDate, setStartingDate] = useState([]);
 
   const {
     match: {
@@ -19,21 +20,32 @@ const MyCalendar = (props) => {
       setMyReservations(data);
     });
   }, []);
-  console.log(myReservations);
+  let tempStartingDate;
+  useEffect(() => {
+    if (myReservations.length !== 0) {
+      const arr = myReservations[0].date.split('T');
+      tempStartingDate = `${arr[0]}T${myReservations[0].start_time}`;
+    }
+    setStartingDate(tempStartingDate);
+  }, [myReservations]);
+
+  console.log(startingDate);
+
   const now = new Date();
   const events = [
     {
       id: 0,
-      title: 'All Day Event very long title',
-      allDay: true,
-      start: new Date(2019, 6, 0),
-      end: new Date(2019, 6, 1),
+      title: 'TEST',
+      /* allDay: true, */
+      start: new Date(startingDate),
+      end: new Date(2021, 0, 19, 14),
+      allDay: false,
     },
     {
       id: 1,
       title: 'Long Event',
-      start: new Date(2019, 3, 7),
-      end: new Date(2019, 3, 10),
+      start: new Date(2021, 12, 7),
+      end: new Date(2021, 12, 10),
     },
     {
       id: 2,
@@ -43,7 +55,7 @@ const MyCalendar = (props) => {
     },
   ];
   return (
-    <div className="calendar-container" style={{ height: 700, width: 200 }}>
+    <div className="calendar-container" style={{ height: 700, width: 800 }}>
       <Calendar
         events={events}
         startAccessor="start"
