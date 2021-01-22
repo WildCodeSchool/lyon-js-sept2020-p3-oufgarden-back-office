@@ -56,7 +56,6 @@ const MyCalendar = (props) => {
   ];
   return (
     <div className="calendar-container">
-
       <Calendar
         events={events}
         startAccessor="start"

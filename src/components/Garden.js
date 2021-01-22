@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import { MdDelete, MdEdit } from 'react-icons/md';
-import { FaRegCalendarAlt } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 
 import { useToasts } from 'react-toast-notifications';

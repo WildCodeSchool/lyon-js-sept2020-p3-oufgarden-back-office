@@ -119,7 +119,7 @@ const ArticleList = (props) => {
             );
           })}
       </div>
-      <div className="container-to-color-rows">
+      <div className="container-to-color-rows-articles">
         {articlesFiltered.length > 0
           ? articles
               .filter((article) => {
