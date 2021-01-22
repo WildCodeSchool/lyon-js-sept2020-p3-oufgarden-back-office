@@ -43,8 +43,13 @@ const App = () => {
                 <Route exact path="/category" component={TagsPage} />
                 <Route exact path="/garden" component={Garden} />
                 <Route path="/garden/creation" component={GardenCreation} />
-                <Route path="/garden/:id" component={GardenCreation} />
-                <Route path="/calendar" component={Calendar} />
+                <Route exact path="/garden/:id" component={GardenCreation} />
+                <Route
+                  exact
+                  path="/garden/:id/calendar/"
+                  component={Calendar}
+                />
+                <Route path="/calendar" />
               </Switch>
             </div>
           </Router>
