@@ -15,6 +15,7 @@ import GardenCreation from './GardenCreation';
 import GardenEdition from './GardenEdition';
 import ArticleList from './ArticleList';
 import MemberDetail from './MemberDetail';
+import Calendar from './Calendar';
 
 const App = () => {
   return (
@@ -42,16 +43,23 @@ const App = () => {
                 <Route exact path="/articles/:id" component={ArticleCreation} />
                 <Route exact path="/category" component={TagsPage} />
                 <Route exact path="/garden" component={Garden} />
+
                 <Route
                   exact
                   path="/garden/creation"
                   component={GardenCreation}
                 />
-                {/* <Route path="/garden/:id" component={GardenCreation} /> */}
+
                 <Route
                   exact
                   path="/garden/:id/edition"
                   component={GardenEdition}
+                />
+
+                <Route
+                  exact
+                  path="/garden/:id/calendar/"
+                  component={Calendar}
                 />
                 <Route path="/calendar" />
               </Switch>
