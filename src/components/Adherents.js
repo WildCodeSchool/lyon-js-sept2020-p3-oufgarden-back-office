@@ -24,12 +24,24 @@ const Adherents = (props) => {
   useEffect(() => {
     getCollection('users').then((data) => {
       setAdherentList(
-        data.map((userData) => ({
-          ...userData,
-          gardenArray: userData.garden_id_concat
-            ? userData.garden_id_concat.split(',').map((gardenId) => +gardenId)
-            : [],
-        }))
+        data
+          .map((userData) => ({
+            ...userData,
+            gardenArray: userData.garden_id_concat
+              ? userData.garden_id_concat
+                  .split(',')
+                  .map((gardenId) => +gardenId)
+              : [],
+          }))
+          .sort(function (a, b) {
+            if (a.lastname < b.lastname) {
+              return -1;
+            }
+            if (a.lastname > b.lastname) {
+              return 1;
+            }
+            return 0;
+          })
       );
     });
   }, []);
@@ -41,16 +53,18 @@ const Adherents = (props) => {
   const handleGardenList = (target) => {
     if (filterArray.includes(+target.id)) {
       const newFilterArray = filterArray.filter((item) => item !== +target.id);
+      target.classList.toggle('selected');
       setFilterArray(newFilterArray);
     } else {
       setFilterArray((prevState) => [...prevState, +target.id]);
+      target.classList.toggle('selected');
     }
   };
 
   const handleDelete = async (id) => {
     confirmAlert({
       title: 'Confirmez la suppression',
-      message: 'Etes vous sûr de vouloir supprimer cet utilisateur ?',
+      message: 'Etes vous sûr.e de vouloir supprimer cet utilisateur ?',
       buttons: [
         {
           label: 'Confirmer',

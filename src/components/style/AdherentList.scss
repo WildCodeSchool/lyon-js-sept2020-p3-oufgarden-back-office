@@ -1,6 +1,31 @@
 .user-list-container {
   margin: 100px 20px 20px 250px;
 
+  .filterContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 2%;
+  }
+
+  .filterButton {
+    font-size: 1rem;
+    border: 2px solid #0f294f;
+    margin: 10px;
+    &:hover {
+      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+        0 3px 15px 0 rgba(0, 0, 0, 0.19);
+      background-color: #0f294f;
+      color: white;
+    }
+  }
+  .selected {
+    background-color: #0f294f;
+    color: white;
+  }
+
   .container-to-color-rows {
     .adherent-row:nth-of-type(2n) {
       background-color: rgb(184, 219, 184);

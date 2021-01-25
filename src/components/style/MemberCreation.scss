@@ -4,6 +4,20 @@
   justify-content: center;
   align-items: center;
   margin: 50px 20px 20px 250px;
+
+  .title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    svg {
+      position: absolute;
+      left: 20px;
+    }
+  }
+
   h3 {
     font-size: 2rem;
     color: black;
@@ -21,13 +35,7 @@
     background-color: #e6e6e6;
     border: 2px solid rgba(0, 0, 0, 0.226);
     border-radius: 5px;
-    padding: 10px;
-
-    .back {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
+    padding: 20px;
 
     h3 {
       font-size: 2rem;

@@ -24,7 +24,7 @@ const MemberCreation = (props) => {
     },
   } = props;
 
-  const [userToEdit, setUserToEdit] = useState({});
+  const [userToEdit, setUserToEdit] = useState(undefined);
   const [gardenList, setGardenList] = useState([]);
   const [gardenArray, setGardenArray] = useState([]);
   const [gardenInitialOptions, setGardenInitialOptions] = useState([]);
@@ -68,7 +68,11 @@ const MemberCreation = (props) => {
   }, [forUpdate]);
 
   useEffect(() => {
-    setValue('gender_marker', userToEdit.gender_marker);
+    if (userToEdit) {
+      setValue('gender_marker', userToEdit.gender_marker);
+      setValue('birthdate', userToEdit.birthdate);
+      setValue('membership_start', userToEdit.membership_start);
+    }
   }, [userToEdit]);
 
   useEffect(() => {
@@ -219,311 +223,295 @@ const MemberCreation = (props) => {
   return (
     <div>
       <div className="container">
-        <h3>Création d'un membre :</h3>
-        <form className="uploadRows">
-          <div>
-            <label htmlFor="picture">
-              Votre image de profil:
-              <input ref={register} type="file" name="picture" />
-            </label>
-          </div>
-        </form>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="title">
           <IconContext.Provider value={{ className: 'react-icons' }}>
             <MdKeyboardBackspace
-              size={25}
-              className="back"
+              size={35}
+              stroke="#57ac5a"
+              fill="#57ac5a"
               style={{ cursor: 'pointer' }}
               onClick={() => {
                 handleBack();
               }}
             />
           </IconContext.Provider>
-
+          <h3>{forUpdate ? "Edition d'un membre" : "Création d'un membre"}</h3>
+        </div>
+        <form className="uploadRows">
           <div>
-            <label htmlFor="gender_marker">
-              Civilité :{' '}
-              <select
-                name="gender_marker"
-                ref={register({ required: !forUpdate })}
-              >
-                <option value="madame">Mme</option>
-                <option value="monsieur">M.</option>
-                <option value="inconnu">Non précisé</option>
-              </select>
-            </label>
-            {errors.gender_marker &&
-              errors.gender_marker.type === 'required' &&
-              errorMessage(required)}
-          </div>
-
-          <div>
-            <label htmlFor="lastname">
-              Nom :{' '}
-              <input
-                type="text"
-                name="lastname"
-                ref={register({ required: !forUpdate, maxLength: 50 })}
-                defaultValue={userToEdit.lastname}
-              />
-            </label>
-
-            {errors.lastname &&
-              errors.lastname.type === 'required' &&
-              errorMessage(required)}
-            {errors.lastname &&
-              errors.lastname.type === 'maxLength' &&
-              errorMessage(maxLength)}
-          </div>
-
-          <div>
-            <label htmlFor="firstname">
-              Prénom:{' '}
-              <input
-                type="text"
-                name="firstname"
-                ref={register({ required: !forUpdate, maxLength: 50 })}
-                defaultValue={userToEdit.firstname}
-              />
-            </label>
-
-            {errors.firstname &&
-              errors.firstname.type === 'required' &&
-              errorMessage(required)}
-            {errors.firstname &&
-              errors.firstname.type === 'maxLength' &&
-              errorMessage(maxLength)}
-          </div>
-
-          <div>
-            <label htmlFor="birthdate">
-              Date de naissance :{' '}
-              <input
-                type="date"
-                name="birthdate"
-                ref={register}
-                defaultValue={userToEdit.birthdate}
-              />
+            <label htmlFor="picture">
+              Votre image de profil :
+              <input ref={register} type="file" name="picture" />
             </label>
           </div>
-
-          <div>
-            <label htmlFor="membership_start">
-              Date de début d'adhésion :{' '}
-              <input
-                type="date"
-                name="membership_start"
-                ref={register}
-                defaultValue={userToEdit.membership_start}
-              />
-            </label>
-          </div>
-
-          <div>
-            <label htmlFor="email">
-              E-mail :{' '}
-              <input
-                id="email"
-                name="email"
-                aria-invalid={errors.email ? 'true' : 'false'}
-                ref={register({
-                  required: !forUpdate,
-                  pattern: {
-                    value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-                    message: "Le format de l'email est invalide",
-                  },
-                })}
-                type="email"
-                placeholder="example@mail.com"
-                defaultValue={userToEdit.email}
-              />
-            </label>
-
-            {errors.email && <p role="alert">{errors.email.message}</p>}
-          </div>
-          {/* // for now, no email confirmation on update, would be better to add one */}
-          {!forUpdate && (
+        </form>
+        {userToEdit && (
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <label htmlFor="emailConfirmation">
-                Confirmation de l'email :{' '}
+              <label htmlFor="gender_marker">
+                Civilité :{' '}
+                <select
+                  name="gender_marker"
+                  ref={register({ required: !forUpdate })}
+                >
+                  <option value="madame">Mme</option>
+                  <option value="monsieur">M.</option>
+                  <option value="inconnu">Non précisé</option>
+                </select>
+              </label>
+              {errors.gender_marker &&
+                errors.gender_marker.type === 'required' &&
+                errorMessage(required)}
+            </div>
+
+            <div>
+              <label htmlFor="lastname">
+                Nom :{' '}
                 <input
-                  id="emailConfirmation"
-                  name="emailConfirmation"
-                  aria-invalid={errors.emailConfirmation ? 'true' : 'false'}
+                  type="text"
+                  name="lastname"
+                  ref={register({ required: !forUpdate, maxLength: 50 })}
+                  defaultValue={userToEdit.lastname}
+                />
+              </label>
+
+              {errors.lastname &&
+                errors.lastname.type === 'required' &&
+                errorMessage(required)}
+              {errors.lastname &&
+                errors.lastname.type === 'maxLength' &&
+                errorMessage(maxLength)}
+            </div>
+
+            <div>
+              <label htmlFor="firstname">
+                Prénom:{' '}
+                <input
+                  type="text"
+                  name="firstname"
+                  ref={register({ required: !forUpdate, maxLength: 50 })}
+                  defaultValue={userToEdit.firstname}
+                />
+              </label>
+
+              {errors.firstname &&
+                errors.firstname.type === 'required' &&
+                errorMessage(required)}
+              {errors.firstname &&
+                errors.firstname.type === 'maxLength' &&
+                errorMessage(maxLength)}
+            </div>
+
+            <div>
+              <label htmlFor="birthdate">
+                Date de naissance :{' '}
+                <input type="date" name="birthdate" ref={register} />
+              </label>
+            </div>
+
+            <div>
+              <label htmlFor="membership_start">
+                Date de début d'adhésion :{' '}
+                <input type="date" name="membership_start" ref={register} />
+              </label>
+            </div>
+
+            <div>
+              <label htmlFor="email">
+                E-mail :{' '}
+                <input
+                  id="email"
+                  name="email"
+                  aria-invalid={errors.email ? 'true' : 'false'}
                   ref={register({
                     required: !forUpdate,
                     pattern: {
                       value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                       message: "Le format de l'email est invalide",
                     },
-                    validate: !forUpdate && {
-                      matchesPreviousEmail: (value) => {
-                        const { email } = getValues();
-                        return (
-                          email === value || 'Les emails ne sont pas identiques'
-                        );
-                      },
-                    },
                   })}
                   type="email"
                   placeholder="example@mail.com"
+                  defaultValue={userToEdit.email}
                 />
               </label>
 
-              {errors.emailConfirmation && (
-                <p role="alert">{errors.emailConfirmation.message}</p>
-              )}
+              {errors.email && <p role="alert">{errors.email.message}</p>}
             </div>
-          )}
-
-          <div>
-            <label htmlFor="phone">
-              Téléphone :{' '}
-              <input
-                type="text"
-                name="phone"
-                defaultValue={userToEdit.phone}
-                ref={register({
-                  pattern: {
-                    value: /^[0-9]{10}$/,
-                    message: 'Le format du numéro de téléphone est invalide',
-                  },
-                })}
-              />
-            </label>
-            {errors.phone && <p role="alert">{errors.phone.message}</p>}
-          </div>
-
-          {!forUpdate && (
-            <div>
-              <label htmlFor="password">
-                Modifier le mot de passe (si nécessaire):{' '}
-              </label>
-              <input
-                type="text"
-                name="password"
-                defaultValue={generatedPassword}
-                ref={register({
-                  required: 'Le mot de passe est obligatoire',
-                  pattern: {
-                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                    message:
-                      'Format invalide : 8 caractères minimum avec au moins 1 chiffre',
-                  },
-                })}
-              />
-              {errors.password &&
-                errors.password.type === 'required' &&
-                errorMessage(required)}
-              {errors.password && <p role="alert">{errors.password.message}</p>}
-            </div>
-          )}
-          {forUpdate && (
-            <>
+            {/* // for now, no email confirmation on update, would be better to add one */}
+            {!forUpdate && (
               <div>
-                <label htmlFor="password">
-                  Nouveau mot de passe :
+                <label htmlFor="emailConfirmation">
+                  Confirmation de l'email :{' '}
                   <input
-                    type="password"
-                    name="password"
-                    placeholder="******"
+                    id="emailConfirmation"
+                    name="emailConfirmation"
+                    aria-invalid={errors.emailConfirmation ? 'true' : 'false'}
                     ref={register({
+                      required: !forUpdate,
                       pattern: {
-                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                        message:
-                          'Format invalide : 8 caractères minimum avec au moins 1 chiffre',
+                        value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                        message: "Le format de l'email est invalide",
                       },
-                    })}
-                  />
-                </label>
-                {errors.password && (
-                  <p role="alert">{errors.password.message}</p>
-                )}
-              </div>
-              <div>
-                <label htmlFor="passwordConfirmation">
-                  Confirmation du nouveau mot de passe :{' '}
-                  <input
-                    id="passwordConfirmation"
-                    name="passwordConfirmation"
-                    aria-invalid={
-                      errors.passwordConfirmation ? 'true' : 'false'
-                    }
-                    ref={register({
-                      pattern: {
-                        value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-                        message:
-                          'Format invalide : 8 caractères minimum avec au moins 1 chiffre',
-                      },
-                      validate: {
-                        matchesPreviousPassword: (value) => {
-                          const { password } = getValues();
+                      validate: !forUpdate && {
+                        matchesPreviousEmail: (value) => {
+                          const { email } = getValues();
                           return (
-                            password === value ||
-                            'Les mots de passe ne sont pas identiques'
+                            email === value ||
+                            'Les emails ne sont pas identiques'
                           );
                         },
                       },
                     })}
-                    type="password"
-                    placeholder="******"
+                    type="email"
+                    placeholder="example@mail.com"
                   />
                 </label>
 
-                {errors.passwordConfirmation && (
-                  <p role="alert">{errors.passwordConfirmation.message}</p>
+                {errors.emailConfirmation && (
+                  <p role="alert">{errors.emailConfirmation.message}</p>
                 )}
               </div>
-            </>
-          )}
+            )}
 
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <span className="label">Membre administrateur ? {'   '}</span>
-            <label htmlFor="admin" className="switch">
-              <input
-                name="is_admin"
-                type="checkbox"
-                id="admin"
-                value="true"
-                ref={register}
-                defaultChecked={userToEdit.is_admin}
+            <div>
+              <label htmlFor="phone">
+                Téléphone :{' '}
+                <input
+                  type="text"
+                  name="phone"
+                  defaultValue={userToEdit.phone}
+                  ref={register({
+                    pattern: {
+                      value: /^[0-9]{10}$/,
+                      message: 'Le format du numéro de téléphone est invalide',
+                    },
+                  })}
+                />
+              </label>
+              {errors.phone && <p role="alert">{errors.phone.message}</p>}
+            </div>
+
+            {!forUpdate && (
+              <div>
+                <label htmlFor="password">
+                  Modifier le mot de passe (si nécessaire):{' '}
+                </label>
+                <input
+                  type="text"
+                  name="password"
+                  defaultValue={generatedPassword}
+                  ref={register({
+                    required: 'Le mot de passe est obligatoire',
+                    pattern: {
+                      value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                      message:
+                        'Format invalide : 8 caractères minimum avec au moins 1 chiffre',
+                    },
+                  })}
+                />
+                {errors.password &&
+                  errors.password.type === 'required' &&
+                  errorMessage(required)}
+                {errors.password && (
+                  <p role="alert">{errors.password.message}</p>
+                )}
+              </div>
+            )}
+            {forUpdate && (
+              <>
+                <div>
+                  <label htmlFor="password">
+                    Nouveau mot de passe :
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="******"
+                      ref={register({
+                        pattern: {
+                          value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                          message:
+                            'Format invalide : 8 caractères minimum avec au moins 1 chiffre',
+                        },
+                      })}
+                    />
+                  </label>
+                  {errors.password && (
+                    <p role="alert">{errors.password.message}</p>
+                  )}
+                </div>
+                <div>
+                  <label htmlFor="passwordConfirmation">
+                    Confirmation du nouveau mot de passe :{' '}
+                    <input
+                      id="passwordConfirmation"
+                      name="passwordConfirmation"
+                      aria-invalid={
+                        errors.passwordConfirmation ? 'true' : 'false'
+                      }
+                      ref={register({
+                        pattern: {
+                          value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+                          message:
+                            'Format invalide : 8 caractères minimum avec au moins 1 chiffre',
+                        },
+                        validate: {
+                          matchesPreviousPassword: (value) => {
+                            const { password } = getValues();
+                            return (
+                              password === value ||
+                              'Les mots de passe ne sont pas identiques'
+                            );
+                          },
+                        },
+                      })}
+                      type="password"
+                      placeholder="******"
+                    />
+                  </label>
+
+                  {errors.passwordConfirmation && (
+                    <p role="alert">{errors.passwordConfirmation.message}</p>
+                  )}
+                </div>
+              </>
+            )}
+
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span className="label">Membre administrateur ? {'   '}</span>
+              <label htmlFor="admin" className="switch">
+                <input
+                  name="is_admin"
+                  type="checkbox"
+                  id="admin"
+                  value="true"
+                  ref={register}
+                  defaultChecked={userToEdit.is_admin}
+                />
+                <span className="slider round" />
+              </label>
+            </div>
+
+            {gardenInitialOptions && (
+              <Controller
+                as={Select}
+                options={gardenOptions}
+                name="garden"
+                isClearable
+                isMulti
+                control={control}
+                defaultValue={gardenInitialOptions}
               />
-              <span className="slider round" />
-            </label>
-          </div>
+            )}
 
-          {/* <Select
-              isMulti
-              name="garden"
-              placeholder="Jardin(s) lié(s) à l'adhérent"
-              options={gardenOptions}
-              // here, add default values if update
-              className="basic-multi-select"
-              classNamePrefix="select"
-              onChange={(e) => {
-                handleSelectGardenChange(e);
-              }}
-              defaultValue={[gardenOptionsInitial[0], gardenOptionsInitial[1]]}
-            /> */}
-          {gardenInitialOptions && (
-            <Controller
-              as={Select}
-              options={gardenOptions}
-              name="garden"
-              isClearable
-              isMulti
-              control={control}
-              defaultValue={gardenInitialOptions}
-            />
-          )}
-
-          <div className="submitFormBtn">
-            <input
-              type="submit"
-              value={forUpdate ? 'Mettre à jour' : 'Créer le membre'}
-            />
-          </div>
-        </form>
+            <div className="submitFormBtn">
+              <input
+                type="submit"
+                value={forUpdate ? 'Mettre à jour' : 'Créer le membre'}
+              />
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

@@ -7,12 +7,12 @@ const ButtonListCreation = (props) => {
 
   return (
     <div className="button-list-creation-container">
-      <button type="button" className="button-list">
-        <Link to={attributes.list}>Listes {attributes.names}</Link>
-      </button>
-      <button type="button" className="button-creation">
-        <Link to={attributes.creation}>Ajouter un {attributes.name}</Link>
-      </button>
+      <Link to={attributes.list}>
+        <div className="button-list">Listes {attributes.names}</div>
+      </Link>
+      <Link to={attributes.creation}>
+        <div className="button-creation">Ajouter un {attributes.name}</div>
+      </Link>
     </div>
   );
 };
