@@ -38,7 +38,7 @@ const MyCalendar = (props) => {
         };
       })
     );
-  }, []);
+  }, [myReservations]);
 
   return (
     <div className="calendar-container" style={{ height: 700, width: 800 }}>
