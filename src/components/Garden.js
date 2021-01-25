@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { MdDelete, MdEdit } from 'react-icons/md';
+import { FaRegCalendarAlt } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 
 import { useToasts } from 'react-toast-notifications';
@@ -79,6 +80,13 @@ const Garden = (props) => {
               <div className="garden-list-icons">
                 {/* IconContext provider pour personnaliser les props de react-icons */}
                 <IconContext.Provider value={{ className: 'react-icons' }}>
+                  <FaRegCalendarAlt
+                    size={25}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() =>
+                      props.history.push(`/garden/${e.id}/calendar`)
+                    }
+                  />
                   <MdEdit
                     size={25}
                     style={{ cursor: 'pointer' }}
