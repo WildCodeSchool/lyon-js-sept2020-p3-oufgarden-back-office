@@ -57,7 +57,7 @@ const Garden = (props) => {
     });
   };
   const handleEdit = (id) => {
-    props.history.push(`/garden/${id}`);
+    props.history.push(`/garden/${id}/edition`);
   };
   return (
     <div className="garden-list-container">

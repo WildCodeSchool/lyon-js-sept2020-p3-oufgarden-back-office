@@ -115,7 +115,7 @@ const Adherents = (props) => {
             );
           })}
       </div>
-      <div className="user-list-container">
+      <div className="user-list">
         <div className="container-to-color-rows">
           {adherentList
             .filter((user) => {

@@ -23,15 +23,8 @@ const errorMessage = (error) => {
 };
 
 const GardenCreation = (props) => {
-  const {
-    match: {
-      params: { id },
-    },
-  } = props;
-
   const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
-  const [Garden, setGarden] = useState([]);
 
   const [inputList, setInputList] = useState([
     {
@@ -45,12 +38,6 @@ const GardenCreation = (props) => {
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
-
-  useEffect(() => {
-    if (id) {
-      getEntity('garden', id).then((data) => setGarden(data));
-    }
-  }, [id]);
 
   const options = allPlantFamilies.map((elem) => {
     return {
@@ -99,6 +86,7 @@ const GardenCreation = (props) => {
       description: data.description,
       exposition: data.exposition,
       zone_quantity: data.zone_quantity,
+      max_users: data.max_users,
       zone_details:
         inputList.length === 1 &&
         inputList[0].zone_name === '' &&
@@ -191,7 +179,6 @@ const GardenCreation = (props) => {
                   type="text"
                   name="name"
                   ref={register({ required: true })}
-                  defaultValue={Garden.name}
                 />
               </label>
 
@@ -298,9 +285,34 @@ const GardenCreation = (props) => {
                 <p role="alert">{errors.zone_quantity.message}</p>
               )}
             </div>
+
+            <div>
+              <label htmlFor="max_users">
+                Nombre max d'usagers présents sur place :{' '}
+                <input
+                  type="text"
+                  name="max_users"
+                  ref={register({
+                    required: true,
+                    pattern: {
+                      value: /^[0-9]$|^[1-9][0-9]$|^(100)$/,
+                      message: "Merci d'entrer un nombre",
+                    },
+                  })}
+                />
+              </label>
+
+              {errors.max_users &&
+                errors.max_users.type === 'required' &&
+                errorMessage(required)}
+              {errors.max_users && (
+                <p role="alert">{errors.max_users.message}</p>
+              )}
+            </div>
+
             <div className="inputZoneCreation">
               <label htmlFor="zoneCreer">
-                Zone à creer :
+                Création des zones :
                 {inputList.map((x, i) => {
                   return (
                     // not the best solution for the key but could not find another one - do not replace with Math.random()
@@ -333,8 +345,18 @@ const GardenCreation = (props) => {
                         value={x.exposition}
                         onChange={(e) => handleInputChange(e, i)}
                       />
-
-                      <Controller
+                      <Select
+                        isMulti
+                        name="plantfamily"
+                        placeholder="Choisissez la famille de plantes"
+                        options={options}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(e) => {
+                          handleChangeSelect(e, i);
+                        }}
+                      />
+                      {/* <Controller
                         name="plantfamily"
                         control={control}
                         defaultValue=""
@@ -347,10 +369,8 @@ const GardenCreation = (props) => {
                             }}
                             value={value}
                             isMulti
-                          />
-                        )}
-                      />
-
+                          /> */}
+                      {/* )} /> */}
                       <div className="btn-box">
                         {inputList.length - 1 === i && (
                           <button type="button" onClick={handleAddClick}>
