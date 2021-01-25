@@ -29,17 +29,20 @@ const MyCalendar = (props) => {
           start: moment(
             `${elem.date.split('T')[0]} ${elem.start_time}`,
             'YYYY-MM-DD hh:mm:ss'
-          ).toDate(),
+          )
+            .add(1, 'days')
+            .toDate(),
           end: moment(
             `${elem.date.split('T')[0]} ${elem.end_time}`,
             'YYYY-MM-DD hh:mm:ss'
-          ).toDate(),
+          )
+            .add(1, 'days')
+            .toDate(),
           title: `${elem.firstname} ${elem.lastname}`,
         };
       })
     );
   }, [myReservations]);
-
   return (
     <div className="calendar-container" style={{ height: 700, width: 800 }}>
       <Calendar
