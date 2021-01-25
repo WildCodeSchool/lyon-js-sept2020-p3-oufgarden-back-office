@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useToasts } from 'react-toast-notifications';
 import ZoneEdition from './ZoneEdition';
 import { getEntity, makeEntityUpdater } from '../services/API';
 import './style/GardenCreation.scss';
@@ -22,6 +23,7 @@ const GardenEdition = (props) => {
       params: { id },
     },
   } = props;
+  const { addToast } = useToasts();
   const { register, handleSubmit, errors } = useForm();
   const [initialGarden, setInitialGarden] = useState();
 
@@ -54,9 +56,18 @@ const GardenEdition = (props) => {
     formData.append('newData', JSON.stringify(newData));
 
     makeEntityUpdater('garden')(id, formData)
-      .catch((err) => console.log(err.response.data))
+      .catch((err) => {
+        addToast('Problème lors de la modification du jardin', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+        console.log(err.response.data);
+      })
       .then(() => {
-        console.log('done');
+        addToast('Modifications enregistrées', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
       });
   };
 
@@ -69,7 +80,7 @@ const GardenEdition = (props) => {
       <div className="garden-edition-container">
         {initialGarden && (
           <div className="containerGarden">
-            <h3>Edition d'un jardin :</h3>
+            <h3>Edition d'un jardin</h3>
 
             <div className="imgUploadContainer">
               {/*   Just to inform the team, the form here is necessary to make file upload working with react hook form  */}

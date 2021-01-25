@@ -3,6 +3,7 @@ import Select from 'react-select';
 import _ from 'lodash';
 
 import { useForm, Controller } from 'react-hook-form';
+import { useToasts } from 'react-toast-notifications';
 
 import { getCollection, makeEntityAdder } from '../services/API';
 import './style/GardenCreation.scss';
@@ -16,6 +17,7 @@ const ZoneEdition = (props) => {
     []
   );
 
+  const { addToast } = useToasts();
   useEffect(() => {
     if (initialZones.length > 0 && allPlantFamilies.length > 0) {
       const plantFamilyOptionsArray = [];
@@ -133,20 +135,20 @@ const ZoneEdition = (props) => {
     };
 
     makeEntityAdder(`garden/${+props.id}/zones`)(newData)
-      .catch((err) => console.log(err.response.data))
-      .then(() => {
-        // e.target.reset();
-        setInputList([
-          {
-            zone_name: '',
-            type: '',
-            exposition: '',
-            plantFamilyArray: [],
-            description: '',
-          },
-        ]);
+      .catch((err) => {
+        addToast('Problème lors de la modification du jardin', {
+          appearance: 'error',
+          autoDismiss: true,
+        });
+        console.log(err.response.data);
       })
-      .then(() => props.redirect());
+      .then(() => {
+        addToast('Modifications enregistrées', {
+          appearance: 'success',
+          autoDismiss: true,
+        });
+        setTimeout(props.redirect, 2000);
+      });
   };
 
   const handleChangeSelect = (elem, i) => {
@@ -170,6 +172,10 @@ const ZoneEdition = (props) => {
     <div className="containerGarden">
       <form className="formContainer" onSubmit={handleSubmit(onSubmit)}>
         <div className="inputZoneCreation">
+          <p className="info">
+            Attention, modifier les zones entrainera la suppression de
+            l'historique des actions utilisateurs
+          </p>
           <label htmlFor="zoneCreer">
             Modifier les zones :
             {inputList.map((x, i) => {
@@ -227,21 +233,6 @@ const ZoneEdition = (props) => {
                     />
                   )}
 
-                  {/* <Controller
-                        name="plantfamily"
-                        control={control}
-                        defaultValue=""
-                        render={({ onChange, value }) => (
-                          <Select
-                            options={options}
-                            onChange={(e) => {
-                              onChange(e);
-                              handleChangeSelect(e, i);
-                            }}
-                            value={value}
-                            isMulti
-                          /> */}
-                  {/* )} /> */}
                   <div className="btn-box">
                     {inputList.length - 1 === i && (
                       <button type="button" onClick={handleAddClick}>
@@ -264,7 +255,7 @@ const ZoneEdition = (props) => {
         </div>
 
         <div className="submitFormBtn">
-          <input type="submit" value="Créer le jardin" />
+          <input type="submit" value="Enregistrer" />
         </div>
       </form>
     </div>

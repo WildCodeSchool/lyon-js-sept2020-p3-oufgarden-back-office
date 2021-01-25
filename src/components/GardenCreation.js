@@ -151,7 +151,7 @@ const GardenCreation = (props) => {
       </div>
 
       <div className="containerGarden">
-        <h3>Création d'un Jardin :</h3>
+        <h3>Création d'un jardin</h3>
 
         <div>
           <div className="imgUploadContainer">

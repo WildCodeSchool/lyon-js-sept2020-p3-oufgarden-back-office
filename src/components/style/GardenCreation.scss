@@ -4,6 +4,13 @@
   justify-content: center;
 }
 
+.garden-zone-edition-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 260px;
+}
+
 .containerGarden {
   display: flex;
   flex-direction: column;
@@ -47,6 +54,7 @@
     border-radius: 5px;
     padding: 30px;
     min-width: 500px;
+    max-width: 700px;
     border: 2px solid rgba(0, 0, 0, 0.226);
 
     button {
@@ -97,6 +105,17 @@
         content: '⚠ ';
       }
     }
+
+    p.info {
+      color: rgb(58, 58, 58);
+      font-size: 18px;
+      font-weight: normal;
+      &::before {
+        display: inline;
+        content: '';
+      }
+    }
+
     span {
       font-size: 15px;
       font-weight: bold;
