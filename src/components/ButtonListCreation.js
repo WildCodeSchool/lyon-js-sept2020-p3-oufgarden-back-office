@@ -11,7 +11,7 @@ const ButtonListCreation = (props) => {
         <Link to={attributes.list}>Listes {attributes.names}</Link>
       </button>
       <button type="button" className="button-creation">
-        <Link to={attributes.creation}>Nouvel {attributes.name}</Link>
+        <Link to={attributes.creation}>Ajouter un {attributes.name}</Link>
       </button>
     </div>
   );

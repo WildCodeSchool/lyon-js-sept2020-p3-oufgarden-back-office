@@ -12,6 +12,7 @@ import { UserProvider } from './_context/UserContext';
 import ArticleCreation from './ArticleCreation';
 import Garden from './Garden';
 import GardenCreation from './GardenCreation';
+import GardenEdition from './GardenEdition';
 import ArticleList from './ArticleList';
 import MemberDetail from './MemberDetail';
 import Calendar from './Calendar';
@@ -42,8 +43,19 @@ const App = () => {
                 <Route exact path="/articles/:id" component={ArticleCreation} />
                 <Route exact path="/category" component={TagsPage} />
                 <Route exact path="/garden" component={Garden} />
-                <Route path="/garden/creation" component={GardenCreation} />
-                <Route exact path="/garden/:id" component={GardenCreation} />
+
+                <Route
+                  exact
+                  path="/garden/creation"
+                  component={GardenCreation}
+                />
+
+                <Route
+                  exact
+                  path="/garden/:id/edition"
+                  component={GardenEdition}
+                />
+
                 <Route
                   exact
                   path="/garden/:id/calendar/"

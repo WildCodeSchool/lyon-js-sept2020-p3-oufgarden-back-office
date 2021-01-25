@@ -239,7 +239,6 @@ const MemberCreation = (props) => {
               }}
             />
           </IconContext.Provider>
-          <h3>Création d'un membre :</h3>
 
           <div>
             <label htmlFor="gender_marker">
