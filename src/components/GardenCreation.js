@@ -129,11 +129,11 @@ const GardenCreation = (props) => {
         deepCopyList[i].plantFamilyArray = [...arrFamilyId];
         setInputList(deepCopyList);
       }
-      if (!elem) {
-        const deepCopyList = _.cloneDeep(inputList);
-        deepCopyList[i].plantFamilyArray = [];
-        setInputList(deepCopyList);
-      }
+    }
+    if (!elem) {
+      const deepCopyList = _.cloneDeep(inputList);
+      deepCopyList[i].plantFamilyArray = [];
+      setInputList(deepCopyList);
     }
   };
 

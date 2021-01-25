@@ -29,9 +29,10 @@ const GardenEdition = (props) => {
     getEntity('garden', id).then((data) => setInitialGarden(data));
   }, []);
 
-  const onSubmit = (data, e) => {
+  const onSubmit = (data) => {
     const newData = {
       address: {
+        address_id: initialGarden && initialGarden.address.id,
         address_city: data.address_city,
         address_street: data.address_street,
         address_zipcode: data.address_zipcode,
@@ -43,18 +44,24 @@ const GardenEdition = (props) => {
       max_users: data.max_users,
       // not sending input details
     };
+
+    console.log(newData);
+
     const formData = new FormData();
     formData.append('gardenPicture', data.gardenPicture[0]);
     formData.append('zonePicture', data.zonePicture[0]);
     // We use JSON.stringify here to send nested object in formdata
     formData.append('newData', JSON.stringify(newData));
 
-    makeEntityUpdater('garden')(formData)
+    makeEntityUpdater('garden')(id, formData)
       .catch((err) => console.log(err.response.data))
       .then(() => {
-        e.target.reset();
-      })
-      .then(() => props.history.push('/garden'));
+        console.log('done');
+      });
+  };
+
+  const redirect = () => {
+    props.history.push('/garden');
   };
 
   return (
@@ -235,7 +242,8 @@ const GardenEdition = (props) => {
         )}
       </div>
       <div className="zone-edition-container">
-        <ZoneEdition />
+        {' '}
+        <ZoneEdition id={id} redirect={redirect} />{' '}
       </div>
     </div>
   );

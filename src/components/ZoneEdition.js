@@ -1,16 +1,43 @@
 import React, { useState, useEffect } from 'react';
-
-import _ from 'lodash';
-import { useForm, Controller } from 'react-hook-form';
 import Select from 'react-select';
-import ButtonListCreation from './ButtonListCreation';
+import _ from 'lodash';
 
-import { getCollection, makeEntityAdder, getEntity } from '../services/API';
+import { useForm, Controller } from 'react-hook-form';
+
+import { getCollection, makeEntityAdder } from '../services/API';
 import './style/GardenCreation.scss';
 
-const ZoneEdition = () => {
+const ZoneEdition = (props) => {
+  const { handleSubmit, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
 
+  const [initialZones, setInitialZones] = useState([]);
+  const [plantFamilyInitialOptions, setPlantFamilyInitialOptions] = useState(
+    []
+  );
+
+  useEffect(() => {
+    if (initialZones.length > 0 && allPlantFamilies.length > 0) {
+      const plantFamilyOptionsArray = [];
+      initialZones.forEach((initialZone) => {
+        const newArray = allPlantFamilies
+          .filter((plantFamily) =>
+            initialZone.plantFamilyArray.includes(plantFamily.id)
+          )
+          .map((plantFamily) => {
+            return {
+              value: plantFamily.id,
+              label: `${plantFamily.main_category} - ${plantFamily.sub_category}`,
+            };
+          });
+        plantFamilyOptionsArray.push(newArray);
+      });
+
+      setPlantFamilyInitialOptions(plantFamilyOptionsArray);
+    }
+  }, [initialZones, allPlantFamilies]);
+
+  // list of the zones of the current garden
   const [inputList, setInputList] = useState([
     {
       zone_name: '',
@@ -20,8 +47,42 @@ const ZoneEdition = () => {
       description: '',
     },
   ]);
+
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
+  }, []);
+
+  useEffect(() => {
+    getCollection(`garden/${+props.id}/zones`).then((data) => {
+      setInitialZones(
+        data.map((zoneInfo) => {
+          return {
+            ...zoneInfo,
+            zone_name: zoneInfo.name,
+            plantFamilyArray: zoneInfo.plantFamily_concat_string
+              ? zoneInfo.plantFamily_concat_string
+                  .split(',')
+                  .map((number) => +number)
+              : [],
+          };
+        })
+      );
+      if (data.length > 0) {
+        setInputList(
+          data.map((zoneInfo) => {
+            return {
+              ...zoneInfo,
+              zone_name: zoneInfo.name,
+              plantFamilyArray: zoneInfo.plantFamily_concat_string
+                ? zoneInfo.plantFamily_concat_string
+                    .split(',')
+                    .map((number) => +number)
+                : [],
+            };
+          })
+        );
+      }
+    });
   }, []);
 
   const options = allPlantFamilies.map((elem) => {
@@ -60,18 +121,9 @@ const ZoneEdition = () => {
     setInputList(deepCopyList);
   };
 
-  const onSubmit = (data, e) => {
+  const onSubmit = () => {
+    // get garden id also ?
     const newData = {
-      address: {
-        address_city: data.address_city,
-        address_street: data.address_street,
-        address_zipcode: data.address_zipcode,
-      },
-      name: data.name,
-      description: data.description,
-      exposition: data.exposition,
-      zone_quantity: data.zone_quantity,
-      max_users: data.max_users,
       zone_details:
         inputList.length === 1 &&
         inputList[0].zone_name === '' &&
@@ -79,19 +131,11 @@ const ZoneEdition = () => {
           ? []
           : inputList,
     };
-    const formData = new FormData();
-    formData.append('gardenPicture', data.gardenPicture[0]);
-    formData.append('zonePicture', data.zonePicture[0]);
-    // We use JSON.stringify here to send neste object in formdata
-    formData.append('newData', JSON.stringify(newData));
 
-    makeEntityAdder('garden')(formData)
-      // .then((elem) => {
-      //   console.log(elem);
-      // })
+    makeEntityAdder(`garden/${+props.id}/zones`)(newData)
       .catch((err) => console.log(err.response.data))
       .then(() => {
-        e.target.reset();
+        // e.target.reset();
         setInputList([
           {
             zone_name: '',
@@ -102,7 +146,7 @@ const ZoneEdition = () => {
           },
         ]);
       })
-      .then(() => props.history.push('/garden'));
+      .then(() => props.redirect());
   };
 
   const handleChangeSelect = (elem, i) => {
@@ -114,15 +158,117 @@ const ZoneEdition = () => {
         deepCopyList[i].plantFamilyArray = [...arrFamilyId];
         setInputList(deepCopyList);
       }
-      if (!elem) {
-        const deepCopyList = _.cloneDeep(inputList);
-        deepCopyList[i].plantFamilyArray = [];
-        setInputList(deepCopyList);
-      }
+    }
+    if (!elem) {
+      const deepCopyList = _.cloneDeep(inputList);
+      deepCopyList[i].plantFamilyArray = [];
+      setInputList(deepCopyList);
     }
   };
 
-  return <div></div>;
+  return (
+    <div className="containerGarden">
+      <form className="formContainer" onSubmit={handleSubmit(onSubmit)}>
+        <div className="inputZoneCreation">
+          <label htmlFor="zoneCreer">
+            Modifier les zones :
+            {inputList.map((x, i) => {
+              return (
+                // not the best solution for the key but could not find another one - do not replace with Math.random()
+                <div key={i}>
+                  <input
+                    name="zone_name"
+                    type="text"
+                    placeholder="Nom de la zone"
+                    value={x.zone_name}
+                    onChange={(e) => handleInputChange(e, i)}
+                    defaultValue={x.zone_name || ''}
+                  />
+                  <input
+                    name="type"
+                    type="text"
+                    placeholder="Quelle type de zone ? Serre, compost, potager.."
+                    value={x.type}
+                    onChange={(e) => handleInputChange(e, i)}
+                    defaultValue={x.type || ''}
+                  />
+                  <input
+                    name="description"
+                    type="text"
+                    placeholder="Description de la zone"
+                    value={x.description}
+                    onChange={(e) => handleInputChange(e, i)}
+                    defaultValue={x.description || ''}
+                  />
+                  <input
+                    name="exposition"
+                    type="text"
+                    placeholder="Exposition"
+                    value={x.exposition}
+                    onChange={(e) => handleInputChange(e, i)}
+                    defaultValue={x.exposition || ''}
+                  />
+
+                  {plantFamilyInitialOptions.length > 0 && (
+                    <Controller
+                      name="plantfamily"
+                      control={control}
+                      render={({ onChange }) => (
+                        <Select
+                          options={options}
+                          defaultValue={plantFamilyInitialOptions[i]}
+                          onChange={(e) => {
+                            onChange(e);
+                            handleChangeSelect(e, i);
+                          }}
+                          isMulti
+                        />
+                      )}
+                    />
+                  )}
+
+                  {/* <Controller
+                        name="plantfamily"
+                        control={control}
+                        defaultValue=""
+                        render={({ onChange, value }) => (
+                          <Select
+                            options={options}
+                            onChange={(e) => {
+                              onChange(e);
+                              handleChangeSelect(e, i);
+                            }}
+                            value={value}
+                            isMulti
+                          /> */}
+                  {/* )} /> */}
+                  <div className="btn-box">
+                    {inputList.length - 1 === i && (
+                      <button type="button" onClick={handleAddClick}>
+                        Ajouter
+                      </button>
+                    )}
+                    {inputList.length !== 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveClick(i)}
+                      >
+                        Supprimer
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </label>
+        </div>
+
+        <div className="submitFormBtn">
+          <input type="submit" value="Créer le jardin" />
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default ZoneEdition;
