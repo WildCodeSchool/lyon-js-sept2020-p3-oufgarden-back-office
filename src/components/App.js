@@ -16,6 +16,7 @@ import GardenEdition from './GardenEdition';
 import ArticleList from './ArticleList';
 import MemberDetail from './MemberDetail';
 import GardenDetail from './GardenDetail';
+import ArticleDetail from './ArticleDetail';
 import Calendar from './Calendar';
 
 const App = () => {
@@ -46,6 +47,7 @@ const App = () => {
                   path="/articles/:id/edition"
                   component={ArticleCreation}
                 />
+                <Route exact path="/articles/:id" component={ArticleDetail} />
                 <Route exact path="/category" component={TagsPage} />
                 <Route exact path="/garden" component={Garden} />
 

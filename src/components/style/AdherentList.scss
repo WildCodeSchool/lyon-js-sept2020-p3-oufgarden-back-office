@@ -1,5 +1,14 @@
-.user-container {
-  margin: 100px 20px 20px 260px;
+.user-list-container {
+  margin: 100px 20px 20px 250px;
+
+  .filterContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 2%;
+  }
 
   .filterButton {
     font-size: 1rem;
@@ -17,11 +26,24 @@
     color: white;
   }
 
-  .user-list-container {
-    margin: 0 20px 0 20px;
-    .container-to-color-rows {
-      .adherent-row:nth-of-type(2n) {
-        background-color: rgba(184, 219, 184, 0.7);
+  .container-to-color-rows {
+    .adherent-row:nth-of-type(2n) {
+      background-color: rgb(184, 219, 184);
+    }
+    .adherent-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin: 0 20px 20px 20px;
+      background-color: #e5e7e9;
+      box-shadow: 10px;
+      box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2),
+        0 6px 10px 0 rgba(0, 0, 0, 0.19);
+
+      &:hover {
+        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+          0 3px 15px 0 rgba(0, 0, 0, 0.19);
       }
       .adherent-row {
         display: flex;

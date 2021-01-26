@@ -16,35 +16,36 @@
     justify-content: space-around;
     align-items: center;
     margin-bottom: 2%;
-.filterButton {
-  font-size: 1rem;
-  border: 2px solid #0f294f;
-  margin: 10px;
-  width: 150px;
-  padding: 10px;
-  border-radius: 10px;
-  &:hover,
-  &:focus {
-    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
-      0 3px 15px 0 rgba(0, 0, 0, 0.19);
-    background-color: #0f294f;
-    color: white;
-  }
+    // .filterButton {
+    //   font-size: 1rem;
+    //   border: 2px solid #0f294f;
+    //   margin: 10px;
+    //   width: 150px;
+    //   padding: 10px;
+    //   border-radius: 10px;
+    //   &:hover,
+    //   &:focus {
+    //     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+    //       0 3px 15px 0 rgba(0, 0, 0, 0.19);
+    //     background-color: #0f294f;
+    //     color: white;
+    //   }
 
-  .filterButton {
-    font-size: 1rem;
-    border: 2px solid #0f294f;
-    margin: 10px;
-    &:hover,
-    &:focus {
-      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
-        0 3px 15px 0 rgba(0, 0, 0, 0.19);
-      background-color: #0f294f;
-      color: white;
-    }
-    &:active {
-      background-color: #0f294f;
-      color: white;
+    .filterButton {
+      font-size: 1rem;
+      border: 2px solid #0f294f;
+      margin: 10px;
+      &:hover,
+      &:focus {
+        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+          0 3px 15px 0 rgba(0, 0, 0, 0.19);
+        background-color: #0f294f;
+        color: white;
+      }
+      &:active {
+        background-color: #0f294f;
+        color: white;
+      }
     }
   }
 
@@ -63,47 +64,48 @@
     }
   }
 
-.container-to-color-rows-articles {
-  width: 800px;
-  .ArticlesRow:nth-of-type(2n) {
-    background-color: rgba(184, 219, 184, 0.7);
-  }
-  .ArticlesRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    margin: 0 20px 20px 20px;
-    background-color: #e5e7e9;
-    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2),
-      0 6px 10px 0 rgba(0, 0, 0, 0.19);
+  .container-to-color-rows-articles {
+    width: 100%;
+    .ArticlesRow:nth-of-type(2n) {
+      background-color: rgba(184, 219, 184, 0.7);
+    }
+    .ArticlesRow {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin: 0 20px 20px 20px;
+      background-color: #e5e7e9;
+      box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2),
+        0 6px 10px 0 rgba(0, 0, 0, 0.19);
 
-    &:hover {
-      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
-        0 3px 15px 0 rgba(0, 0, 0, 0.19);
+      &:hover {
+        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+          0 3px 15px 0 rgba(0, 0, 0, 0.19);
+      }
+    }
+
+    .articlesInfos {
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .articleListIcons {
+      display: flex;
+      justify-content: flex-end;
+      cursor: pointer;
+      .react-icons {
+        margin-left: 5px;
+      }
     }
   }
 
-  .articlesInfos {
-    display: flex;
-    justify-content: flex-start;
+  .react-confirm-alert-body {
+    width: max-content !important;
+    text-align: center !important;
   }
 
-  .articleListIcons {
-    display: flex;
-    justify-content: flex-end;
-    cursor: pointer;
-    .react-icons {
-      margin-left: 5px;
-    }
+  .react-confirm-alert-button-group {
+    justify-content: center !important;
   }
-}
-
-.react-confirm-alert-body{
-  width: max-content !important;
-  text-align: center !important;
-}
-
-.react-confirm-alert-button-group{
-  justify-content: center !important;
 }
