@@ -147,7 +147,7 @@ const ZoneEdition = (props) => {
           appearance: 'success',
           autoDismiss: true,
         });
-        setTimeout(props.redirect, 2000);
+        setTimeout(props.redirect, 1000);
       });
   };
 
