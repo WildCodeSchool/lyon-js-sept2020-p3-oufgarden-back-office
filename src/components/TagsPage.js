@@ -31,7 +31,7 @@ const TagsPage = () => {
   const handleDelete = async (id) => {
     confirmAlert({
       title: 'Confirmez la suppression',
-      message: 'Etes vous sûr de vouloir supprimer cete gatégorie ?',
+      message: 'Etes vous sûr de vouloir supprimer cette catégorie ?',
       buttons: [
         {
           label: 'Confirmer',
@@ -117,19 +117,21 @@ const TagsPage = () => {
           />
         </form>
       </div>
-      {tagList.map((tag) => {
-        return (
-          <div className="tag-row" key={tag.id}>
-            <p>{tag.name}</p>
-            <div className="user-list-icons">
-              {/* IconContext provider pour personnaliser les props de react-icons */}
-              <IconContext.Provider value={{ className: 'react-icons' }}>
-                <MdDelete size={25} onClick={() => handleDelete(tag.id)} />
-              </IconContext.Provider>
+      <div className="container-to-color-rows">
+        {tagList.map((tag) => {
+          return (
+            <div className="tag-row" key={tag.id}>
+              <p>{tag.name}</p>
+              <div className="user-list-icons">
+                {/* IconContext provider pour personnaliser les props de react-icons */}
+                <IconContext.Provider value={{ className: 'react-icons' }}>
+                  <MdDelete size={25} onClick={() => handleDelete(tag.id)} />
+                </IconContext.Provider>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };

@@ -93,34 +93,34 @@ const ArticleList = (props) => {
     props.history.push(`/articles/${id}/edition`);
   };
   return (
-    <div>
-      <div className="articleListContainer">
-        <ButtonListCreation
-          attributes={{
-            list: '/articles',
-            creation: '/articles/creation',
-            name: 'Article',
-            names: 'Articles',
-          }}
-        />
+    <div className="articleListContainer">
+      <ButtonListCreation
+        attributes={{
+          list: '/articles',
+          creation: '/articles/creation',
+          name: 'Article',
+          names: 'Articles',
+        }}
+      />
 
-        <div className="filterContainer">
-          {allTags &&
-            allTags.map((tag) => {
-              return (
-                <div key={tag.id}>
-                  <button
-                    type="button"
-                    className="filterButton"
-                    id={tag.id}
-                    onClick={(e) => handleTagList(e.target)}
-                  >
-                    {tag.name}
-                  </button>
-                </div>
-              );
-            })}
-        </div>
+      <div className="filterContainer">
+        {allTags &&
+          allTags.map((tag) => {
+            return (
+              <div key={tag.id}>
+                <button
+                  type="button"
+                  className="filterButton"
+                  id={tag.id}
+                  onClick={(e) => handleTagList(e.target)}
+                >
+                  {tag.name}
+                </button>
+              </div>
+            );
+          })}
+      </div>
+      <div className="container-to-color-rows-articles">
         {articlesFiltered.length > 0
           ? articles
               .filter((article) => {

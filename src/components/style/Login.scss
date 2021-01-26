@@ -55,6 +55,26 @@
     width: 70vw;
     outline: none;
   }
+  .buttonLogin {
+    margin: 5px;
+    background-color: #28841f;
+    border: unset;
+    border-radius: 50px;
+    padding: 8px;
+    width: 40vw;
+    outline: none;
+    color: white;
+  }
+  .infoCreation {
+    margin: 10px;
+    width: 70vw;
+    text-align: center;
+  }
+
+  .buttonLogin:hover {
+    cursor: pointer;
+    color: #292929;
+  }
 
   .form-group {
     display: flex;
