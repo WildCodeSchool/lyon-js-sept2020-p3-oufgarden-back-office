@@ -18,6 +18,13 @@
     width: 100%;
   }
 
+  .name-section {
+    text-align: center;
+    .img-garden-details {
+      width: 100%;
+    }
+  }
+
   .garden-infos {
     margin-left: 20px;
     margin-top: 10px;
@@ -42,6 +49,10 @@
       span {
         margin-left: 5px;
       }
+    }
+
+    .img-map {
+      width: 100%;
     }
 
     .zone-details {

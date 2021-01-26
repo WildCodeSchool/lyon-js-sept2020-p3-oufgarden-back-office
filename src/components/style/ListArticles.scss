@@ -1,4 +1,7 @@
 .articleListContainer {
+  margin-left: 260px;
+  margin-right: 100px;
+
   .buttons {
     display: flex;
     flex-direction: row;
@@ -73,5 +76,8 @@
     display: flex;
     justify-content: flex-end;
     cursor: pointer;
+    .react-icons {
+      margin-left: 5px;
+    }
   }
 }

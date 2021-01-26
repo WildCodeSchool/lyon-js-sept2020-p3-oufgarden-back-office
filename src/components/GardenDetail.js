@@ -10,6 +10,8 @@ import { getEntity, getCollection } from '../services/API';
 
 import './style/GardenDetail.scss';
 
+const URL = process.env.REACT_APP_API_BASE_URL;
+
 // const today = dayjs();
 
 const GardenDetail = (props) => {
@@ -83,7 +85,14 @@ const GardenDetail = (props) => {
               />
             </IconContext.Provider>
           </div>
-          <h2 className="name">{gardenDetails.name}</h2>
+          <div className="name-section">
+            <img
+              className="img-garden-details"
+              src={`${URL}/${gardenDetails.picture}`}
+              alt="[jardin]"
+            />
+            <h2 className="name">{gardenDetails.name}</h2>
+          </div>
 
           <div className="garden-infos">
             <div className="address">
@@ -104,8 +113,13 @@ const GardenDetail = (props) => {
             </div>
             <div className="zones-infos">
               <h3>Zones</h3>
+              <img
+                className="img-map"
+                src={`${URL}/${gardenDetails.map}`}
+                alt="[map]"
+              />
+
               <p>
-                {' '}
                 <span className="emph">Nombre de zones renseigné : </span>
                 {gardenDetails.zone_quantity}
               </p>
@@ -118,14 +132,16 @@ const GardenDetail = (props) => {
                         <p className="zone-name">{zone.name}</p>
                         <p className="zone-type">{zone.type}</p>
                         <p className="zone-description">{zone.description}</p>
-                        <p className="exposition">
-                          <IconContext.Provider
-                            value={{ className: 'react-icons' }}
-                          >
-                            <FaSun size={20} />
-                          </IconContext.Provider>
-                          <span>{zone.exposition}</span>
-                        </p>
+                        {zone.exposition && (
+                          <p className="exposition">
+                            <IconContext.Provider
+                              value={{ className: 'react-icons' }}
+                            >
+                              <FaSun size={20} />
+                            </IconContext.Provider>
+                            <span>{zone.exposition}</span>
+                          </p>
+                        )}
                         <div className="plant-families">
                           {allPlantFamilies.length > 0 &&
                             allPlantFamilies.map((plantFamily) => {

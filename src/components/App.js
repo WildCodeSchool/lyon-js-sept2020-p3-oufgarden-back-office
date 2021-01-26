@@ -41,7 +41,11 @@ const App = () => {
                   path="/articles/creation"
                   component={ArticleCreation}
                 />
-                <Route exact path="/articles/:id" component={ArticleCreation} />
+                <Route
+                  exact
+                  path="/articles/:id/edition"
+                  component={ArticleCreation}
+                />
                 <Route exact path="/category" component={TagsPage} />
                 <Route exact path="/garden" component={Garden} />
 
@@ -57,13 +61,12 @@ const App = () => {
                   component={GardenEdition}
                 />
 
-                <Route path="/garden/:id" component={GardenDetail} />
-
                 <Route
                   exact
                   path="/garden/:id/calendar/"
                   component={Calendar}
                 />
+                <Route path="/garden/:id" component={GardenDetail} />
                 <Route path="/calendar" />
               </Switch>
             </div>
