@@ -5,11 +5,6 @@
 import React, { useEffect, useState } from 'react';
 import { MdEdit, MdKeyboardBackspace } from 'react-icons/md';
 import { IconContext } from 'react-icons';
-// import { IoLeaf } from 'react-icons/io';
-
-// import { Link } from 'react-router-dom';
-
-// import * as dayjs from 'dayjs';
 
 import { getEntity, getCollection } from '../services/API';
 

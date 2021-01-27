@@ -1,0 +1,100 @@
+.garden-detail-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 50%;
+  margin: auto;
+  margin-top: 200px;
+  align-items: center;
+
+  padding: 10px;
+
+  background-color: #e5e7e9;
+
+  .icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .name-section {
+    text-align: center;
+    .img-garden-details {
+      width: 100%;
+    }
+  }
+
+  .garden-infos {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    width: 80%;
+
+    h3 {
+      margin-top: 10px;
+    }
+
+    .emph {
+      font-weight: bold;
+    }
+
+    .alert {
+      color: rgb(214, 0, 0);
+    }
+
+    .exposition {
+      display: flex;
+      span {
+        margin-left: 5px;
+      }
+    }
+
+    .img-map {
+      width: 100%;
+    }
+
+    .zone-details {
+      background-color: #b8dbb8;
+      border-radius: 10px;
+      margin: 5px;
+      padding: 10px;
+      width: 90%;
+
+      .zone-name {
+        font-size: 18px;
+        font-weight: 500;
+        text-align: center;
+      }
+
+      .zone-type {
+        font-style: italic;
+        font-size: 15px;
+        text-align: center;
+      }
+
+      .zone-description {
+        margin: 10px 0;
+        text-align: justify;
+        line-height: 1.4em;
+      }
+
+      .plant-families {
+        display: flex;
+        flex-wrap: wrap;
+
+        .plant-family {
+          color: white;
+          background-color: #3d5f3d;
+          border-radius: 20px;
+          width: min-content;
+          padding: 5px 10px;
+          text-align: center;
+          white-space: nowrap;
+          margin: 5px 10px;
+        }
+      }
+    }
+  }
+}

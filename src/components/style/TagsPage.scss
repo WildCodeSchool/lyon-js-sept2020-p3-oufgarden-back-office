@@ -86,24 +86,37 @@
       color: black;
     }
   }
-
-  .tag-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    margin: 20px 20px 20px;
-    background-color: #e5e7e9;
-    box-shadow: 10px;
-    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2),
-      0 6px 10px 0 rgba(0, 0, 0, 0.19);
-    &:hover {
-      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
-        0 3px 15px 0 rgba(0, 0, 0, 0.19);
+  .container-to-color-rows {
+    .tag-row:nth-of-type(2n) {
+      background-color: rgba(184, 219, 184, 0.7);
     }
-    .react-icons {
-      margin: 10px;
-      cursor: pointer;
+    .tag-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin: 20px 20px 20px;
+      background-color: #e5e7e9;
+      box-shadow: 10px;
+      box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2),
+        0 6px 10px 0 rgba(0, 0, 0, 0.19);
+      &:hover {
+        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+          0 3px 15px 0 rgba(0, 0, 0, 0.19);
+      }
+      .react-icons {
+        margin: 10px;
+        cursor: pointer;
+      }
     }
   }
+}
+
+.react-confirm-alert-body{
+  width: max-content !important;
+  text-align: center !important;
+}
+
+.react-confirm-alert-button-group{
+  justify-content: center !important;
 }

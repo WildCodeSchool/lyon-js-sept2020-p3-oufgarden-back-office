@@ -138,7 +138,7 @@ const GardenCreation = (props) => {
   };
 
   return (
-    <div>
+    <div className="garden-container-all-element">
       <div className="button-garden-container">
         <ButtonListCreation
           attributes={{
