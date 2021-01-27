@@ -7,6 +7,7 @@ import Login from './Login';
 import Adherents from './Adherents';
 import TagsPage from './TagsPage';
 import MemberCreation from './MemberCreation';
+import MemberEdition from './MemberEdition';
 import history from '../history';
 import { UserProvider } from './_context/UserContext';
 import ArticleCreation from './ArticleCreation';
@@ -30,8 +31,9 @@ const App = () => {
               <Switch>
                 <Route exact path="/" component={Login} />
 
+                <Route path="/adherents/edit/:id" component={MemberEdition} />
                 <Route path="/adherents/creation" component={MemberCreation} />
-                <Route path="/adherents/edit/:id" component={MemberCreation} />
+
                 <Route path="/adherents/:id" component={MemberDetail} />
                 <Route exact path="/adherents" component={Adherents} />
 
