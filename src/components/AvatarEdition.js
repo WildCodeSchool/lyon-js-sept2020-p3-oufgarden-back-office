@@ -10,7 +10,6 @@ const AvatarEdition = ({ id }) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data, e) => {
-    // data is updated to add the array with garden ids, before submit
     const newData = {
       ...data,
     };
@@ -49,7 +48,10 @@ const AvatarEdition = ({ id }) => {
             </label>
           </div>
         </form>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="submit-avatar-edition"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="submitFormBtn">
             <input type="submit" value="Enregistrer" />
           </div>

@@ -128,7 +128,7 @@ const MemberDetail = (props) => {
               {gardenList
                 .filter((garden) => gardenArray.includes(garden.id))
                 .map((garden) => (
-                  <p>{garden.name}</p>
+                  <p key={garden.name}>{garden.name}</p>
                 ))}
             </div>
           </div>
