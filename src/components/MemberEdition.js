@@ -187,14 +187,6 @@ const MemberEdition = (props) => {
     props.history.push(`/adherents`);
   };
 
-  useEffect(() => {
-    if (id) {
-      getEntity('users', id).then((elem) => {
-        setUserToEdit(elem);
-      });
-    }
-  }, [id]);
-
   return (
     <div>
       <div className="container">
