@@ -1,5 +1,46 @@
 .user-list-container {
-  margin: 100px 20px 20px 15%;
+  margin: 100px 20px 20px 250px;
+
+  .filterContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 2%;
+  }
+
+  .filterButton {
+    font-size: 16px;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+
+    border-radius: 20px;
+    background-color: white;
+    margin: 10px;
+    padding: 6px 10px;
+    cursor: pointer;
+    -webkit-box-shadow: 1px 3px 5px 0px rgba(150, 150, 150, 1);
+    -moz-box-shadow: 1px 3px 5px 0px rgba(150, 150, 150, 1);
+    box-shadow: 1px 3px 5px 0px rgba(150, 150, 150, 1);
+
+    &:hover {
+      box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+        0 3px 15px 0 rgba(0, 0, 0, 0.19);
+      background-color: #b8dbb8;
+      color: white;
+    }
+  }
+  .selected {
+    background-color: #b8dbb8;
+    color: white;
+  }
+
   .container-to-color-rows {
     .adherent-row:nth-of-type(2n) {
       background-color: rgb(184, 219, 184);
@@ -19,29 +60,58 @@
         box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
           0 3px 15px 0 rgba(0, 0, 0, 0.19);
       }
+      .adherent-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        margin: 0 20px 20px 20px;
+        background-color: #e5e7e9;
+        box-shadow: 10px;
+        box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2),
+          0 6px 10px 0 rgba(0, 0, 0, 0.19);
 
-      .react-icons {
-        margin: 10px;
+        &:hover {
+          box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
+            0 3px 15px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .react-icons {
+          margin: 10px;
+        }
       }
-    }
 
-    .bold {
-      font-weight: bold;
-      font-size: 18px;
-    }
+      .bold {
+        font-weight: bold;
+        font-size: 18px;
+      }
 
-    .user-infos {
-      display: flex;
-      flex-direction: row;
+      a.email-user {
+        color: black;
+      }
 
-      justify-content: flex-start;
-    }
+      .user-infos {
+        display: flex;
+        flex-direction: row;
 
-    .garden-list {
-      margin-left: 40px;
-      li {
-        list-style-type: '- ';
+        justify-content: flex-start;
+      }
+
+      .garden-list {
+        margin-left: 40px;
+        li {
+          list-style-type: '- ';
+        }
       }
     }
   }
+}
+
+.react-confirm-alert-body {
+  width: max-content !important;
+  text-align: center !important;
+}
+
+.react-confirm-alert-button-group {
+  justify-content: center !important;
 }

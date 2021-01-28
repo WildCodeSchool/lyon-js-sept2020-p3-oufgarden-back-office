@@ -222,7 +222,7 @@ const ArticleCreation = (props) => {
             }}
           />
         )}
-        {!update && (
+        {(!update || (update && initialGardenValue.length < 1)) && (
           <Select
             isMulti
             name="garden"
@@ -235,34 +235,6 @@ const ArticleCreation = (props) => {
             }}
           />
         )}
-        {!update ||
-          (update && initialGardenValue.length < 1 && (
-            <Select
-              isMulti
-              name="garden"
-              placeholder="Choisissez votre jardin"
-              options={gardenOptions}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              onChange={(e) => {
-                handleSelectGardenChange(e);
-              }}
-            />
-          ))}
-        {!update ||
-          (update && initialGardenValue.length < 1 && (
-            <Select
-              isMulti
-              name="garden"
-              placeholder="Choisissez votre jardin"
-              options={gardenOptions}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              onChange={(e) => {
-                handleSelectGardenChange(e);
-              }}
-            />
-          ))}
         {initialTagsValue.length > 0 && update && (
           <Select
             isMulti
@@ -277,10 +249,9 @@ const ArticleCreation = (props) => {
             }}
           />
         )}
-        {!update && (
+        {(!update || (update && initialTagsValue.length < 1)) && (
           <Select
             isMulti
-            defaultValue={initialTagsValue}
             name="tags"
             placeholder="Votre tag ici"
             options={tagOptions}
@@ -291,20 +262,6 @@ const ArticleCreation = (props) => {
             }}
           />
         )}
-        {!update ||
-          (update && initialTagsValue.length < 1 && (
-            <Select
-              isMulti
-              name="tags"
-              placeholder="Votre tag ici"
-              options={tagOptions}
-              className="basic-multi-select"
-              classNamePrefix="select"
-              onChange={(e) => {
-                handleSelectTagChange(e);
-              }}
-            />
-          ))}
 
         {update && (
           <div className="buttonArticlePublishDisable">

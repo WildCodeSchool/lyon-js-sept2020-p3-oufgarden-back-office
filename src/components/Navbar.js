@@ -25,7 +25,7 @@ const Navbar = () => {
   };
   return (
     <div className="navbar">
-      <div className="logo" />
+      <div className="logoNavbar" />
       <ul>
         <li>
           <Link to="/adherents">Adhérents</Link>
