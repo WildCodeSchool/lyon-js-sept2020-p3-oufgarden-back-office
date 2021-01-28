@@ -135,8 +135,11 @@ const MemberEdition = (props) => {
 
     // here add data validation
     let newData = {};
-    if (!data.garden || data.garden.length === 0) {
+    if (!data.garden) {
       newData = { ...data };
+      setGardenArray([]);
+    } else if (data.garden.length === 0) {
+      newData = { ...data, gardenArray: [] };
       setGardenArray([]);
     } else {
       newData = {
@@ -156,6 +159,8 @@ const MemberEdition = (props) => {
       });
       return;
     }
+
+    console.log(newData);
 
     const formData = new FormData();
     formData.append('data', JSON.stringify(newData));
@@ -421,6 +426,20 @@ const MemberEdition = (props) => {
                 isMulti
                 name="garden"
                 defaultValue={gardenInitialOptions}
+                placeholder="Choisissez votre jardin"
+                options={gardenOptions}
+                className="basic-multi-select"
+                classNamePrefix="select"
+                onChange={(e) => {
+                  handleSelectGardenChange(e);
+                }}
+              />
+            )}
+
+            {gardenInitialOptions.length === 0 && (
+              <Select
+                isMulti
+                name="garden"
                 placeholder="Choisissez votre jardin"
                 options={gardenOptions}
                 className="basic-multi-select"
