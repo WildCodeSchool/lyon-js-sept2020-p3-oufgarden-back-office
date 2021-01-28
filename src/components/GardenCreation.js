@@ -12,7 +12,6 @@ import './style/GardenCreation.scss';
 
 // Messages
 const required = 'Ce champ est obligatoire';
-/* const maxLength = 'Vous avez dépassé le nombre maximal de caractères.'; */
 
 // Error Component
 const errorMessage = (error) => {
@@ -24,15 +23,8 @@ const errorMessage = (error) => {
 };
 
 const GardenCreation = (props) => {
-  const {
-    match: {
-      params: { id },
-    },
-  } = props;
-
   const { register, handleSubmit, errors, control } = useForm();
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
-  const [Garden, setGarden] = useState([]);
 
   const [inputList, setInputList] = useState([
     {
@@ -43,18 +35,10 @@ const GardenCreation = (props) => {
       description: '',
     },
   ]);
-
   useEffect(() => {
     getCollection('plantFamily').then((data) => setAllPlantFamilies(data));
   }, []);
 
-  useEffect(() => {
-    if (id) {
-      getEntity('garden', id).then((data) => setGarden(data));
-    }
-  }, [id]);
-
-  // test pour react select
   const options = allPlantFamilies.map((elem) => {
     return {
       value: elem.id,
@@ -102,6 +86,7 @@ const GardenCreation = (props) => {
       description: data.description,
       exposition: data.exposition,
       zone_quantity: data.zone_quantity,
+      max_users: data.max_users,
       zone_details:
         inputList.length === 1 &&
         inputList[0].zone_name === '' &&
@@ -109,7 +94,13 @@ const GardenCreation = (props) => {
           ? []
           : inputList,
     };
-    makeEntityAdder('garden')(newData)
+    const formData = new FormData();
+    formData.append('gardenPicture', data.gardenPicture[0]);
+    formData.append('zonePicture', data.zonePicture[0]);
+    // We use JSON.stringify here to send neste object in formdata
+    formData.append('newData', JSON.stringify(newData));
+
+    makeEntityAdder('garden')(formData)
       // .then((elem) => {
       //   console.log(elem);
       // })
@@ -138,16 +129,16 @@ const GardenCreation = (props) => {
         deepCopyList[i].plantFamilyArray = [...arrFamilyId];
         setInputList(deepCopyList);
       }
-      if (!elem) {
-        const deepCopyList = _.cloneDeep(inputList);
-        deepCopyList[i].plantFamilyArray = [];
-        setInputList(deepCopyList);
-      }
+    }
+    if (!elem) {
+      const deepCopyList = _.cloneDeep(inputList);
+      deepCopyList[i].plantFamilyArray = [];
+      setInputList(deepCopyList);
     }
   };
 
   return (
-    <div>
+    <div className="garden-container-all-element">
       <div className="button-garden-container">
         <ButtonListCreation
           attributes={{
@@ -160,16 +151,27 @@ const GardenCreation = (props) => {
       </div>
 
       <div className="containerGarden">
-        <div>
-          <form
-            method="POST"
-            encType="multipart/form-data"
-            action="http://localhost:5000"
-            className="formContainer"
-            onSubmit={handleSubmit(onSubmit)}
-          >
-            <h3>Création d'un Jardin :</h3>
+        <h3>Création d'un jardin</h3>
 
+        <div>
+          <div className="imgUploadContainer">
+            {/*   Just to inform the team, the form here is necessary to make file upload working with react hook form  */}
+            <form>
+              <div className="uploadRows">
+                <label htmlFor="gardenPicture">
+                  Image du jardin:
+                  <input ref={register} type="file" name="gardenPicture" />
+                </label>
+              </div>
+              <div className="uploadRows">
+                <label htmlFor="zonePicture">
+                  Image des zones:
+                  <input ref={register} type="file" name="zonePicture" />
+                </label>
+              </div>
+            </form>
+          </div>
+          <form className="formContainer" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label htmlFor="GardenName">
                 Nom du jardin:{' '}
@@ -177,20 +179,12 @@ const GardenCreation = (props) => {
                   type="text"
                   name="name"
                   ref={register({ required: true })}
-                  defaultValue={Garden.name}
                 />
               </label>
 
               {errors.name &&
                 errors.name.type === 'required' &&
                 errorMessage(required)}
-            </div>
-            {/* partie upload */}
-            <div>
-              <label htmlFor="pic_profile">
-                Photo du jardin :{' '}
-                <input className="inputPics" type="file" name="pic_profile" />
-              </label>
             </div>
 
             <div>
@@ -269,13 +263,6 @@ const GardenCreation = (props) => {
             </div>
 
             <div>
-              <label htmlFor="pic_plan">
-                Plan :{' '}
-                <input className="inputPics" type="file" name="pic_plan" />
-              </label>
-            </div>
-
-            <div>
               <label htmlFor="zone_quantity">
                 Nombre de zones :{' '}
                 <input
@@ -298,9 +285,34 @@ const GardenCreation = (props) => {
                 <p role="alert">{errors.zone_quantity.message}</p>
               )}
             </div>
+
+            <div>
+              <label htmlFor="max_users">
+                Nombre max d'usagers présents sur place :{' '}
+                <input
+                  type="text"
+                  name="max_users"
+                  ref={register({
+                    required: true,
+                    pattern: {
+                      value: /^[0-9]$|^[1-9][0-9]$|^(100)$/,
+                      message: "Merci d'entrer un nombre",
+                    },
+                  })}
+                />
+              </label>
+
+              {errors.max_users &&
+                errors.max_users.type === 'required' &&
+                errorMessage(required)}
+              {errors.max_users && (
+                <p role="alert">{errors.max_users.message}</p>
+              )}
+            </div>
+
             <div className="inputZoneCreation">
               <label htmlFor="zoneCreer">
-                Zone à creer :
+                Création des zones :
                 {inputList.map((x, i) => {
                   return (
                     // not the best solution for the key but could not find another one - do not replace with Math.random()
@@ -333,8 +345,18 @@ const GardenCreation = (props) => {
                         value={x.exposition}
                         onChange={(e) => handleInputChange(e, i)}
                       />
-
-                      <Controller
+                      <Select
+                        isMulti
+                        name="plantfamily"
+                        placeholder="Choisissez la famille de plantes"
+                        options={options}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={(e) => {
+                          handleChangeSelect(e, i);
+                        }}
+                      />
+                      {/* <Controller
                         name="plantfamily"
                         control={control}
                         defaultValue=""
@@ -347,10 +369,8 @@ const GardenCreation = (props) => {
                             }}
                             value={value}
                             isMulti
-                          />
-                        )}
-                      />
-
+                          /> */}
+                      {/* )} /> */}
                       <div className="btn-box">
                         {inputList.length - 1 === i && (
                           <button type="button" onClick={handleAddClick}>

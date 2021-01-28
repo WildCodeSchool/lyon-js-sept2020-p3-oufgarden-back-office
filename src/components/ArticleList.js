@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { MdDelete, MdEdit } from 'react-icons/md';
+import { FaReadme } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import { useToasts } from 'react-toast-notifications';
 import { confirmAlert } from 'react-confirm-alert';
@@ -89,37 +90,37 @@ const ArticleList = (props) => {
     }
   };
   const handleEdit = (id) => {
-    props.history.push(`/articles/${id}`);
+    props.history.push(`/articles/${id}/edition`);
   };
   return (
-    <div>
-      <div className="articleListContainer">
-        <ButtonListCreation
-          attributes={{
-            list: '/articles',
-            creation: '/articles/creation',
-            name: 'Article',
-            names: 'Articles',
-          }}
-        />
+    <div className="articleListContainer">
+      <ButtonListCreation
+        attributes={{
+          list: '/articles',
+          creation: '/articles/creation',
+          name: 'Article',
+          names: 'Articles',
+        }}
+      />
 
-        <div className="filterContainer">
-          {allTags &&
-            allTags.map((tag) => {
-              return (
-                <div key={tag.id}>
-                  <button
-                    type="button"
-                    className="filterButton"
-                    id={tag.id}
-                    onClick={(e) => handleTagList(e.target)}
-                  >
-                    {tag.name}
-                  </button>
-                </div>
-              );
-            })}
-        </div>
+      <div className="filterContainer">
+        {allTags &&
+          allTags.map((tag) => {
+            return (
+              <div key={tag.id}>
+                <button
+                  type="button"
+                  className="filterButton"
+                  id={tag.id}
+                  onClick={(e) => handleTagList(e.target)}
+                >
+                  {tag.name}
+                </button>
+              </div>
+            );
+          })}
+      </div>
+      <div className="container-to-color-rows-articles">
         {articlesFiltered.length > 0
           ? articles
               .filter((article) => {
@@ -140,6 +141,13 @@ const ArticleList = (props) => {
                       <IconContext.Provider
                         value={{ className: 'react-icons' }}
                       >
+                        <FaReadme
+                          size={25}
+                          style={{ cursor: 'pointer' }}
+                          onClick={() =>
+                            props.history.push(`/articles/${e.id}`)
+                          }
+                        />
                         <MdEdit
                           size={25}
                           style={{ cursor: 'pointer' }}
@@ -147,6 +155,7 @@ const ArticleList = (props) => {
                             handleEdit(e.id);
                           }}
                         />
+
                         <MdDelete
                           size={25}
                           onClick={() => {
@@ -173,6 +182,11 @@ const ArticleList = (props) => {
                         onClick={() => {
                           handleEdit(e.id);
                         }}
+                      />
+                      <FaReadme
+                        size={25}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => props.history.push(`/articles/${e.id}`)}
                       />
                       <MdDelete
                         size={25}

@@ -5,11 +5,6 @@
 import React, { useEffect, useState } from 'react';
 import { MdEdit, MdKeyboardBackspace } from 'react-icons/md';
 import { IconContext } from 'react-icons';
-// import { IoLeaf } from 'react-icons/io';
-
-// import { Link } from 'react-router-dom';
-
-// import * as dayjs from 'dayjs';
 
 import { getEntity, getCollection } from '../services/API';
 
@@ -40,7 +35,9 @@ const MemberDetail = (props) => {
         user_creation: dayjs(data.user_creation).format('YYYY-MM-DD'),
       }));
       setGardenArray(() =>
-        data.garden_id_concat.split(',').map((gardenId) => +gardenId)
+        data.garden_id_concat
+          ? data.garden_id_concat.split(',').map((gardenId) => +gardenId)
+          : []
       );
     });
   }, []);
@@ -49,7 +46,6 @@ const MemberDetail = (props) => {
     getCollection('garden').then((data) => setGardenList(data));
   }, []);
 
-  console.log(userDetails);
   const handleEdit = (userId) => {
     props.history.push(`/adherents/edit/${userId}`);
   };

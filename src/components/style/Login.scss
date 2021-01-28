@@ -2,102 +2,149 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ffffff;
-}
-
-.boxLogin {
-  margin-top: 150px;
-  border-radius: 20px;
-  padding: 30px;
-  min-width: 500px;
-  display: flex;
-  justify-content: center;
   flex-direction: column;
-  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.1), 0px 0px 20px rgb(175, 182, 182);
-  font-size: 90px;
-  align-items: center;
-}
+  background: #dfdddb;
+  width: 100vw;
+  height: 100vh;
 
-.boxLogin h3 {
-  margin: 30px;
-  font-size: 30px;
-}
+  .admin {
+    border: solid;
+    border-radius: 50px;
+    padding: 15px;
+    background-color: white;
+    font-size: 35px;
+    text-align: center;
+    margin: 20px;
+  }
 
-.field {
-  text-align: center;
-  width: 100%;
-  margin-bottom: 20px;
-  margin-bottom: 5px;
-  font-weight: bold;
-  width: 100%;
-}
+  .logo {
+    background-image: url('../../images/black_logo.png');
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100px;
+    width: 40%;
+    min-width: 500px;
+    padding: 10%;
+  }
 
-.form-control {
-  margin: 10px;
-  font-size: 20px;
-}
+  .boxLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
-.input-wrapper {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  width: 350px;
-  justify-content: center;
-  align-items: center;
-}
+  .field {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
-.input-wrapper label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  width: 100%;
-}
+  input {
+    max-width: 400px;
+  }
 
-.input-wrapper input {
-  background-color: transparent;
-  border: unset;
-  border-radius: 10px;
-  padding: 10px;
-  outline: none;
-  box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.1),
-    inset -3px -3px 5px rgb(255, 255, 255);
-}
+  .form-control {
+    margin: 5px;
+    background-color: white;
+    border: unset;
+    border-radius: 50px;
+    padding: 8px;
+    width: 70vw;
+    outline: none;
+  }
+  .buttonLogin {
+    margin: 5px;
+    background-color: #28841f;
+    border: unset;
+    border-radius: 50px;
+    padding: 8px;
+    width: 40vw;
+    outline: none;
+    color: white;
+  }
+  .infoCreation {
+    margin: 10px;
+    width: 70vw;
+    text-align: center;
+  }
 
-button {
-  margin-top: 20px;
-  width: 130px;
-  background-color: transparent;
-  outline: none;
-  color: #292929;
-  font-weight: bold;
-  border-radius: 10px;
-  padding: 10px;
-  transition: ease all 250ms;
-  box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.1),
-    -7px -7px 20px rgba(255, 255, 255, 0.062);
-  border: unset;
-  font-size: 20px;
-}
+  .buttonLogin:hover {
+    cursor: pointer;
+    color: #292929;
+  }
 
-button:hover {
-  cursor: pointer;
-  color: #292929;
-  box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.1),
-    inset -3px -3px 5px rgb(172, 172, 172);
-}
-.invalid-feedback {
-  display: block !important;
-  color: red;
-  font-size: 20px;
-}
-.stay-connected-container {
-  display: flex;
-  justify-content: center;
+  .form-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
-  .stay-connected {
-    font-size: 15px;
+  .button {
+    margin: 5px;
+    background-color: #28841f;
+    border: unset;
+    border-radius: 50px;
+    padding: 8px;
+    width: 40vw;
+    max-width: 300px;
+    min-width: min-content;
+    white-space: nowrap;
+    outline: none;
+    color: white;
+  }
+  .infoCreation {
+    margin: 10px;
+    width: 70vw;
+    text-align: center;
+  }
 
-    #stayConnected {
-      margin: 20px;
+  button:hover {
+    cursor: pointer;
+    color: #292929;
+  }
+
+  .invalid-feedback {
+    display: block !important;
+    color: red;
+    font-size: 12px;
+  }
+
+  .stay-connected-container {
+    display: flex;
+    justify-content: center;
+
+    .stay-connected {
+      font-size: 15px;
+
+      #stayConnected {
+        margin: 20px;
+      }
     }
+  }
+}
+
+@media screen and (min-width: 480px) and (max-width: 800px) {
+  .containerLogin .logo {
+    margin: 20px;
+    width: 80%;
+    min-width: 200px;
+  }
+
+  .containerLogin .admin {
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .containerLogin .logo {
+    width: 80%;
+    min-width: 200px;
+  }
+
+  .containerLogin .admin {
+    font-size: 20px;
   }
 }

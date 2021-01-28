@@ -1,6 +1,13 @@
 .garden-list-container {
-  margin: 100px 20px 20px 15%;
+  margin: 100px 20px 20px 250px;
 }
+
+.container-to-color-rows {
+  .garden-row:nth-of-type(2n) {
+    background-color: rgba(184, 219, 184, 0.7);
+  }
+}
+
 .garden-row {
   display: flex;
   justify-content: space-between;
@@ -17,4 +24,21 @@
   .react-icons {
     margin: 10px;
   }
+
+  .garden-infos {
+    .garden-name {
+      font-weight: bold;
+      font-size: 20px;
+    }
+    line-height: 1.5em;
+  }
+}
+
+.react-confirm-alert-body {
+  width: max-content !important;
+  text-align: center !important;
+}
+
+.react-confirm-alert-button-group {
+  justify-content: center !important;
 }
