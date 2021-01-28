@@ -19,6 +19,7 @@ import MemberDetail from './MemberDetail';
 import GardenDetail from './GardenDetail';
 import ArticleDetail from './ArticleDetail';
 import Calendar from './Calendar';
+import PublicCalendar from './PublicCalendar';
 
 const App = () => {
   return (
@@ -71,7 +72,7 @@ const App = () => {
                   component={Calendar}
                 />
                 <Route path="/garden/:id" component={GardenDetail} />
-                <Route path="/calendar" />
+                <Route path="/calendar" component={PublicCalendar} />
               </Switch>
             </div>
           </Router>
