@@ -14,7 +14,7 @@ import './style/ListArticles.scss';
 
 const ArticleList = (props) => {
   const [articles, setArticles] = useState([]);
-  const [articlesFiltered, setArticlesFiltered] = useState();
+  const [articlesFiltered, setArticlesFiltered] = useState([]);
   const [tagList, setTagList] = useState([]);
   const [allTags, setAllTags] = useState([]);
   const { addToast } = useToasts();
@@ -67,25 +67,17 @@ const ArticleList = (props) => {
 
   useEffect(() => {
     getCollection('tagToArticle').then((result) => {
-      if (tagList.length > 0) {
-        const articleToFilter = result
-          .filter((article) => {
-            if (tagList.includes(article.tag_id)) {
-              return true;
-            }
-            return false;
-          })
-          .map((article) => {
-            return article.article_id;
-          });
-        setArticlesFiltered(articleToFilter);
-      } else {
-        setArticlesFiltered(
-          result.map((article) => {
-            return article.article_id;
-          })
-        );
-      }
+      const articleToFilter = result
+        .filter((article) => {
+          if (tagList.includes(article.tag_id)) {
+            return true;
+          }
+          return false;
+        })
+        .map((article) => {
+          return article.article_id;
+        });
+      setArticlesFiltered(articleToFilter);
     });
   }, [tagList]);
 
@@ -98,7 +90,6 @@ const ArticleList = (props) => {
     }
     target.classList.toggle('selected');
   };
-
   const handleEdit = (id) => {
     props.history.push(`/articles/${id}/edition`);
   };
@@ -131,7 +122,7 @@ const ArticleList = (props) => {
           })}
       </div>
       <div className="container-to-color-rows-articles">
-        {articlesFiltered
+        {articlesFiltered.length > 0
           ? articles
               .filter((article) => {
                 if (articlesFiltered.includes(article.id)) {
