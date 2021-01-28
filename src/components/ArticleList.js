@@ -88,6 +88,7 @@ const ArticleList = (props) => {
     } else {
       setTagList((prevState) => [...prevState, +target.id]);
     }
+    target.classList.toggle('selected');
   };
   const handleEdit = (id) => {
     props.history.push(`/articles/${id}/edition`);

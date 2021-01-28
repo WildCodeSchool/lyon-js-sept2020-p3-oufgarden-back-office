@@ -157,7 +157,7 @@ const Adherents = (props) => {
                             e.gardenArray &&
                             e.gardenArray.includes(garden.id)
                           ) {
-                            return <li>{garden.name}</li>;
+                            return <li key={garden.name}>{garden.name}</li>;
                           }
                           return null;
                         })}
