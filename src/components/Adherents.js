@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiMail } from 'react-icons/fi';
 import { MdDelete, MdAccountCircle } from 'react-icons/md';
 import { IconContext } from 'react-icons';
@@ -157,14 +157,14 @@ const Adherents = (props) => {
                             e.gardenArray &&
                             e.gardenArray.includes(garden.id)
                           ) {
-                            return <li>{garden.name}</li>;
+                            return <li key={garden.name}>{garden.name}</li>;
                           }
                           return null;
                         })}
                     </ul>
                   </div>
                   <div className="user-list-icons">
-                    {/* IconContext provider pour personnaliser les props de react-icons */}
+                    {/* IconContext provider to personalise props of react-icons */}
                     <IconContext.Provider value={{ className: 'react-icons' }}>
                       <a className="email-user" href={`mailto:${e.email}`}>
                         <FiMail size={25} />

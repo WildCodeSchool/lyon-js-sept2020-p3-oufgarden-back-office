@@ -16,36 +16,36 @@
     justify-content: space-around;
     align-items: center;
     margin-bottom: 2%;
-    // .filterButton {
-    //   font-size: 1rem;
-    //   border: 2px solid #0f294f;
-    //   margin: 10px;
-    //   width: 150px;
-    //   padding: 10px;
-    //   border-radius: 10px;
-    //   &:hover,
-    //   &:focus {
-    //     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
-    //       0 3px 15px 0 rgba(0, 0, 0, 0.19);
-    //     background-color: #0f294f;
-    //     color: white;
-    //   }
 
     .filterButton {
-      font-size: 1rem;
-      border: 2px solid #0f294f;
+      font-size: 16px;
+      background: none;
+      color: inherit;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      outline: inherit;
+
+      border-radius: 20px;
+      background-color: white;
       margin: 10px;
-      &:hover,
-      &:focus {
+      padding: 6px 10px;
+      cursor: pointer;
+      -webkit-box-shadow: 1px 3px 5px 0px rgba(150, 150, 150, 1);
+      -moz-box-shadow: 1px 3px 5px 0px rgba(150, 150, 150, 1);
+      box-shadow: 1px 3px 5px 0px rgba(150, 150, 150, 1);
+
+      &:hover {
         box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2),
           0 3px 15px 0 rgba(0, 0, 0, 0.19);
-        background-color: #0f294f;
+        background-color: #b8dbb8;
         color: white;
       }
-      &:active {
-        background-color: #0f294f;
-        color: white;
-      }
+    }
+    .selected {
+      background-color: #b8dbb8;
+      color: white;
     }
   }
 

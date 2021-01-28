@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useToasts } from 'react-toast-notifications';
+import Select from 'react-select';
 import { MdKeyboardBackspace } from 'react-icons/md';
 import { IconContext } from 'react-icons';
-import Select from 'react-select';
-
 import { makeEntityAdder, getCollection } from '../services/API';
+
 import './style/MemberCreation.scss';
 
 const generator = require('generate-password');

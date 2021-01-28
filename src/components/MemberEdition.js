@@ -254,7 +254,7 @@ const MemberEdition = (props) => {
                   onChange={(e) =>
                     setData((prevState) => ({
                       ...prevState,
-                      lastname: e.target.lastname,
+                      lastname: e.target.value,
                     }))
                   }
                 />
