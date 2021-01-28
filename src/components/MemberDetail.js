@@ -1,18 +1,23 @@
 /* eslint-disable no-nested-ternary */
-/* eslint-disable import/first */
-/* eslint-disable import/order */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 
 import React, { useEffect, useState } from 'react';
-import { MdEdit, MdKeyboardBackspace } from 'react-icons/md';
+import { MdKeyboardBackspace, MdEmail, MdAccountCircle } from 'react-icons/md';
+import {
+  FaBirthdayCake,
+  FaPhone,
+  FaRegCalendarAlt,
+  FaLeaf,
+} from 'react-icons/fa';
 import { IconContext } from 'react-icons';
-
-import { getEntity, getCollection } from '../services/API';
-
 import dayjs from 'dayjs';
+import { getEntity, getCollection } from '../services/API';
 
 import './style/MemberDetail.scss';
 
 const today = dayjs();
+const URL = process.env.REACT_APP_API_BASE_URL;
 
 const MemberDetail = (props) => {
   const {
@@ -54,87 +59,112 @@ const MemberDetail = (props) => {
   };
 
   return (
-    <>
-      {userDetails && (
-        <div className="member-detail-container">
-          <div className="icons">
+    <div className="box-container-user">
+      <div className="centering-box">
+        {userDetails && (
+          <div className="member-detail-container">
             <IconContext.Provider value={{ className: 'react-icons' }}>
-              <MdKeyboardBackspace
-                size={25}
-                style={{ cursor: 'pointer' }}
-                onClick={() => {
-                  handleBack();
-                }}
-              />
-              <MdEdit
-                size={25}
-                style={{ cursor: 'pointer' }}
-                onClick={() => {
-                  handleEdit(id);
-                }}
-              />
+              <div className="icons">
+                <MdKeyboardBackspace
+                  size={25}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    handleBack();
+                  }}
+                />
+              </div>
+              <div className="top-section">
+                <div className="user-avatar-container">
+                  <img
+                    className="user-avatar"
+                    alt="utilisateur"
+                    src={`${URL}/${userDetails.picture_url}`}
+                  />
+                </div>
+                <h2 className="name">
+                  {userDetails.firstname} {userDetails.lastname}
+                </h2>
+                <div className="is-admin">
+                  {userDetails.is_admin === 1 ? 'Admin' : ''}
+                </div>
+                <div className="edit-button" onClick={() => handleEdit(id)}>
+                  Mettre à jour
+                </div>
+              </div>
+              <div className="user-infos">
+                <div className="contact">
+                  <h3>
+                    <MdAccountCircle size={25} style={{ marginRight: '5px' }} />
+                    Informations personnelles
+                  </h3>
+                  <p className="vertical-align">
+                    <MdEmail size={18} style={{ marginRight: '5px' }} />
+                    {userDetails.email}
+                  </p>
+                  <p className="vertical-align">
+                    <FaPhone size={18} style={{ marginRight: '5px' }} />
+                    {userDetails.phone}
+                  </p>
+                  <p className="vertical-align">
+                    <FaBirthdayCake size={18} style={{ marginRight: '5px' }} />
+                    {dayjs(userDetails.birthdate).format('DD/MM/YYYY')}
+                  </p>
+                </div>
+                <div className="membership-infos">
+                  <h3>
+                    <FaRegCalendarAlt
+                      size={25}
+                      style={{ marginRight: '5px' }}
+                    />
+                    Adhésion
+                  </h3>
+                  <p>
+                    <span className="emph">Date d'adhésion : </span>
+                    {dayjs(userDetails.membership_start).format('DD/MM/YYYY')}
+                  </p>
+                  <p>
+                    <span className="emph">
+                      Temps restant avant le renouvellement d'adhésion :{' '}
+                    </span>
+                    <span
+                      className={
+                        dayjs(userDetails.membership_start)
+                          .add(1, 'year')
+                          .diff(today, 'days') < 30
+                          ? 'alert'
+                          : 'ok'
+                      }
+                    >
+                      {dayjs(userDetails.membership_start)
+                        .add(1, 'year')
+                        .diff(today, 'days')}{' '}
+                      jours
+                    </span>
+                  </p>
+                  <p>
+                    <span className="emph">
+                      Profil d'utilisateur créé le :{' '}
+                    </span>
+                    {dayjs(userDetails.user_creation).format('DD/MM/YYYY')}
+                  </p>
+                </div>
+                <div className="garden-infos">
+                  <h3>
+                    <FaLeaf size={25} style={{ marginRight: '5px' }} />
+                    Jardins associés
+                  </h3>
+                  {gardenList
+                    .filter((garden) => gardenArray.includes(garden.id))
+                    .map((garden) => (
+                      <p key={garden.name}>{garden.name}</p>
+                    ))}
+                </div>
+              </div>
             </IconContext.Provider>
           </div>
-          <h2 className="name">
-            {`${
-              userDetails.gender_marker === 'madame'
-                ? 'Mme'
-                : userDetails.gender_marker === 'monsieur'
-                ? 'M.'
-                : ''
-            } ${userDetails.firstname}  ${userDetails.lastname}`}
-          </h2>
-          <div className="is-admin">
-            {userDetails.is_admin === 1 ? 'Admin' : ''}
-          </div>
-          <div className="user-infos">
-            <div className="contact">
-              <h3>Informations de contact</h3>
-              <p>{userDetails.email}</p>
-              <p>{userDetails.phone}</p>
-            </div>
-            <div className="membership-infos">
-              <h3>Adhésion</h3>
-              <p>
-                <span className="emph">Date d'adhésion : </span>
-                {dayjs(userDetails.membership_start).format('DD/MM/YYYY')}
-              </p>
-              <p>
-                <span className="emph">
-                  Temps restant avant le renouvellement d'adhésion :{' '}
-                </span>
-                <span
-                  className={
-                    dayjs(userDetails.membership_start)
-                      .add(1, 'year')
-                      .diff(today, 'days') < 30
-                      ? 'alert'
-                      : 'ok'
-                  }
-                >
-                  {dayjs(userDetails.membership_start)
-                    .add(1, 'year')
-                    .diff(today, 'days')}{' '}
-                  jours
-                </span>
-              </p>
-              <p>
-                <span className="emph">Profil d'utilisateur créé le : </span>
-                {dayjs(userDetails.user_creation).format('DD/MM/YYYY')}
-              </p>
-            </div>
-            <div className="garden-infos">
-              <h3>Jardins associés</h3>
-              {gardenList
-                .filter((garden) => gardenArray.includes(garden.id))
-                .map((garden) => (
-                  <p key={garden.name}>{garden.name}</p>
-                ))}
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+        )}
+      </div>
+    </div>
   );
 };
 export default MemberDetail;
