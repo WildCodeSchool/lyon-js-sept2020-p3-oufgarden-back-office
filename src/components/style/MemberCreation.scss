@@ -3,14 +3,28 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 50px 20px 20px 5%;
+  margin: 50px 20px 20px 250px;
+
+  .title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    svg {
+      position: absolute;
+      left: 20px;
+    }
+  }
+
   h3 {
     font-size: 2rem;
     color: black;
     text-align: center;
   }
   .uploadRows {
-    margin: 10px 0 10px 0;
+    margin: 10px 0 20px 0;
   }
 
   form {
@@ -21,13 +35,7 @@
     background-color: #e6e6e6;
     border: 2px solid rgba(0, 0, 0, 0.226);
     border-radius: 5px;
-    padding: 10px;
-
-    .back {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
+    padding: 20px;
 
     h3 {
       font-size: 2rem;
@@ -143,6 +151,27 @@
 
     .slider.round:before {
       border-radius: 50%;
+    }
+  }
+}
+
+.avatar-edition-container {
+  margin-bottom: 40px;
+
+  .uploadRows {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .submit-avatar-edition {
+    border-top: 0;
+    margin-top: -10px;
+
+    .submitFormBtn {
+      margin: 0;
+      input[type='submit'] {
+        margin-top: 0;
+      }
     }
   }
 }

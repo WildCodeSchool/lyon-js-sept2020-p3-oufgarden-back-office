@@ -1,0 +1,129 @@
+.articleDetailsPage {
+  margin: 100px 100px 100px 260px;
+
+  .articlesDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    border: 1px solid darkgray;
+    position: relative;
+
+    .imgArticleDetails {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .whitebar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      background-color: rgba(255, 255, 255, 0.356);
+      width: 100%;
+      height: 30px;
+      padding: 5px;
+
+      .link-back-feed {
+        width: 100px;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        flex-direction: row;
+        text-decoration: none;
+      }
+
+      .back-arrow {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        background-image: url('../../images/Fichier\ 2.png');
+        background-size: 20px;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      .retour {
+        font-family: 'Montserrat', sans-serif;
+        color: #292929;
+        font-size: 14px;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+
+    .article-tags,
+    .article-garden {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-flow: row wrap;
+      margin: 10px;
+    }
+
+    .tag-of-article,
+    .garden-of-article {
+      font-family: 'Montserrat', sans-serif, 300;
+      font-size: 18px;
+      background-color: white;
+      border-radius: 20px;
+      border: 1px solid black;
+      margin: 5px;
+      padding: 5px;
+    }
+
+    .fullText {
+      width: 100%;
+      text-align: center;
+    }
+    .title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      text-decoration: none;
+      color: #292929;
+      font-size: 20px;
+    }
+
+    .content {
+      font-weight: 300;
+      text-decoration: none;
+      color: #292929;
+      font-size: 18px;
+      text-align: justify;
+      margin: 20px;
+    }
+
+    .garden-image {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      background-image: url('../../images/jardin-active.png');
+      background-size: 20px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+  }
+  .comments {
+    margin-top: 20px;
+    border: 1px solid darkgray;
+    padding: 10px;
+  }
+
+  .comments-title {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .speech-bubble {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-image: url('../../images/Fichier\ 3.png');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
