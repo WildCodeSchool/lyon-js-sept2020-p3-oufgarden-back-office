@@ -189,7 +189,7 @@ const MemberEdition = (props) => {
   };
 
   const handleBack = () => {
-    props.history.push(`/adherents`);
+    props.history.push(`/adherents/${id}`);
   };
 
   useEffect(() => {
