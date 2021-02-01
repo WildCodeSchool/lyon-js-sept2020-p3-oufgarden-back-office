@@ -6,6 +6,8 @@ import { MdDelete, MdAccountCircle } from 'react-icons/md';
 import { IconContext } from 'react-icons';
 import { useToasts } from 'react-toast-notifications';
 import { confirmAlert } from 'react-confirm-alert';
+import Select from 'react-select';
+import { useForm, Controller } from 'react-hook-form';
 import ButtonListCreation from './ButtonListCreation';
 
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -20,6 +22,14 @@ const Adherents = (props) => {
   const [adherentList, setAdherentList] = useState([]);
   const [gardenList, setGardenList] = useState([]);
   const [filterArray, setFilterArray] = useState([]);
+  const { control } = useForm();
+
+  const adherentSelect = adherentList.map((elem) => {
+    return {
+      value: elem.id,
+      label: `${elem.firstname} ${elem.lastname}`,
+    };
+  });
 
   useEffect(() => {
     getCollection('users').then((data) => {
@@ -110,6 +120,14 @@ const Adherents = (props) => {
             name: 'Adhérent',
             names: 'Adhérents',
           }}
+        />
+        <Controller
+          as={Select}
+          options={adherentSelect}
+          name="adherent"
+          isClearable
+          isMulti
+          control={control}
         />
       </div>
       <div className="filterContainer">

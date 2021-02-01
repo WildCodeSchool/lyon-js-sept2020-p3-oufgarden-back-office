@@ -6,8 +6,9 @@ import { IconContext } from 'react-icons';
 
 import { useToasts } from 'react-toast-notifications';
 import { confirmAlert } from 'react-confirm-alert';
+import Select from 'react-select';
+import { useForm, Controller } from 'react-hook-form';
 import ButtonListCreation from './ButtonListCreation';
-
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/Garden.scss';
@@ -15,6 +16,14 @@ import './style/Garden.scss';
 const Garden = (props) => {
   const { addToast } = useToasts();
   const [gardenList, setGardenList] = useState([]);
+  const { control } = useForm();
+
+  const gardenSelect = gardenList.map((elem) => {
+    return {
+      value: elem.id,
+      label: `${elem.name}`,
+    };
+  });
 
   useEffect(() => {
     getCollection('garden').then((elem) => {
@@ -69,6 +78,14 @@ const Garden = (props) => {
           name: 'Jardin',
           names: 'Jardins',
         }}
+      />
+      <Controller
+        as={Select}
+        options={gardenSelect}
+        name="garden"
+        isClearable
+        isMulti
+        control={control}
       />
       <div className="container-to-color-rows">
         {gardenList
