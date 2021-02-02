@@ -6,7 +6,6 @@ import { FaReadme } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import { useToasts } from 'react-toast-notifications';
 import { confirmAlert } from 'react-confirm-alert';
-import Select from 'react-select';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import ButtonListCreation from './ButtonListCreation';
 
@@ -19,21 +18,6 @@ const ArticleList = (props) => {
   const [tagList, setTagList] = useState([]);
   const [allTags, setAllTags] = useState([]);
   const { addToast } = useToasts();
-
-  const handleSelectArticleChange = (elem) => {
-    if (!elem) {
-      setArticlesFiltered([]);
-    } else {
-      setArticlesFiltered(elem.map((e) => e.value));
-    }
-  };
-
-  const articleSelect = articles.map((elem) => {
-    return {
-      value: elem.id,
-      label: `${elem.title}`,
-    };
-  });
 
   useEffect(() => {
     getCollection('articles').then((elem) => {
@@ -119,16 +103,7 @@ const ArticleList = (props) => {
           names: 'Articles',
         }}
       />
-      <Select
-        as={Select}
-        options={articleSelect}
-        name="articles"
-        isClearable
-        isMulti
-        onChange={(e) => {
-          handleSelectArticleChange(e);
-        }}
-      />
+
       <div className="filterContainer">
         {allTags &&
           allTags.map((tag) => {
