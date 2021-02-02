@@ -247,7 +247,8 @@ const MemberCreation = (props) => {
 
           <div>
             <label htmlFor="password">
-              Modifier le mot de passe (si nécessaire):{' '}
+              Modifier le mot de passe (si nécessaire et n’accepte pas de
+              caractères spéciaux):{' '}
             </label>
             <input
               type="text"
