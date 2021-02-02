@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import React, { useEffect, useState } from 'react';
 import { FiMail } from 'react-icons/fi';
 import { MdDelete, MdAccountCircle } from 'react-icons/md';

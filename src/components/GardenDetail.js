@@ -25,6 +25,7 @@ const GardenDetail = (props) => {
   const [allPlantFamilies, setAllPlantFamilies] = useState([]);
   const [zones, setZones] = useState();
 
+  // MemberEdition was merged with MemberCreation | if there is an id in the props, then it's for edition
   useEffect(() => {
     getEntity('garden', id).then((data) => {
       setGardenDetails(() => ({
