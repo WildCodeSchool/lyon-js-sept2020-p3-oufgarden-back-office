@@ -1,27 +1,5 @@
 .user-list-container {
   margin: 100px 20px 20px 250px;
-  .css-2b097c-container {
-    width: 50vw;
-    border: unset;
-    outline: none;
-    margin: 30px;
-
-    .css-yk16xz-control {
-      height: 50px;
-      border-radius: 50px;
-      .css-12jo7m5 {
-        font-size: 20px;
-      }
-    }
-    &:focus {
-      border: unset;
-      outline: none;
-    }
-    &:active {
-      border: unset;
-      outline: none;
-    }
-  }
 
   .filterContainer {
     display: flex;

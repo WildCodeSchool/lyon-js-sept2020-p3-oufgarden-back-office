@@ -3,12 +3,12 @@
   margin-right: 100px;
 
   .css-2b097c-container {
-    width: 50vw;
     border: unset;
     outline: none;
     margin: 30px;
 
     .css-yk16xz-control {
+      width: 50vw;
       height: 50px;
       border-radius: 50px;
       .css-12jo7m5 {
@@ -23,13 +23,6 @@
       border: unset;
       outline: none;
     }
-  }
-
-  .buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-bottom: 5%;
   }
 
   .filterContainer {
