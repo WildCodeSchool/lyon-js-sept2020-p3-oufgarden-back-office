@@ -6,8 +6,8 @@ import { IconContext } from 'react-icons';
 
 import { useToasts } from 'react-toast-notifications';
 import { confirmAlert } from 'react-confirm-alert';
+import Select from 'react-select';
 import ButtonListCreation from './ButtonListCreation';
-
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/Garden.scss';
@@ -15,6 +15,22 @@ import './style/Garden.scss';
 const Garden = (props) => {
   const { addToast } = useToasts();
   const [gardenList, setGardenList] = useState([]);
+  const [gardenListFiltered, setGardenListFiltered] = useState([]);
+
+  const handleSelectGardenChange = (elem) => {
+    if (!elem) {
+      setGardenListFiltered([]);
+    } else {
+      setGardenListFiltered(elem.map((e) => e.value));
+    }
+  };
+
+  const gardenSelect = gardenList.map((elem) => {
+    return {
+      value: elem.id,
+      label: `${elem.name}`,
+    };
+  });
 
   useEffect(() => {
     getCollection('garden').then((elem) => {
@@ -70,60 +86,112 @@ const Garden = (props) => {
           names: 'Jardins',
         }}
       />
+      <Select
+        options={gardenSelect}
+        name="garden"
+        isClearable
+        isMulti
+        onChange={(e) => {
+          handleSelectGardenChange(e);
+        }}
+      />
       <div className="container-to-color-rows">
-        {gardenList
-          .sort(function (a, b) {
-            if (a.lastname < b.lastname) {
-              return -1;
-            }
-            if (a.lastname > b.lastname) {
-              return 1;
-            }
-            return 0;
-          })
-          .map((e) => {
-            return (
-              <div key={e.id} className="garden-row">
-                <div className="garden-infos">
-                  <p className="garden-name">{e.name}</p>
-                  <p>
-                    {e.street} {e.zip_code} {e.city}
-                  </p>
+        {gardenListFiltered.length > 0
+          ? gardenList
+              .filter((garden) => {
+                if (gardenListFiltered.includes(garden.id)) {
+                  return true;
+                }
+                return false;
+              })
+              .map((e) => {
+                return (
+                  <div key={e.id} className="garden-row">
+                    <div className="garden-infos">
+                      <p className="garden-name">{e.name}</p>
+                      <p>
+                        {e.street} {e.zip_code} {e.city}
+                      </p>
+                    </div>
+                    <div className="garden-list-icons">
+                      {/* IconContext provider pour personnaliser les props de react-icons */}
+                      <IconContext.Provider
+                        value={{ className: 'react-icons' }}
+                      >
+                        <FaRegCalendarAlt
+                          size={25}
+                          style={{ cursor: 'pointer' }}
+                          onClick={() =>
+                            props.history.push(`/garden/${e.id}/calendar`)
+                          }
+                        />
+                        <FaLeaf
+                          size={25}
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => props.history.push(`/garden/${e.id}`)}
+                        />
+                        <MdEdit
+                          size={25}
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => {
+                            handleEdit(e.id);
+                          }}
+                        />
+                        <MdDelete
+                          style={{ cursor: 'pointer' }}
+                          size={25}
+                          onClick={() => {
+                            handleDelete(e.id);
+                          }}
+                        />
+                      </IconContext.Provider>
+                    </div>
+                  </div>
+                );
+              })
+          : gardenList.map((e) => {
+              return (
+                <div key={e.id} className="garden-row">
+                  <div className="garden-infos">
+                    <p className="garden-name">{e.name}</p>
+                    <p>
+                      {e.street} {e.zip_code} {e.city}
+                    </p>
+                  </div>
+                  <div className="garden-list-icons">
+                    {/* IconContext provider pour personnaliser les props de react-icons */}
+                    <IconContext.Provider value={{ className: 'react-icons' }}>
+                      <FaRegCalendarAlt
+                        size={25}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() =>
+                          props.history.push(`/garden/${e.id}/calendar`)
+                        }
+                      />
+                      <FaLeaf
+                        size={25}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => props.history.push(`/garden/${e.id}`)}
+                      />
+                      <MdEdit
+                        size={25}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                          handleEdit(e.id);
+                        }}
+                      />
+                      <MdDelete
+                        style={{ cursor: 'pointer' }}
+                        size={25}
+                        onClick={() => {
+                          handleDelete(e.id);
+                        }}
+                      />
+                    </IconContext.Provider>
+                  </div>
                 </div>
-                <div className="garden-list-icons">
-                  {/* IconContext provider pour personnaliser les props de react-icons */}
-                  <IconContext.Provider value={{ className: 'react-icons' }}>
-                    <FaRegCalendarAlt
-                      size={25}
-                      style={{ cursor: 'pointer' }}
-                      onClick={() =>
-                        props.history.push(`/garden/${e.id}/calendar`)
-                      }
-                    />
-                    <FaLeaf
-                      size={25}
-                      style={{ cursor: 'pointer' }}
-                      onClick={() => props.history.push(`/garden/${e.id}`)}
-                    />
-                    <MdEdit
-                      size={25}
-                      style={{ cursor: 'pointer' }}
-                      onClick={() => {
-                        handleEdit(e.id);
-                      }}
-                    />
-                    <MdDelete
-                      style={{ cursor: 'pointer' }}
-                      size={25}
-                      onClick={() => {
-                        handleDelete(e.id);
-                      }}
-                    />
-                  </IconContext.Provider>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
       </div>
     </div>
   );
