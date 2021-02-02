@@ -282,15 +282,18 @@ const MemberCreation = (props) => {
               <span className="slider round" />
             </label>
           </div>
+          <div className="selct-garden-member">
+            Selectionner un jardin :
+            <Controller
+              as={Select}
+              options={gardenOptions}
+              name="garden"
+              isClearable
+              isMulti
+              control={control}
+            />
+          </div>
 
-          <Controller
-            as={Select}
-            options={gardenOptions}
-            name="garden"
-            isClearable
-            isMulti
-            control={control}
-          />
           <div className="submitFormBtn">
             <input type="submit" value="Créer le membre" />
           </div>
