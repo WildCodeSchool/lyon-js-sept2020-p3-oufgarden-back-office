@@ -290,18 +290,10 @@ const MemberCreation = (props) => {
               isClearable
               isMulti
               control={control}
+              rules={{ required: true }}
             />
           </div>
 
-          <Controller
-            as={Select}
-            options={gardenOptions}
-            name="garden"
-            isClearable
-            isMulti
-            control={control}
-            rules={{ required: true }}
-          />
           <div className="submitFormBtn">
             <input type="submit" value="Créer le membre" />
           </div>
