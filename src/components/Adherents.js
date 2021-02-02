@@ -7,7 +7,7 @@ import { IconContext } from 'react-icons';
 import { useToasts } from 'react-toast-notifications';
 import { confirmAlert } from 'react-confirm-alert';
 import Select from 'react-select';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import ButtonListCreation from './ButtonListCreation';
 
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -20,6 +20,7 @@ const Adherents = (props) => {
   const { addToast } = useToasts();
 
   const [adherentList, setAdherentList] = useState([]);
+  const [adherentListFiltered, setAdherentListFiltered] = useState([]);
   const [gardenList, setGardenList] = useState([]);
   const [filterArray, setFilterArray] = useState([]);
   const { control } = useForm();
@@ -30,6 +31,8 @@ const Adherents = (props) => {
       label: `${elem.firstname} ${elem.lastname}`,
     };
   });
+
+  const handleSelectAdherentChange = (elem) => {};
 
   useEffect(() => {
     getCollection('users').then((data) => {
@@ -121,13 +124,14 @@ const Adherents = (props) => {
             names: 'Adhérents',
           }}
         />
-        <Controller
-          as={Select}
+        <Select
           options={adherentSelect}
           name="adherent"
           isClearable
           isMulti
-          control={control}
+          onChange={(e) => {
+            handleSelectAdherentChange(e);
+          }}
         />
       </div>
       <div className="filterContainer">

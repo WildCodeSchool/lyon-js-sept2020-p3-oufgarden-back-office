@@ -2,6 +2,29 @@
   margin-left: 260px;
   margin-right: 100px;
 
+  .css-2b097c-container {
+    width: 50vw;
+    border: unset;
+    outline: none;
+    margin: 30px;
+
+    .css-yk16xz-control {
+      height: 50px;
+      border-radius: 50px;
+      .css-12jo7m5 {
+        font-size: 20px;
+      }
+    }
+    &:focus {
+      border: unset;
+      outline: none;
+    }
+    &:active {
+      border: unset;
+      outline: none;
+    }
+  }
+
   .buttons {
     display: flex;
     flex-direction: row;

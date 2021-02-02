@@ -7,7 +7,6 @@ import { IconContext } from 'react-icons';
 import { useToasts } from 'react-toast-notifications';
 import { confirmAlert } from 'react-confirm-alert';
 import Select from 'react-select';
-import { useForm, Controller } from 'react-hook-form';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import ButtonListCreation from './ButtonListCreation';
 
@@ -15,12 +14,19 @@ import { getCollection, makeEntityDeleter } from '../services/API';
 import './style/ListArticles.scss';
 
 const ArticleList = (props) => {
-  const { control } = useForm();
   const [articles, setArticles] = useState([]);
   const [articlesFiltered, setArticlesFiltered] = useState([]);
   const [tagList, setTagList] = useState([]);
   const [allTags, setAllTags] = useState([]);
   const { addToast } = useToasts();
+
+  const handleSelectArticleChange = (elem) => {
+    if (!elem) {
+      setArticlesFiltered([]);
+    } else {
+      setArticlesFiltered(elem.map((e) => e.value));
+    }
+  };
 
   const articleSelect = articles.map((elem) => {
     return {
@@ -113,13 +119,15 @@ const ArticleList = (props) => {
           names: 'Articles',
         }}
       />
-      <Controller
+      <Select
         as={Select}
         options={articleSelect}
         name="articles"
         isClearable
         isMulti
-        control={control}
+        onChange={(e) => {
+          handleSelectArticleChange(e);
+        }}
       />
       <div className="filterContainer">
         {allTags &&
