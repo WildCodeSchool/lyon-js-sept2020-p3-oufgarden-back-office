@@ -289,6 +289,7 @@ const MemberCreation = (props) => {
             isClearable
             isMulti
             control={control}
+            rules={{ required: true }}
           />
           <div className="submitFormBtn">
             <input type="submit" value="Créer le membre" />
