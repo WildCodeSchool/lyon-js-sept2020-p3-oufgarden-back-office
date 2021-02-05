@@ -282,14 +282,19 @@ const MemberCreation = (props) => {
             </label>
           </div>
 
-          <Controller
-            as={Select}
-            options={gardenOptions}
-            name="garden"
-            isClearable
-            isMulti
-            control={control}
-          />
+          <div className="selct-garden-member">
+            Selectionner un jardin :
+            <Controller
+              as={Select}
+              options={gardenOptions}
+              name="garden"
+              isClearable
+              isMulti
+              control={control}
+              rules={{ required: true }}
+            />
+          </div>
+
           <div className="submitFormBtn">
             <input type="submit" value="Créer le membre" />
           </div>
