@@ -167,17 +167,20 @@ const Adherents = (props) => {
                     {/* IconContext provider to personalise props of react-icons */}
                     <IconContext.Provider value={{ className: 'react-icons' }}>
                       <a className="email-user" href={`mailto:${e.email}`}>
-                        <FiMail size={25} />
+                        <FiMail
+                          size={25}
+                          style={{ cursor: 'pointer', margin: '0 10px 0 10px' }}
+                        />
                       </a>
                       <MdAccountCircle
                         size={25}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', margin: '0 10px 0 10px' }}
                         onClick={() => {
                           handleEdit(e.id);
                         }}
                       />
                       <MdDelete
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: 'pointer', margin: '0 10px 0 10px' }}
                         size={25}
                         onClick={() => {
                           handleDelete(e.id);
