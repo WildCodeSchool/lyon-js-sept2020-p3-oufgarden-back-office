@@ -25,28 +25,30 @@ const Navbar = () => {
   };
   return (
     <div className="navbar">
-      <div className="logoNavbar" />
-      <ul>
-        <li>
-          <Link to="/adherents">Adhérents</Link>
-        </li>
-        <li>
-          <Link to="/garden">Jardins</Link>
-        </li>
-        <li>
-          <Link to="/articles">Articles</Link>
-        </li>
-        <li>
-          <Link to="/category">Catégories</Link>
-        </li>
-        <li>
-          <Link to="/calendar">Agenda</Link>
-        </li>
-      </ul>
-      <div className="containerLogoutButton">
-        <button className="btn-logout" type="button" onClick={logout}>
-          Déconnexion
-        </button>
+      <div className="navbar-content">
+        <div className="logoNavbar" />
+        <ul>
+          <li>
+            <Link to="/adherents">Adhérents</Link>
+          </li>
+          <li>
+            <Link to="/garden">Jardins</Link>
+          </li>
+          <li>
+            <Link to="/articles">Articles</Link>
+          </li>
+          <li>
+            <Link to="/category">Catégories</Link>
+          </li>
+          <li>
+            <Link to="/calendar">Agenda</Link>
+          </li>
+        </ul>
+        <div className="containerLogoutButton">
+          <button className="btn-logout" type="button" onClick={logout}>
+            Déconnexion
+          </button>
+        </div>
       </div>
     </div>
   );

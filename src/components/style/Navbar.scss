@@ -1,13 +1,12 @@
 .navbar {
-  // float: left;
-  // position: fixed;
-  // top: 0;
-  // left: 0;
   width: 200px;
-  // height: 100%;
   background-color: #e6e6e6;
   padding-bottom: 40px;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+
+  .navbar-content {
+    position: fixed;
+  }
 
   .logoNavbar {
     background-image: url('../../images/black_logo.png');
