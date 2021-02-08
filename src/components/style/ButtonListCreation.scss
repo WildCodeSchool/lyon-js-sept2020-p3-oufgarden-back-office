@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+
 .button-list-creation-container {
   display: flex;
   justify-content: center;
@@ -21,7 +23,7 @@
     border: solid 1px lightgray;
     margin: 10px;
     border-radius: 5px;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', 'sans-serif';
     font-size: 1rem;
     cursor: pointer;
 

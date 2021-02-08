@@ -1,15 +1,12 @@
 .navbar {
-  float: left;
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 200px;
-  height: 100vh;
-  justify-content: left;
-  align-items: center;
   background-color: #e6e6e6;
   padding-bottom: 40px;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+
+  .navbar-content {
+    position: fixed;
+  }
 
   .logoNavbar {
     background-image: url('../../images/black_logo.png');
@@ -58,6 +55,8 @@
       font-size: 1rem;
       border-radius: 20px;
       width: 12vw;
+      min-width: min-content;
+      padding: 5px;
       height: 5vh;
       outline: none;
       border: solid 1px red;

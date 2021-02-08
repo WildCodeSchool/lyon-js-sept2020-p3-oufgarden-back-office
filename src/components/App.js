@@ -23,7 +23,7 @@ import PublicCalendar from './PublicCalendar';
 
 const App = () => {
   return (
-    <div>
+    <div className="global-page">
       <ToastProvider placement="top-right">
         <UserProvider>
           <Router history={history}>

@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 20px;
   .buttonNav {
     display: flex;
     margin: 5% 0 3% 0;
@@ -71,9 +72,7 @@
   }
 
   .sendButton {
-    /* margin-top: 3%;
-    margin-left: 40%; */
-    margin-bottom: 3%;
+    margin: 20px;
     background-color: #ebb349;
     font-family: 'Montserrat';
     font-size: 1rem;
