@@ -30,4 +30,5 @@ body {
 
 .global-page {
   display: flex;
+  height: 100%;
 }
