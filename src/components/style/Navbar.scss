@@ -1,20 +1,23 @@
 .navbar {
   width: 200px;
+
   background-color: #e6e6e6;
   padding-bottom: 40px;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
 
   .navbar-content {
-    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .logoNavbar {
     background-image: url('../../images/black_logo.png');
-    background-size: 100%;
+    background-size: 80%;
     background-repeat: no-repeat;
     background-position: center;
     height: 120px;
-    margin: 10%;
+    align-self: stretch;
   }
 
   ul {
@@ -46,10 +49,9 @@
     }
   }
   .containerLogoutButton {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-
+    width: 70%;
+    justify-self: center;
+    align-self: center;
     .btn-logout {
       z-index: 1;
       font-size: 1rem;

@@ -45,7 +45,6 @@ const MemberCreation = (props) => {
   const onSubmit = async (data, e) => {
     // data is updated to add the array with garden ids, before submit
 
-    console.log(data);
     const newData = {
       ...data,
       gardenArray: data.garden.map((elem) => elem.value),

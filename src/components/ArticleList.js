@@ -144,14 +144,12 @@ const ArticleList = (props) => {
                       >
                         <FaReadme
                           size={25}
-                          style={{ cursor: 'pointer' }}
                           onClick={() =>
                             props.history.push(`/articles/${e.id}`)
                           }
                         />
                         <MdEdit
                           size={25}
-                          style={{ cursor: 'pointer' }}
                           onClick={() => {
                             handleEdit(e.id);
                           }}
