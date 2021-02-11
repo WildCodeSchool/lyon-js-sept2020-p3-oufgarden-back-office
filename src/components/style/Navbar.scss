@@ -1,14 +1,15 @@
 .navbar {
   width: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
   background-color: #e6e6e6;
   padding-bottom: 40px;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
 
   .navbar-content {
     position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .logoNavbar {
@@ -49,9 +50,9 @@
     }
   }
   .containerLogoutButton {
-    display: flex;
     width: 70%;
-
+    justify-self: center;
+    align-self: center;
     .btn-logout {
       z-index: 1;
       font-size: 1rem;
