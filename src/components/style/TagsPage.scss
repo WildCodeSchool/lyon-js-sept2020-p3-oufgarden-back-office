@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+
 .tag-list-container {
   margin: 100px 20px 20px 20px;
 
@@ -94,6 +96,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 20px;
       padding: 20px;
       margin: 20px 20px 20px;
       background-color: #e5e7e9;
